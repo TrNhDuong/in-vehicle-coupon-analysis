@@ -1,0 +1,29 @@
+# Local environment and Python artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.env.*
+*.egg-info/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dataset: never commit the raw/processed datasets
+/data/raw/*
+!/data/raw/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+
+# Local notebook backups and exported data/models
+*.ipynb.bak
+*.pkl
+*.joblib
+/reports/tables/*.csv
+/reports/tables/*.xlsx
