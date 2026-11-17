@@ -1,0 +1,19 @@
+{
+  "raw_sha256": "d47897367f5a12a31dece0f4e42d7bd9da76d7016b568da511b50335d08dcb43",
+  "rows": 12684,
+  "columns": 26,
+  "python": "3.12.1",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "matplotlib": "3.10.7",
+    "nbformat": "5.10.4",
+    "nbclient": "0.10.4"
+  },
+  "source": "https://archive.ics.uci.edu/dataset/603/in+vehicle+coupon+recommendation",
+  "license": "CC BY 4.0",
+  "min_n": 30,
+  "bootstrap_replicates": 10000,
+  "seed": 17104,
+  "status": "AI-assisted draft; human verification not asserted"
+}

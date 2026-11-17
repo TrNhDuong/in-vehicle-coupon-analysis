@@ -9,7 +9,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![Dataset](https://img.shields.io/badge/Dataset-UCI%20%23603-346E47)
 ![Workflow](https://img.shields.io/badge/Workflow-EDA%20%7C%20Analysis%20%7C%20ML-6D5BD0)
-![Stage](https://img.shields.io/badge/Status-Project%20Starter-F0A44B)
+![Stage](https://img.shields.io/badge/Status-Q1--Q4%20In%20Progress-F0A44B)
 
 **Trần Nhật Dương · Nguyễn Mạnh Hà · Hoàng Công Lý**
 
@@ -18,7 +18,7 @@
 </div>
 
 > [!IMPORTANT]
-> Đây là **bộ khung đồ án (starter repository)**, chưa phải sản phẩm phân tích hoàn chỉnh. Các notebook có mục lục, câu hỏi và vị trí để nhóm tự viết code, tính toán và kết luận. **Chưa có kết quả, biểu đồ, mô hình đã huấn luyện hay slide cuối kỳ.** Không sử dụng số liệu giả làm kết quả thực nghiệm.
+> Repo đã hoàn thiện phần **Collection, Q1–Q2 (Dương)** và có **bản nháp EDA, Q3–Q4 (Hà)** chạy trên dữ liệu UCI thật; xem [bàn giao phần Hà](docs/ha_handoff.md) và [quy ước phân tích](docs/ha_analysis_protocol.md). Phần **Q5, Q6 (Lý)**, tổng hợp chung (`02_analysis.ipynb`) và `slides.pdf` vẫn đang chờ hoàn thiện; xem [LLM_USAGE.md](LLM_USAGE.md).
 
 ---
 
@@ -128,15 +128,17 @@ in-vehicle-coupon-analysis/
 │   └── 03_ml_question.ipynb               # Lý – Q6
 ├── src/coupon_project/                  # Tiện ích đọc/kiểm tra dữ liệu & module phân tích
 │   ├── __init__.py
+│   ├── analysis.py                       # Hà – hàm EDA, Q3 & Q4
 │   ├── config.py
 │   ├── data_io.py
 │   ├── journey.py                        # Dương – hàm D2/D3/D4/D5 cho Q1 & Q2
 │   ├── metrics.py                        # Thống kê nhóm, bootstrap 95% CI dùng chung Q1–Q5
-│   ├── plotting.py                       # Hàm vẽ heatmap, grouped bar CI & forest plot
+│   ├── plotting.py                       # Hàm vẽ heatmap & grouped bar CI
 │   └── quality.py
 ├── scripts/
 │   ├── download_data.py                  # Tải dữ liệu chính thức từ UCI
-│   └── check_project.py                 # Kiểm tra chuẩn bị trước khi chạy
+│   ├── check_project.py                  # Kiểm tra chuẩn bị trước khi chạy
+│   └── run_ha_notebooks.py               # Chạy lại phần EDA & Q3–Q4 của Hà
 ├── tests/                                 # Unit tests nhẹ cho tiện ích
 ├── reports/
 │   ├── figures/.gitkeep                  # Biểu đồ sau phân tích
@@ -178,6 +180,10 @@ Mở và chạy theo thứ tự:
 4. Hoàn thiện phát hiện chung, kiểm chứng số liệu và thuyết trình
 
 Để kiểm tra tiện ích hỗ trợ: `python -m pytest -q`.
+
+Để chạy riêng bản nháp EDA/Q3/Q4 của Hà từ kernel mới, sau khi đã tải dữ liệu:
+`python scripts/run_ha_notebooks.py`. Lệnh tái tạo bảng/hình và
+`data/processed/ha_analysis_ready.csv`; kiểm tra SHA-256 để bảo đảm raw không đổi.
 
 ### Nếu không tải được qua script
 

@@ -11,5 +11,7 @@ dependencies:
   - jupyterlab
   - notebook
   - ipykernel
+  - nbformat
+  - nbclient
   - pytest
   - pip

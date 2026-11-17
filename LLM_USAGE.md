@@ -7,6 +7,10 @@
 | Ngày | Thành viên | Công cụ | Câu hỏi/prompt (tóm tắt chính xác) | Đã sử dụng / kiểm chứng / thay đổi như thế nào? |
 | --- | --- | --- | --- | --- |
 | `2026-11-17` | `Trần Nhật Dương` | `Antigravity (Gemini)` | `Hỗ trợ tách module thống kê/trực quan dùng chung và triển khai phần Q1, Q2, data collection, related work theo đúng yêu cầu đồ án` | `Sinh viên tự kiểm tra số liệu thực từ CSV UCI #603, chạy lại toàn bộ unit test (pytest) và notebook 02A_duong_q1_q2.ipynb từ kernel mới; đối chiếu nguồn UCI/Wang et al. (2017) trước khi chốt nội dung.` |
+| 2026-11-16 | Nguyễn Mạnh Hà (người yêu cầu) | ChatGPT / Codex | Đọc toàn bộ repo và file phân công `PHAN_CONG_CHI_TIET_DUONG_HA_LY.md`; xác định và triển khai phần Hà. | AI đọc các tệp của repo, đối chiếu phạm vi EDA/Q3/Q4 và quy định AI; chuẩn bị code thống kê, notebook, bảng/hình và bản nháp diễn giải; chạy kiểm tra tự động. Chi tiết và kết quả kiểm tra được ghi trong `docs/ha_handoff.md`. **Đây là hỗ trợ vượt vai trò gia sư mà repo cho phép; không được coi là phần Hà đã tự thực hiện hay bản đủ điều kiện nộp.** Chưa xác nhận Hà tự đọc, chạy, sửa hoặc kiểm chứng; Hà cần tự thực hiện theo quy định trước khi sử dụng trong bài nộp. |
+| 2026-11-17 | Nguyễn Mạnh Hà (người yêu cầu) | ChatGPT / Codex | Kiểm tra phần Hà đã sẵn sàng push hay chưa. | AI rà diff, phạm vi thay đổi và file Git ignore; chạy lại 10 tests và kiểm tra cấu trúc; thực thi hai notebook từ kernel mới trong bản sao tạm không có processed/reports; đối chiếu 32 bảng, hai báo cáo, processed data và 180 Wilson CI. Kết quả kỹ thuật đạt cho bản nháp gửi nhóm review. Không xác nhận review của Hà/đồng đội, không commit hoặc push. Xem mục kiểm tra ngày 17/11 trong `docs/ha_handoff.md`. |
+
+Phần trình bày của phiên 2026-11-16 gồm nguồn Markdown 5 slide và ghi chú EDA/Q3/Q4; chưa xuất PPTX/PDF vì thiếu runtime skill Presentations. Không có xác nhận Hà đã luyện nói hay viết reflection.
 
 ### Ghi nhận cần bổ sung cho việc tạo scaffold
 

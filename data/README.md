@@ -24,3 +24,12 @@ Hoặc tải trực tiếp từ trang chính thức: <https://archive.ics.uci.ed
 3. Sau từng bước làm thay đổi dữ liệu: ghi lại số dòng trước/sau và lý do.
 4. Nếu lưu processed CSV, ghi rõ notebook/script và các bước tạo ra nó.
 5. Dataset lớn không được commit trong repo này (`.gitignore` đã cấu hình).
+
+## Bản mô tả phục vụ phần Hà
+
+EDA tạo `data/processed/ha_analysis_ready.csv`: giữ nguyên tất cả 12.684 dòng
+và 26 cột raw của bản UCI đã kiểm tra, thêm `matched_frequency` và
+`frequent_user` (0/1, để trống khi không biết). Không xóa duplicate, điền NaN
+hoặc đổi tên cột raw. Quy tắc mapping/ngưỡng và log nằm trong notebook 01 và
+`docs/ha_analysis_protocol.md`. Q3/Q4 tự đọc raw, không phụ thuộc file processed.
+Không dùng bản điền mode trong sensitivity Q3 làm tiền xử lý ML.

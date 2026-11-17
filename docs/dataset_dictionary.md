@@ -42,10 +42,16 @@ Số dòng công bố: **12.684** | Số features: **25** | Target: **`Y`**
 | `Coffee House` | `CoffeeHouse` |
 | `Bar` | `Bar` |
 | `Carry out & Take away` | `CarryAway` |
-| `Restaurant(<20)` / có thể khác cách hiển thị trên UCI | `RestaurantLessThan20` |
-| `Restaurant(20-50)` / có thể khác cách hiển thị trên UCI | `Restaurant20To50` |
+| `Restaurant(<20)` | `RestaurantLessThan20` |
+| `Restaurant(20-50)` | `Restaurant20To50` |
 
 **Nhất thiết kiểm tra `df['coupon'].unique()` trước khi dùng mapping**, vì trang mô tả UCI và CSV có thể khác cách ghi ký hiệu `$`. Với tần suất `never`, `less1`, `1~3`, `4~8`, `gt8`, cần chỉ ra cách mã hoá thứ tự và cách xử lý NaN.
+
+EDA/Q3 đã đối chiếu đúng năm nhãn CSV ở bảng trên. Biến dùng chung tên
+`matched_frequency` (tên dự kiến `matched_visit_frequency` trong kế hoạch Q3
+chỉ cùng khái niệm, không tạo cột trùng). `frequent_user` là 1 cho
+`1~3/4~8/gt8`, 0 cho `never/less1`, thiếu vẫn thiếu. Xem quy ước và sensitivity
+trong `ha_analysis_protocol.md`.
 
 ## Những kiểm tra nên có
 

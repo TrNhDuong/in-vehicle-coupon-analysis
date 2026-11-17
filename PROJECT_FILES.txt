@@ -1,4 +1,4 @@
-# File manifest (starter repository)
+# File manifest (starter + Duong Q1-Q2 + Ha EDA/Q3-Q4 draft; generated CSVs excluded)
 .editorconfig
 .gitattributes
 .github/PULL_REQUEST_TEMPLATE.md
@@ -38,3 +38,30 @@ src/coupon_project/quality.py
 tests/conftest.py
 tests/test_data_io.py
 tests/test_quality.py
+docs/ha_analysis_protocol.md
+docs/ha_handoff.md
+presentation/ha_slides.md
+presentation/ha_speaker_notes.md
+reports/ha_eda_observations.md
+reports/ha_findings.md
+reports/ha_run_metadata.json
+reports/figures/ha_eda_distributions.png
+reports/figures/ha_eda_missing.png
+reports/figures/ha_q3_frequency_bars.png
+reports/figures/ha_q3_frequency_heatmap.png
+reports/figures/ha_q4_destination_heatmaps.png
+reports/figures/ha_q4_passanger_bars.png
+reports/figures/q1_fig1_heatmap_travel_time_direction.png
+reports/figures/q1_fig2_grouped_bar_coupon_travel_time.png
+reports/figures/q1_fig3_stratified_destination_direction.png
+reports/figures/q2_fig1_grouped_bar_time_expiration.png
+reports/figures/q2_fig2_heatmap_diff_time_coupon.png
+reports/figures/q2_fig3_coupon_expiration_ci.png
+scripts/run_ha_notebooks.py
+src/coupon_project/analysis.py
+src/coupon_project/journey.py
+src/coupon_project/metrics.py
+src/coupon_project/plotting.py
+tests/test_analysis.py
+tests/test_journey.py
+tests/test_metrics.py
