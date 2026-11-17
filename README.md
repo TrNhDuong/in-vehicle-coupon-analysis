@@ -9,7 +9,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![Dataset](https://img.shields.io/badge/Dataset-UCI%20%23603-346E47)
 ![Workflow](https://img.shields.io/badge/Workflow-EDA%20%7C%20Analysis%20%7C%20ML-6D5BD0)
-![Stage](https://img.shields.io/badge/Status-Project%20Starter-F0A44B)
+![Stage](https://img.shields.io/badge/Status-Ha%20Draft-F0A44B)
 
 **Trần Nhật Dương · Nguyễn Mạnh Hà · Hoàng Công Lý**
 
@@ -18,7 +18,7 @@
 </div>
 
 > [!IMPORTANT]
-> Đây là **bộ khung đồ án (starter repository)**, chưa phải sản phẩm phân tích hoàn chỉnh. Các notebook có mục lục, câu hỏi và vị trí để nhóm tự viết code, tính toán và kết luận. **Chưa có kết quả, biểu đồ, mô hình đã huấn luyện hay slide cuối kỳ.** Không sử dụng số liệu giả làm kết quả thực nghiệm.
+> Repo xuất phát từ **bộ khung đồ án**, chưa phải sản phẩm nộp hoàn chỉnh. Phần **EDA và Q3–Q4 của Hà đã có bản nháp thực nghiệm có AI hỗ trợ**, bảng/hình và kiểm tra trên dữ liệu UCI thật; xem [bàn giao phần Hà](docs/ha_handoff.md) và [quy ước phân tích](docs/ha_analysis_protocol.md). Q1, Q2, Q5, Q6 và Collection vẫn là khung; chưa có mô hình hay slide cuối kỳ. Bản nháp không xác nhận Hà đã tự thực hiện/diễn giải hoặc đáp ứng quy định AI; xem [LLM_USAGE.md](LLM_USAGE.md).
 
 ---
 
@@ -175,6 +175,10 @@ Mở và chạy theo thứ tự:
 4. Hoàn thiện phát hiện chung, kiểm chứng số liệu và thuyết trình
 
 Để kiểm tra tiện ích hỗ trợ: `python -m pytest -q`.
+
+Để chạy riêng bản nháp EDA/Q3/Q4 của Hà từ kernel mới, sau khi đã tải dữ liệu:
+`python scripts/run_ha_notebooks.py`. Lệnh tái tạo bảng/hình và
+`data/processed/ha_analysis_ready.csv`; kiểm tra SHA-256 để bảo đảm raw không đổi.
 
 ### Nếu không tải được qua script
 
