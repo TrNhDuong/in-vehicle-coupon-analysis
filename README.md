@@ -126,10 +126,13 @@ in-vehicle-coupon-analysis/
 │   ├── 02B_ha_q3_q4.ipynb
 │   ├── 02C_ly_q5.ipynb
 │   └── 03_ml_question.ipynb               # Lý – Q6
-├── src/coupon_project/                  # Tiện ích đọc/kiểm tra dữ liệu
+├── src/coupon_project/                  # Tiện ích đọc/kiểm tra dữ liệu & module phân tích
 │   ├── __init__.py
 │   ├── config.py
 │   ├── data_io.py
+│   ├── journey.py                        # Dương – hàm D2/D3/D4/D5 cho Q1 & Q2
+│   ├── metrics.py                        # Thống kê nhóm, bootstrap 95% CI dùng chung Q1–Q5
+│   ├── plotting.py                       # Hàm vẽ heatmap, grouped bar CI & forest plot
 │   └── quality.py
 ├── scripts/
 │   ├── download_data.py                  # Tải dữ liệu chính thức từ UCI

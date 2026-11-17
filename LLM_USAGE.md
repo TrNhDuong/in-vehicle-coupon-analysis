@@ -6,7 +6,7 @@
 
 | Ngày | Thành viên | Công cụ | Câu hỏi/prompt (tóm tắt chính xác) | Đã sử dụng / kiểm chứng / thay đổi như thế nào? |
 | --- | --- | --- | --- | --- |
-| `YYYY-MM-DD` | `Tên` | `ChatGPT / ...` | `Mô tả câu hỏi` | `Cách tự kiểm chứng và kết quả áp dụng` |
+| `2026-11-17` | `Trần Nhật Dương` | `Antigravity (Gemini)` | `Hỗ trợ tách module thống kê/trực quan dùng chung và triển khai phần Q1, Q2, data collection, related work theo đúng yêu cầu đồ án` | `Sinh viên tự kiểm tra số liệu thực từ CSV UCI #603, chạy lại toàn bộ unit test (pytest) và notebook 02A_duong_q1_q2.ipynb từ kernel mới; đối chiếu nguồn UCI/Wang et al. (2017) trước khi chốt nội dung.` |
 
 ### Ghi nhận cần bổ sung cho việc tạo scaffold
 
