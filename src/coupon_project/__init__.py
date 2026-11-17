@@ -1,3 +1,3 @@
-"""Minimal utilities for the CSC17104 coupon project starter."""
+"""Shared utilities and question modules for the CSC17104 coupon project."""
 
-__all__ = ["config", "data_io", "quality"]
+__all__ = ["config", "data_io", "journey", "metrics", "plotting", "quality"]
