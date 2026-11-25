@@ -4,14 +4,15 @@
 .github/PULL_REQUEST_TEMPLATE.md
 .github/workflows/ci.yml
 .gitignore
-CHECKLIST.md
-CONTRIBUTING.md
 LLM_USAGE.md
 PROJECT_FILES.txt
 README.md
 data/README.md
 data/processed/.gitkeep
 data/raw/.gitkeep
+docs/CHECKLIST.md
+docs/CONTRIBUTING.md
+docs/PHAN_CONG_CHI_TIET_DUONG_HA_LY.md
 docs/assignment_requirements.md
 docs/dataset_dictionary.md
 docs/presentation_outline.md
@@ -42,6 +43,7 @@ docs/ha_analysis_protocol.md
 docs/ha_handoff.md
 presentation/ha_slides.md
 presentation/ha_speaker_notes.md
+presentation/slides.html
 reports/ha_eda_observations.md
 reports/ha_findings.md
 reports/ha_run_metadata.json
@@ -58,6 +60,7 @@ reports/figures/q2_fig1_grouped_bar_time_expiration.png
 reports/figures/q2_fig2_heatmap_diff_time_coupon.png
 reports/figures/q2_fig3_coupon_expiration_ci.png
 scripts/run_ha_notebooks.py
+slides.pdf
 src/coupon_project/analysis.py
 src/coupon_project/journey.py
 src/coupon_project/metrics.py

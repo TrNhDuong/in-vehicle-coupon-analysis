@@ -5,7 +5,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
-    "README.md", "environment.yml", "LLM_USAGE.md", "CONTRIBUTING.md",
+    "README.md", "environment.yml", "LLM_USAGE.md", "docs/CONTRIBUTING.md",
     "data/raw/.gitkeep", "data/processed/.gitkeep",
     "notebooks/01_collection_exploration.ipynb", "notebooks/02_analysis.ipynb",
     "notebooks/02A_duong_q1_q2.ipynb", "notebooks/02B_ha_q3_q4.ipynb",
