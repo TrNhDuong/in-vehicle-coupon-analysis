@@ -1,4 +1,7 @@
-"""Make the starter src package importable without installing it."""
-import sys
+"""Pytest setup; package is editable-installed via pyproject.toml (fallback keeps src importable)."""
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))

@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coupon-project"
+version = "0.1.0"
+description = "CSC17104 analysis and ML pipeline for UCI #603 In-Vehicle Coupon Acceptance."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy", "pandas"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

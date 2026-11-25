@@ -350,11 +350,11 @@
       </div>
       <div class="col">
         <div class="fig-box" style="flex: 1.05;">
-          <img src="../reports/figures/ha_eda_missing.png" alt="Missing values">
+          <img src="../reports/figures/eda_missing.png" alt="Missing values">
           <div class="fig-cap">Tỷ lệ dữ liệu thiếu theo cột gốc (n = 12.684)</div>
         </div>
         <div class="fig-box" style="flex: 1.15;">
-          <img src="../reports/figures/ha_eda_distributions.png" alt="Distributions">
+          <img src="../reports/figures/eda_distributions.png" alt="Distributions">
           <div class="fig-cap">Phân phối loại coupon và nhóm người đồng hành (passanger)</div>
         </div>
       </div>
@@ -379,14 +379,14 @@
           <h3>Kết quả chính theo ngưỡng thời gian (D3, D5)</h3>
           <ul class="bullets">
             <li><strong>Toàn mẫu:</strong> <code>5–&lt;15 min</code> đạt <strong>61,42%</strong> (n=5.562) &gt; <code>15–&lt;25 min</code> <strong>56,07%</strong> (n=5.611) &gt; <code>≥25 min</code> <strong>42,89%</strong> (n=1.511).</li>
-            <li>Chênh lệch gần – xa: <strong>+18,53 điểm %</strong> (CI 95%: <code>[+15,64; +21,27]</code>). Độ nhạy loại 74 dòng trùng: <code>+19,41 pp</code>.</li>
+            <li>Chênh lệch gần – xa: <strong>+18,53 điểm %</strong> (CI 95%: <code>[+15,69; +21,38]</code>). Độ nhạy loại 74 dòng trùng: <code>+19,41 pp</code>.</li>
           </ul>
         </div>
         <div class="card">
           <h3>Phân tầng theo loại coupon &amp; mục đích (D4)</h3>
           <ul class="bullets">
             <li><strong>Phản ứng rất khác nhau theo coupon:</strong> <code>Restaurant(&lt;20)</code> giảm mạnh nhất <strong>+42,74 pp</strong> (75,32% → 32,58%), <code>Coffee House</code> giảm <strong>+20,29 pp</strong>; nhưng <code>Carry out &amp; Take away</code> giữ phẳng ở <strong>73,21%</strong> (chênh chỉ +2,05 pp, CI chứa 0).</li>
-            <li><strong>Confounder <code>destination</code> ở hướng đi:</strong> Thô toàn mẫu <code>direction_same=1</code> chỉ hơn <code>0</code> là <code>+1,76 pp</code> (CI <code>[-0,30; +3,72]</code>) vì 6.283 dòng <code>No Urgent Place</code> đều có <code>direction_same=0</code>.</li>
+            <li><strong>Confounder <code>destination</code> ở hướng đi:</strong> Thô toàn mẫu <code>direction_same=1</code> chỉ hơn <code>0</code> là <code>+1,76 pp</code> (CI <code>[-0,33; +3,85]</code>) vì 6.283 dòng <code>No Urgent Place</code> đều có <code>direction_same=0</code>.</li>
             <li>Khi giữ cố định <code>Home</code>, đi cùng hướng tăng <strong>+17,40 pp</strong> (dải 15–&lt;25 min đạt <strong>+24,91 pp</strong>). Ở <code>Work</code> 5–&lt;15 min lại đảo chiều (<code>-9,30 pp</code>).</li>
           </ul>
         </div>
@@ -429,12 +429,12 @@
           <table>
             <thead><tr><th>Khung giờ</th><th class="num">2h (%)</th><th class="num">1d (%)</th><th class="num">1d − 2h (CI 95%)</th></tr></thead>
             <tbody>
-              <tr><td>Toàn mẫu</td><td class="num">49,60</td><td class="num">62,56</td><td class="num"><strong>+12,96</strong> [11,21; 14,63]</td></tr>
-              <tr><td>7AM (Work)</td><td class="num">37,51</td><td class="num">58,29</td><td class="num"><strong>+20,78</strong> [17,42; 24,18]</td></tr>
-              <tr><td>10AM (No Urgent)</td><td class="num">61,76</td><td class="num">59,75</td><td class="num" style="color:#DC2626;"><strong>−2,01</strong> [−5,82; +1,96]</td></tr>
-              <tr><td>2PM (No Urgent)</td><td class="num">55,85</td><td class="num">71,77</td><td class="num"><strong>+15,92</strong> [11,54; 20,21]</td></tr>
-              <tr><td>6PM</td><td class="num">54,53</td><td class="num">61,82</td><td class="num"><strong>+7,29</strong> [3,82; 10,79]</td></tr>
-              <tr><td>10PM</td><td class="num">36,90</td><td class="num">63,03</td><td class="num"><strong>+26,13</strong> [21,81; 30,24]</td></tr>
+              <tr><td>Toàn mẫu</td><td class="num">49,60</td><td class="num">62,56</td><td class="num"><strong>+12,96</strong> [11,27; 14,70]</td></tr>
+              <tr><td>7AM (Work)</td><td class="num">37,51</td><td class="num">58,29</td><td class="num"><strong>+20,78</strong> [17,11; 24,25]</td></tr>
+              <tr><td>10AM (No Urgent)</td><td class="num">61,76</td><td class="num">59,75</td><td class="num" style="color:#DC2626;"><strong>−2,01</strong> [−5,78; +2,24]</td></tr>
+              <tr><td>2PM (No Urgent)</td><td class="num">55,85</td><td class="num">71,77</td><td class="num"><strong>+15,92</strong> [11,52; 20,20]</td></tr>
+              <tr><td>6PM</td><td class="num">54,53</td><td class="num">61,82</td><td class="num"><strong>+7,29</strong> [3,85; 10,67]</td></tr>
+              <tr><td>10PM</td><td class="num">36,90</td><td class="num">63,03</td><td class="num"><strong>+26,13</strong> [22,03; 30,32]</td></tr>
             </tbody>
           </table>
         </div>
@@ -479,11 +479,11 @@
           <table>
             <thead><tr><th>Coupon</th><th class="num">Thường % (n)</th><th class="num">Ít % (n)</th><th class="num">Chênh pp [CI 95%]</th></tr></thead>
             <tbody>
-              <tr class="best"><td>Bar</td><td class="num">68,79 (596)</td><td class="num">29,21 (1.400)</td><td class="num">+39,58 [35,09; 44,11]</td></tr>
-              <tr class="best"><td>Coffee House</td><td class="num">66,02 (1.922)</td><td class="num">34,62 (2.002)</td><td class="num">+31,41 [28,37; 34,36]</td></tr>
-              <tr><td>Restaurant(20-50)</td><td class="num">55,53 (506)</td><td class="num">38,38 (964)</td><td class="num">+17,15 [11,76; 22,58]</td></tr>
-              <tr><td>Carry out &amp; Take away</td><td class="num">74,37 (1.986)</td><td class="num">68,57 (385)</td><td class="num">+5,80 [0,83; 10,87]</td></tr>
-              <tr><td>Restaurant(&lt;20)</td><td class="num">71,54 (2.245)</td><td class="num">66,15 (514)</td><td class="num">+5,39 [0,91; 9,98]</td></tr>
+              <tr class="best"><td>Bar</td><td class="num">68,79 (596)</td><td class="num">29,21 (1.400)</td><td class="num">+39,58 [35,18; 43,97]</td></tr>
+              <tr class="best"><td>Coffee House</td><td class="num">66,02 (1.922)</td><td class="num">34,62 (2.002)</td><td class="num">+31,41 [28,42; 34,38]</td></tr>
+              <tr><td>Restaurant(20-50)</td><td class="num">55,53 (506)</td><td class="num">38,38 (964)</td><td class="num">+17,15 [11,84; 22,41]</td></tr>
+              <tr><td>Carry out &amp; Take away</td><td class="num">74,37 (1.986)</td><td class="num">68,57 (385)</td><td class="num">+5,80 [0,84; 10,91]</td></tr>
+              <tr><td>Restaurant(&lt;20)</td><td class="num">71,54 (2.245)</td><td class="num">66,15 (514)</td><td class="num">+5,39 [0,93; 9,92]</td></tr>
             </tbody>
           </table>
         </div>
@@ -491,18 +491,18 @@
           <h3>Kiểm tra độ bền (D6) &amp; điểm đáng chú ý</h3>
           <ul class="bullets">
             <li><strong>Độ bền qua 4 biến thể (2 ngưỡng × 2 cách xử lý NaN):</strong> Cả 5/5 coupon đều giữ chiều chênh lệch dương ở 4/4 cấu hình; bỏ 74 dòng trùng chỉ làm đổi tối đa <strong>0,29 pp</strong>.</li>
-            <li><strong>Độ bất định với <code>Carry out</code>:</strong> Khi đổi ngưỡng lên <code>≥4 lần/tháng</code>, chênh lệch còn <code>+2,90 pp</code> và CI <code>[−0,70; +6,42]</code> cắt qua 0.</li>
+            <li><strong>Độ bất định với <code>Carry out</code>:</strong> Khi đổi ngưỡng lên <code>≥4 lần/tháng</code>, chênh lệch còn <code>+2,90 pp</code> và CI <code>[−0,72; +6,45]</code> cắt qua 0.</li>
             <li><strong>Không tăng đơn điệu ở mức cao:</strong> Với <code>Bar</code>, mức <code>4~8</code> đạt 78,00% (n=150) vs <code>gt8</code> là 73,47% (n=49); với <code>Coffee House</code> là 68,59% vs 65,79%.</li>
           </ul>
         </div>
       </div>
       <div class="col">
         <div class="fig-box">
-          <img src="../reports/figures/ha_q3_frequency_bars.png" alt="Q3 frequency bars">
+          <img src="../reports/figures/q3_frequency_bars.png" alt="Q3 frequency bars">
           <div class="fig-cap">Tỷ lệ chấp nhận theo từng cấp tần suất trong mỗi loại coupon (Wilson CI 95%)</div>
         </div>
         <div class="fig-box">
-          <img src="../reports/figures/ha_q3_frequency_heatmap.png" alt="Q3 heatmap">
+          <img src="../reports/figures/q3_frequency_heatmap.png" alt="Q3 heatmap">
           <div class="fig-cap">Heatmap coupon × tần suất ghé thăm (bao gồm nhóm Unknown thiếu dữ liệu)</div>
         </div>
       </div>
@@ -528,10 +528,10 @@
           <table>
             <thead><tr><th>So sánh</th><th class="num">Chênh pp</th><th class="num">CI 95%</th><th>Phạm vi mẫu</th></tr></thead>
             <tbody>
-              <tr><td>Thô: Friend(s) − Alone</td><td class="num"><strong>+14,76</strong></td><td class="num">[12,81; 16,70]</td><td>10.603 dòng cặp</td></tr>
-              <tr><td>Chuẩn hóa coupon × dest</td><td class="num"><strong>+1,33</strong></td><td class="num">[−1,78; +4,48]</td><td>4/15 tầng (41,6%)</td></tr>
-              <tr><td>Thô: Partner − Alone</td><td class="num"><strong>+6,95</strong></td><td class="num">[3,78; 10,01]</td><td>8.380 dòng cặp</td></tr>
-              <tr><td>Chuẩn hóa coupon × dest</td><td class="num"><strong>+3,03</strong></td><td class="num">[−1,11; +7,08]</td><td>8/15 tầng (53,6%)</td></tr>
+              <tr><td>Thô: Friend(s) − Alone</td><td class="num"><strong>+14,76</strong></td><td class="num">[12,81; 16,75]</td><td>10.603 dòng cặp</td></tr>
+              <tr><td>Chuẩn hóa coupon × dest</td><td class="num"><strong>+1,33</strong></td><td class="num">[−1,70; +4,51]</td><td>4/15 tầng (41,6%)</td></tr>
+              <tr><td>Thô: Partner − Alone</td><td class="num"><strong>+6,95</strong></td><td class="num">[3,83; 10,07]</td><td>8.380 dòng cặp</td></tr>
+              <tr><td>Chuẩn hóa coupon × dest</td><td class="num"><strong>+3,03</strong></td><td class="num">[−1,08; +7,07]</td><td>8/15 tầng (53,6%)</td></tr>
             </tbody>
           </table>
         </div>
@@ -539,18 +539,18 @@
           <h3>Vì sao chênh lệch thu hẹp mạnh sau phân tầng?</h3>
           <ul class="bullets">
             <li><strong>Mất cân bằng cấu trúc:</strong> <code>Friend(s)</code> có <strong>3.298</strong> dòng ở <code>No Urgent Place</code> nhưng <strong>0</strong> dòng ở <code>Home</code> và <code>Work</code> — không thể suy rộng cho mọi hành trình.</li>
-            <li><strong>Khác biệt theo coupon:</strong> Trong <code>Bar</code> tại <code>No Urgent Place</code>, <code>Friend(s)</code> (55,79%, n=337) cao hơn hẳn <code>Alone</code> (37,80%, n=291; chênh <strong>+17,99 pp</strong>, CI <code>[10,36; 25,67]</code>). Ở <code>Carry out</code> lại có dấu âm (<code>−8,22 pp</code>, CI chứa 0).</li>
+            <li><strong>Khác biệt theo coupon:</strong> Trong <code>Bar</code> tại <code>No Urgent Place</code>, <code>Friend(s)</code> (55,79%, n=337) cao hơn hẳn <code>Alone</code> (37,80%, n=291; chênh <strong>+17,99 pp</strong>, CI <code>[10,29; 25,66]</code>). Ở <code>Carry out</code> lại có dấu âm (<code>−8,22 pp</code>, CI chứa 0).</li>
             <li><strong>Đổi dấu giữa các tầng:</strong> <strong>6/12</strong> tầng đủ n≥30 đổi dấu so với mức chưa phân tầng <code>destination</code>.</li>
           </ul>
         </div>
       </div>
       <div class="col">
         <div class="fig-box">
-          <img src="../reports/figures/ha_q4_passanger_bars.png" alt="Q4 passanger bars">
+          <img src="../reports/figures/q4_passanger_bars.png" alt="Q4 passanger bars">
           <div class="fig-cap">Tỷ lệ chấp nhận theo passanger trong từng loại coupon</div>
         </div>
         <div class="fig-box">
-          <img src="../reports/figures/ha_q4_destination_heatmaps.png" alt="Q4 heatmaps">
+          <img src="../reports/figures/q4_destination_heatmaps.png" alt="Q4 heatmaps">
           <div class="fig-cap">Ô xám cho thấy Friend(s) vắng mặt hoàn toàn ở Home và Work</div>
         </div>
       </div>
@@ -632,22 +632,22 @@
             <tbody>
               <tr><td>Dummy (đa số)</td><td class="num">0,500 ± 0,000</td><td class="num">0,500</td><td class="num">0,500</td><td class="num">0,749</td></tr>
               <tr><td>Logistic Regression</td><td class="num">0,722 ± 0,011</td><td class="num">0,726 (0,700–0,753)</td><td class="num">0,660</td><td class="num">0,744</td></tr>
-              <tr class="best"><td>Random Forest ★</td><td class="num">0,767 ± 0,009</td><td class="num">0,782 (0,756–0,808)</td><td class="num">0,705</td><td class="num">0,775</td></tr>
+              <tr class="best"><td>Random Forest ★</td><td class="num">0,767 ± 0,009</td><td class="num">0,781 (0,755–0,807)</td><td class="num">0,706</td><td class="num">0,775</td></tr>
             </tbody>
           </table>
           <p style="font-size:8.7pt; color:#475569; margin-top:5px;">
-            Accuracy test: RF <strong>72,3%</strong> vs Dummy 59,9%. Lưu ý F1 của LogReg (0,744) thấp hơn Dummy (0,749) — chứng minh cần dùng ROC-AUC làm metric chính.
+            Accuracy test: RF <strong>72,4%</strong> vs Dummy 59,9%. Lưu ý F1 của LogReg (0,744) thấp hơn Dummy (0,749) — chứng minh cần dùng ROC-AUC làm metric chính.
           </p>
         </div>
       </div>
       <div class="col">
         <div class="fig-box">
           <img src="../reports/figures/q6_fig1_model_comparison.png" alt="Q6 model comparison">
-          <div class="fig-cap">Random Forest vượt Logistic Regression (+0,056 ROC-AUC trên test) và baseline</div>
+          <div class="fig-cap">Random Forest vượt Logistic Regression (+0,055 ROC-AUC trên test) và baseline</div>
         </div>
         <div class="fig-box">
           <img src="../reports/figures/q6_fig2_confusion_matrix.png" alt="Q6 confusion matrix">
-          <div class="fig-cap">Ma trận nhầm lẫn trên tập test (ngưỡng 0,5; 396 FP vs 312 FN)</div>
+          <div class="fig-cap">Ma trận nhầm lẫn trên tập test (ngưỡng 0,5; 391 FP vs 314 FN)</div>
         </div>
       </div>
     </div>
@@ -671,7 +671,7 @@
           <h3>Permutation Importance (mức giảm ROC-AUC trên test)</h3>
           <ul class="bullets">
             <li><strong><code>coupon</code> áp đảo:</strong> giảm <strong>0,157 ± 0,009</strong> (gấp ~3× biến đứng thứ hai).</li>
-            <li><strong>Thói quen khớp &amp; thời hạn:</strong> <code>CoffeeHouse</code> (<strong>0,058</strong>), <code>expiration</code> (<strong>0,049</strong>), <code>Bar</code> (<strong>0,018</strong>), <code>destination</code> (0,015), <code>time</code> (0,009).</li>
+            <li><strong>Thói quen khớp &amp; thời hạn:</strong> <code>CoffeeHouse</code> (<strong>0,057</strong>), <code>expiration</code> (<strong>0,049</strong>), <code>Bar</code> (<strong>0,017</strong>), <code>destination</code> (0,015), <code>time</code> (0,009).</li>
             <li><strong>Nhân khẩu học ≈ 0:</strong> <code>age</code> (0,001), <code>income</code> (~0), <code>education</code>, <code>gender</code> hầu như không giúp dự đoán thêm — khớp với Q5.</li>
             <li>Random Forest học được tương tác phi tuyến <code>coupon × thói quen</code> mà Logistic Regression tuyến tính bỏ qua.</li>
           </ul>
@@ -679,9 +679,9 @@
         <div class="card">
           <h3>Phân tích lỗi &amp; gợi ý xếp hạng xác suất</h3>
           <ul class="bullets">
-            <li><strong>Lỗi lệch theo nền tỷ lệ nhận:</strong> <code>Carry out</code> (nhận nhiều) bị <strong>FPR = 90,5%</strong>; <code>Bar</code> (ít nhận) bị bỏ sót <strong>FNR = 53,0%</strong>.</li>
-            <li><strong>Mạnh ở hai đầu xác suất:</strong> Khi dự đoán <code>p &gt; 0,7</code> (32% test), tỷ lệ nhận thật là <strong>84,4%</strong>; khi <code>p ≤ 0,3</code> (16% test), chỉ <strong>18,6%</strong> nhận.</li>
-            <li>Vùng lưng chừng <code>0,3–0,6</code> (34% test) độ chính xác chỉ 53–57% → phù hợp dùng để <em>xếp hạng ưu tiên gửi</em> hơn là cắt cứng ở 0,5.</li>
+            <li><strong>Lỗi lệch theo nền tỷ lệ nhận:</strong> <code>Carry out</code> (nhận nhiều) bị <strong>FPR = 90,5%</strong>; <code>Bar</code> (ít nhận) bị bỏ sót <strong>FNR = 51,9%</strong>.</li>
+            <li><strong>Mạnh ở hai đầu xác suất:</strong> Khi dự đoán <code>p &gt; 0,7</code> (824 dòng), tỷ lệ nhận thật là <strong>84,6%</strong>; khi <code>p ≤ 0,3</code> (422 dòng), chỉ <strong>19,0%</strong> nhận.</li>
+            <li>Vùng lưng chừng <code>0,3–0,6</code> (865 dòng) độ chính xác chỉ 52–59% → phù hợp dùng để <em>xếp hạng ưu tiên gửi</em> hơn là cắt cứng ở 0,5.</li>
           </ul>
         </div>
       </div>
@@ -718,7 +718,7 @@
             <li><strong>1. Sản phẩm + thói quen &gt; nhân khẩu học:</strong> Ghé quán thường xuyên tăng tỷ lệ nhận tới +39,58 pp (Bar) và +31,41 pp (Coffee House), áp đảo chênh lệch tuổi (+7,5 pp) và thu nhập (+3,8 pp khi cố định tuổi).</li>
             <li><strong>2. Phân tầng (D4) chống kết luận sai:</strong> <code>direction_same</code> (+1,76 → +17,40 pp ở Home), <code>10AM</code> (−2,01 pp đảo chiều dương cả 5/5 coupon), và <code>Friend(s) − Alone</code> (+14,76 → +1,33 pp) đều minh họa tác động của confounder &amp; mất cân bằng mẫu.</li>
             <li><strong>3. Ngưỡng tiện lợi tùy loại dịch vụ:</strong> <code>Restaurant(&lt;20)</code> sụt 42,74 pp khi xa ≥25 phút; ngược lại <code>Carry out</code> giữ trên 72% ở mọi khoảng cách.</li>
-            <li><strong>4. ML có giá trị xếp hạng:</strong> Random Forest đạt ROC-AUC <strong>0,782</strong> trên người chưa từng gặp, nhưng cần tinh chỉnh ngưỡng theo chi phí làm phiền người dùng.</li>
+            <li><strong>4. ML có giá trị xếp hạng:</strong> Random Forest đạt ROC-AUC <strong>0,781</strong> trên người chưa từng gặp, nhưng cần tinh chỉnh ngưỡng theo chi phí làm phiền người dùng.</li>
           </ul>
         </div>
         <div class="card">
@@ -744,7 +744,7 @@
           <ul class="bullets">
             <li>Thử nghiệm A/B trên ứng dụng thực tế với dữ liệu giao dịch đổi coupon thật và có mã người dùng rõ ràng.</li>
             <li>Hiệu chỉnh xác suất (calibration), tối ưu ngưỡng theo chi phí FP/FN và mở rộng sang mô hình Gradient Boosting.</li>
-            <li>Kiểm tra toàn bộ 20 unit tests (<code>pytest</code>) &amp; quy trình tái lập từ môi trường Conda sạch.</li>
+            <li>Kiểm tra toàn bộ 11 unit tests (<code>pytest</code>) &amp; quy trình tái lập 1 lệnh <code>scripts/run_all.py</code>.</li>
           </ul>
         </div>
       </div>

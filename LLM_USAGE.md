@@ -1,19 +1,41 @@
 # LLM Usage Log – CSC17104 Final Project
 
-> **Bắt buộc ghi lại mỗi lần dùng LLM đáng kể.** Theo đề, LLM (ChatGPT, Claude, Copilot...) có thể dùng như gia sư để giải thích khái niệm, lỗi hoặc API, **không dùng để viết hộ phân tích, kết luận hoặc reflection**. Mọi nội dung nộp phải được người làm hiểu và chịu trách nhiệm.
+## Quy tắc bắt buộc khi làm việc & dùng LLM
 
-## Nhật ký sử dụng theo thành viên
+1. **Chỉ chỉnh sửa phần của chính mình:** Ai làm (hoặc dùng LLM hỗ trợ) **chỉ được chỉnh sửa đúng phần bài làm, code/notebook và mục nhật ký của người đó** — tuyệt đối không tự ý sửa phần việc hay nhật ký của thành viên khác.
+2. **Đọc bảng phân chia công việc trước khi bắt đầu:** Trước khi làm hoặc nhờ LLM hỗ trợ, hãy đọc mục **[Thành viên & Phân công theo Phase](docs/CONTRIBUTING.md#1-thành-viên--phân-công-theo-phase)** trong `docs/CONTRIBUTING.md` để nắm rõ từng người phụ trách phần nào.
+3. **Ghi nhận trung thực mỗi lần dùng đáng kể:** Ai dùng LLM tự ghi vào đúng bảng mang tên mình bên dưới (ngày, công cụ, tóm tắt prompt/mục đích và cách tự kiểm chứng lại trên dữ liệu thật).
+4. **Phạm vi hợp lệ:** Chỉ dùng LLM như gia sư hỗ trợ giải thích khái niệm, debug, chuẩn hóa code/tài liệu; **không dùng để bịa số liệu hoặc viết thay kết luận, phân tích và Individual reflection**. Người đứng tên chịu trách nhiệm giải thích toàn bộ code và số liệu trong phần của mình.
 
-| Ngày | Thành viên | Công cụ | Câu hỏi/prompt (tóm tắt chính xác) | Đã sử dụng / kiểm chứng / thay đổi như thế nào? |
-| --- | --- | --- | --- | --- |
-| `2026-11-17` | `Trần Nhật Dương` | `Antigravity (Gemini)` | `Hỗ trợ tách module thống kê/trực quan dùng chung và triển khai phần Q1, Q2, data collection, related work theo đúng yêu cầu đồ án; rút gọn code và hoàn thiện tài liệu/slide tổng hợp` | `Sinh viên tự kiểm tra số liệu thực từ CSV UCI #603, chạy lại toàn bộ unit test (pytest) và notebook 02A_duong_q1_q2.ipynb từ kernel mới; đối chiếu nguồn UCI/Wang et al. (2017) trước khi chốt nội dung.` |
-| `2026-11-16` | `Nguyễn Mạnh Hà (người yêu cầu)` | `ChatGPT / Codex` | `Đọc toàn bộ repo và file phân công PHAN_CONG_CHI_TIET_DUONG_HA_LY.md; xác định và triển khai phần Hà.` | `AI đọc các tệp của repo, đối chiếu phạm vi EDA/Q3/Q4 và quy định AI; chuẩn bị code thống kê, notebook, bảng/hình và bản nháp diễn giải; chạy kiểm tra tự động (chi tiết tại docs/ha_handoff.md). Hà cần tự đọc, chạy, chỉnh sửa và chịu trách nhiệm diễn giải trước khi nộp.` |
-| `2026-11-17` | `Nguyễn Mạnh Hà (người yêu cầu)` | `ChatGPT / Codex` | `Kiểm tra phần Hà đã sẵn sàng push hay chưa.` | `AI rà diff, phạm vi thay đổi và file Git ignore; chạy lại tests và 2 notebook từ kernel mới; đối chiếu 32 bảng, báo cáo, processed data và Wilson CI (xem docs/ha_handoff.md).` |
-| `2026-11-17` | `Hoàng Công Lý` | `(Bổ sung nếu có sử dụng LLM cho Q5/Q6)` | `(Ghi tóm tắt prompt nếu có)` | `(Ghi cách tự kiểm chứng lại code và số liệu Q5/Q6)` |
+---
 
-## Những điều từng thành viên tự chịu trách nhiệm
+## Nhật ký riêng từng thành viên
 
-- Tự kiểm chứng toàn bộ số liệu trên dữ liệu thật (`data/raw/in-vehicle-coupon-recommendation.csv`), không dùng số liệu ước đoán.
-- Tự đọc hiểu từng dòng code trong `src/` và `notebooks/`, sẵn sàng giải thích trong phần Q&A.
-- Tự viết **Individual reflections** bằng trải nghiệm cá nhân trong `notebooks/02_analysis.ipynb`.
-- Tự rà soát trích dẫn nguồn, giấy phép CC BY 4.0 và `docs/related_work.md`.
+### 1. Trần Nhật Dương (`23120243`)
+*(Chỉ Trần Nhật Dương chỉnh sửa mục này)*
+
+| Ngày | Công cụ | Câu hỏi / mục đích sử dụng (tóm tắt) | Tự kiểm chứng & thay đổi đã thực hiện |
+| --- | --- | --- | --- |
+| `2026-11-17` | `Antigravity (Gemini)` | Hỗ trợ tổ chức `src/coupon_project/` (5 module theo vai trò), gom 3 Phase notebooks, chuẩn hóa `docs/`, viết `scripts/run_all.py` và xuất `slides.pdf` | Tự kiểm tra số liệu thực từ CSV UCI #603, chạy `scripts/run_all.py` (`check_project.py`, `pytest`, 3 notebook từ kernel mới) và đối chiếu nguồn UCI/Wang et al. (2017) |
+
+### 2. Nguyễn Mạnh Hà (`23120248`)
+*(Chỉ Nguyễn Mạnh Hà chỉnh sửa mục này)*
+
+| Ngày | Công cụ | Câu hỏi / mục đích sử dụng (tóm tắt) | Tự kiểm chứng & thay đổi đã thực hiện |
+| --- | --- | --- | --- |
+| `2026-11-16` | `ChatGPT / Codex` | Đọc repo, xác định phạm vi và triển khai bản nháp EDA, Q3–Q4 | AI chuẩn bị code thống kê trong `src/coupon_project/analysis.py`, notebook nháp EDA/Q3–Q4 và đối chiếu Wilson CI; Hà tự đọc, chạy và chịu trách nhiệm diễn giải khi trình bày |
+| `2026-11-17` | `ChatGPT / Codex` | Kiểm tra phần EDA và Q3–Q4 trước khi tích hợp | AI rà diff, chạy lại tests và notebook từ kernel mới trước khi tích hợp vào Phase 1 & Phase 2 |
+
+### 3. Hoàng Công Lý (`24120378`)
+*(Chỉ Hoàng Công Lý chỉnh sửa mục này)*
+
+| Ngày | Công cụ | Câu hỏi / mục đích sử dụng (tóm tắt) | Tự kiểm chứng & thay đổi đã thực hiện |
+| --- | --- | --- | --- |
+| `—` | *(Tự điền nếu có dùng LLM cho Q5/Q6)* | *(Tóm tắt prompt/mục đích)* | *(Ghi cách tự kiểm chứng code, số liệu Q5/Q6 và pipeline ML)* |
+
+---
+
+## Trách nhiệm cá nhân trước khi nộp
+
+- Tự kiểm chứng toàn bộ số liệu trên `data/raw/in-vehicle-coupon-recommendation.csv` và hiểu từng dòng code trong phần mình phụ trách.
+- Tự viết **Individual reflections** bằng trải nghiệm cá nhân trong [notebooks/02_analysis.ipynb](notebooks/02_analysis.ipynb) và rà soát trích dẫn tại [docs/related_work.md](docs/related_work.md).

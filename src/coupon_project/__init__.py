@@ -1,3 +1,3 @@
-"""Shared utilities and question modules for the CSC17104 coupon project."""
+"""Clean layered toolkit for CSC17104 coupon acceptance analysis and ML."""
 
-__all__ = ["config", "data_io", "journey", "metrics", "plotting", "quality", "analysis"]
+__all__ = ["data", "features", "stats", "plotting", "modeling"]

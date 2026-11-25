@@ -1,43 +1,33 @@
-# 📚 Dataset Dictionary – In-Vehicle Coupon Recommendation
+# Từ điển biến & Quy ước phân tích – UCI Dataset #603
 
-**UCI Dataset #603:** <https://archive.ics.uci.edu/dataset/603/in+vehicle+coupon+recommendation>  
-Số dòng công bố: **12.684** | Số features: **25** | Target: **`Y`**  
-**Quan trọng:** các tên dưới đây dựa trên file CSV công khai; phải tự đối chiếu bằng `df.columns` sau khi tải. Ghi lại mọi lần đổi tên cột.
+- **Nguồn:** *In-Vehicle Coupon Recommendation* — UCI ID **603** · DOI: `10.24432/C5GS4P` · **CC BY 4.0** · `12.684` dòng × `26` cột (`Y=1` chiếm **56,84%**).
+- **Ý nghĩa 1 dòng:** Một kịch bản lái xe giả định trên Amazon Mechanical Turk kèm nhãn ý định `Y` (`1` = chấp nhận, `0` = từ chối; không phải giao dịch thật).
 
-| Nhóm | Cột CSV | Ý nghĩa (giản lược) |
-| --- | --- | --- |
-| Hành trình | `destination` | Đi làm, về nhà, không có nơi cần đến gấp |
-| Hành trình | `passanger` | Người đi cùng (tên cột CSV viết là **passanger**) |
-| Hành trình | `weather` | Thời tiết giả định |
-| Hành trình | `temperature` | Nhiệt độ của kịch bản (các mức như 30/55/80) |
-| Hành trình | `time` | Thời điểm trong ngày, **không phải ngày tháng** |
-| Ưu đãi | `coupon` | Loại coupon: quán cà phê, bar, takeaway, nhà hàng theo mức giá |
-| Ưu đãi | `expiration` | Hạn sử dụng `2h` hoặc `1d` |
-| Cá nhân | `gender` | Giới tính được khảo sát |
-| Cá nhân | `age` | Nhóm tuổi: có cả `below21`, `50plus` |
-| Cá nhân | `maritalStatus` | Tình trạng quan hệ/hôn nhân |
-| Cá nhân | `has_children` | Có con hay không (0/1) |
-| Cá nhân | `education` | Trình độ học vấn |
-| Cá nhân | `occupation` | Nghề nghiệp |
-| Cá nhân | `income` | Khoảng thu nhập (nhãn phân loại, cần thứ tự hợp lý) |
-| Cá nhân | `car` | Điều kiện/phương tiện liên quan xe (cần kiểm tra độ thiếu thực tế) |
-| Thói quen | `Bar` | Tần suất đến bar hàng tháng |
-| Thói quen | `CoffeeHouse` | Tần suất đến quán cà phê hàng tháng |
-| Thói quen | `CarryAway` | Tần suất mua đồ ăn mang đi |
-| Thói quen | `RestaurantLessThan20` | Tần suất đến nhà hàng chi phí thấp |
-| Thói quen | `Restaurant20To50` | Tần suất đến nhà hàng mức giá trung bình |
-| Khoảng cách | `toCoupon_GEQ5min` | Đi đến điểm sử dụng coupon mất ít nhất khoảng 5 phút (kiểm tra phân phối) |
-| Khoảng cách | `toCoupon_GEQ15min` | Thời gian đi đến điểm sử dụng coupon ≥ khoảng 15 phút |
-| Khoảng cách | `toCoupon_GEQ25min` | Thời gian đi đến điểm sử dụng coupon ≥ khoảng 25 phút |
-| Hướng | `direction_same` | Nơi sử dụng coupon cùng hướng đến điểm đích |
-| Hướng | `direction_opp` | Nơi sử dụng coupon khác hướng đến điểm đích |
-| Target | `Y` | `1` = dự định chấp nhận, `0` = không chấp nhận |
+---
 
-> **Lưu ý về địa lý:** Đây là kịch bản lái xe khảo sát, không có toạ độ GPS trong bảng; không kết luận về khoảng cách địa lý chính xác từ các cột `GEQ...`. Không suy ra quan hệ nhân quả từ tỷ lệ chấp nhận.
+## 1. Danh mục 26 cột gốc
 
-## Mapping dùng cho Q3 – thói quen phù hợp coupon
+| Nhóm | Cột CSV | Kiểu & miền giá trị | Ý nghĩa / Lưu ý chất lượng |
+| --- | --- | --- | --- |
+| Hành trình | `destination` | Phân loại (`No Urgent Place`, `Home`, `Work`) | Mục đích chuyến đi |
+| Hành trình | `passanger` | Phân loại (`Alone`, `Friend(s)`, `Partner`, `Kid(s)`) | Giữ nguyên tên cột gốc `passanger` |
+| Hành trình | `weather` | Phân loại (`Sunny`, `Rainy`, `Snowy`) | Thời tiết kịch bản |
+| Hành trình | `temperature` | Rời rạc (`30`, `55`, `80`) | Nhiệt độ (°F) |
+| Hành trình | `time` | 5 mốc (`7AM`, `10AM`, `2PM`, `6PM`, `10PM`) | Giờ trong ngày (**không phải** chuỗi nhiều ngày) |
+| Ưu đãi | `coupon` | 5 loại (bảng ánh xạ bên dưới) | Loại phiếu ưu đãi |
+| Ưu đãi | `expiration` | Phân loại (`2h`, `1d`) | Thời hạn hiệu lực |
+| Cá nhân | `gender`, `age`, `maritalStatus`, `has_children`, `education`, `occupation`, `income` | Phân loại / nhị phân / khoảng có thứ tự | `age` có `below21`, `50plus`; `income` là khoảng USD — không ép sang số |
+| Cá nhân | `car` | Phân loại | **Thiếu 99,15%** (`12.576/12.684`) — loại khỏi ML features |
+| Thói quen | `Bar`, `CoffeeHouse`, `CarryAway`, `RestaurantLessThan20`, `Restaurant20To50` | Thứ tự (`never`, `less1`, `1~3`, `4~8`, `gt8`) | Tần suất ghé/tháng; thiếu `0,84%–1,71%` |
+| Khoảng cách | `toCoupon_GEQ5min`, `GEQ15min`, `GEQ25min` | Nhị phân (`0/1`) | `GEQ5min` **luôn bằng `1`** (hằng số); `0` vi phạm logic `GEQ25 ≤ GEQ15 ≤ GEQ5` |
+| Hướng đi | `direction_same`, `direction_opp` | Nhị phân (`0/1`) | Luôn thỏa `direction_same + direction_opp = 1` |
+| Nhãn | `Y` | Nhị phân (`0/1`) | Biến mục tiêu (`Y = 1` đạt **7.210 / 12.684**) |
 
-| Loại coupon trong CSV | Cột thói quen tương ứng |
+---
+
+## 2. Ánh xạ thói quen (`matched_frequency`) cho Q3 & Q5
+
+| Nhãn `coupon` thực tế trong CSV | Cột thói quen tương ứng |
 | --- | --- |
 | `Coffee House` | `CoffeeHouse` |
 | `Bar` | `Bar` |
@@ -45,19 +35,13 @@ Số dòng công bố: **12.684** | Số features: **25** | Target: **`Y`**
 | `Restaurant(<20)` | `RestaurantLessThan20` |
 | `Restaurant(20-50)` | `Restaurant20To50` |
 
-**Nhất thiết kiểm tra `df['coupon'].unique()` trước khi dùng mapping**, vì trang mô tả UCI và CSV có thể khác cách ghi ký hiệu `$`. Với tần suất `never`, `less1`, `1~3`, `4~8`, `gt8`, cần chỉ ra cách mã hoá thứ tự và cách xử lý NaN.
+- `frequent_user = 1` nếu `matched_frequency` thuộc `{1~3, 4~8, gt8}`, `0` nếu `{never, less1}`, giữ `NaN` khi thiếu (`164` dòng = `1,29%`). Ngưỡng sensitivity Q3/Q5: `{4~8, gt8}`.
 
-EDA/Q3 đã đối chiếu đúng năm nhãn CSV ở bảng trên. Biến dùng chung tên
-`matched_frequency` (tên dự kiến `matched_visit_frequency` trong kế hoạch Q3
-chỉ cùng khái niệm, không tạo cột trùng). `frequent_user` là 1 cho
-`1~3/4~8/gt8`, 0 cho `never/less1`, thiếu vẫn thiếu. Xem quy ước và sensitivity
-trong `ha_analysis_protocol.md`.
+---
 
-## Những kiểm tra nên có
+## 3. Quy ước thống kê & kiểm soát dữ liệu dùng chung
 
-- Giá trị thiếu (số lượng, phần trăm, nhóm dữ liệu liên quan) đặc biệt các cột thói quen và `car`.
-- Cột hằng: kiểm tra `toCoupon_GEQ5min` và các cột khác bằng `nunique()` trước khi dùng mô hình.
-- Kiểm tra trùng lặp dòng; không tự loại trùng vì có thể là các kịch bản khảo sát tương tự từ nhiều người.
-- Không ép `age` hay `income` trực tiếp sang số khi còn nhãn chuỗi.
-- Kiểm tra `direction_same` và `direction_opp` có tương thích với nhau hay không.
-- Số hàng ở nhóm nhỏ trước khi so sánh, để tránh kết luận từ mẫu quá ít.
+1. **Giữ dòng trùng ở bản chính:** Giữ nguyên `74` dòng trùng lặp hoàn toàn ở phân tích chính vì CSV gốc thiếu `participant_id`; kiểm tra riêng độ nhạy sau `drop_duplicates()` ở Q1 & Q3.
+2. **Định nghĩa metric & nhóm nhỏ:** `acceptance_rate = mean(Y) × 100 (%)`; chênh lệch biểu diễn theo **điểm phần trăm (pp)**. Nhóm có `n < 30` (`MIN_N = 30`) được gắn cờ `*`, không xếp hạng mạnh; ô `n = 0` để trống thay vì gán `0%`.
+3. **Ước lượng bất định (D5):** Tỷ lệ đơn lẻ dùng **Wilson 95% CI**; chênh lệch giữa hai nhóm dùng **percentile bootstrap 95% CI** (`seed = 42` ở `metrics.py`/`demographics.py`, `seed = 17104` ở `analysis.py`). Riêng Q5 và Q6 dựng `respondent_id` suy ra (`567` hồ sơ duy nhất) để cluster-bootstrap theo người và tách `GroupShuffleSplit`.
+4. **Chuẩn hóa confounder (D4):** Q4 chuẩn hóa trọng số `w_s = (n_As + n_Bs) / sum(n_As + n_Bs)` trên các tầng common support (`n ≥ 30` ở cả hai nhóm); Q5 chuẩn hóa trực tiếp theo phân bố tầng của mẫu. Mọi kết luận chỉ mang tính **mối liên hệ trong khảo sát**, không suy diễn nhân quả.

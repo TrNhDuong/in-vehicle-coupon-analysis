@@ -1,12 +1,7 @@
-# Notebooks – thứ tự đề xuất
+# Notebooks – cấu trúc 3 Phase
 
-1. **`01_collection_exploration.ipynb`**: thu thập, bối cảnh, kiểm tra quality, phân phối, mối quan hệ, cleaning plan và nhận xét sơ bộ.
-2. **`02_analysis.ipynb`**: trang tổng hợp và định hướng Q1–Q5, sau khi các notebook cá nhân có kết quả.
-3. **`02A_duong_q1_q2.ipynb`**: Dương Q1 & Q2.
-4. **`02B_ha_q3_q4.ipynb`**: Hà Q3 & Q4.
-5. **`02C_ly_q5.ipynb`**: Lý Q5.
-6. **`03_ml_question.ipynb`**: Lý Q6, Machine Learning.
+1. **`01_collection_exploration.ipynb`** *(Phase 1 — Dương & Hà)*: thu thập nguồn dữ liệu, kiểm tra chất lượng/schema, phân phối biến, quan hệ sơ bộ và xuất `data/processed/analysis_ready.csv`.
+2. **`02_analysis.ipynb`** *(Phase 2 — Dương, Hà, Lý)*: phân tích thống kê non-ML Q1–Q5 theo giai đoạn (`2.1` Hành trình & thời hạn, `2.2` Thói quen & người đồng hành, `2.3` Tuổi & thu nhập theo người trả lời, `2.4` Tổng hợp & Individual reflections), bao phủ `D2, D3, D4, D5, D6`.
+3. **`03_ml_question.ipynb`** *(Phase 3 — Lý)*: dự đoán ý định `Y` bằng Machine Learning (`Dummy`, `LogisticRegression`, `RandomForest`) qua `coupon_project.modeling` với split theo người trả lời, `Pipeline` chống leakage, 5-fold CV, kiểm tra test 1 lần, phân tích lỗi và permutation importance.
 
-Phần Collection và `02A_duong_q1_q2.ipynb` (Dương) cùng phần EDA của `01_collection_exploration.ipynb` và `02B_ha_q3_q4.ipynb` (bản nháp của Hà) đã chạy trên dữ liệu thật; xem `../docs/ha_handoff.md` và `../LLM_USAGE.md`. Các notebook của Lý (`02C_ly_q5.ipynb`, `03_ml_question.ipynb`) và trang tổng hợp `02_analysis.ipynb` vẫn là starter với `TODO`.
-
-> Mở Jupyter từ thư mục gốc (`jupyter lab`). Nếu notebook chạy từ `notebooks/`, cell setup cũng tự định vị repo root. Trước khi nộp: Restart Kernel → Run All và kiểm tra không lệ thuộc biến ẩn/thứ tự chạy khác.
+> Chạy toàn bộ pipeline 1 lệnh từ thư mục gốc bằng `python scripts/run_all.py`, hoặc mở `jupyter lab` và chạy theo thứ tự `01 → 02 → 03`.

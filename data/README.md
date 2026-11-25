@@ -1,35 +1,12 @@
-# Data – UCI 603
+# Data – UCI #603
 
-## Đường dẫn dữ liệu
+## Đường dẫn & Cách tải
 
-- File CSV gốc: `data/raw/in-vehicle-coupon-recommendation.csv`
-- Dữ liệu đã xử lý: `data/processed/` (nhóm tạo sau khi quyết định quy tắc cleaning)
-
-## Tải dữ liệu
-
-Chạy từ thư mục gốc repo:
+- CSV gốc: `data/raw/in-vehicle-coupon-recommendation.csv` (**không chỉnh sửa trực tiếp**, bị `.gitignore` loại).
+- Dữ liệu dẫn xuất cho mô tả: `data/processed/analysis_ready.csv` (giữ nguyên `12.684` dòng × `26` cột raw, chỉ thêm `matched_frequency` và `frequent_user`; **không** dùng cho ML).
 
 ```bash
 python scripts/download_data.py
 ```
 
-Hoặc tải trực tiếp từ trang chính thức: <https://archive.ics.uci.edu/dataset/603/in+vehicle+coupon+recommendation> và giải nén/đổi tên đúng `in-vehicle-coupon-recommendation.csv`.
-
-**Nguồn và giấy phép:** UCI Machine Learning Repository, In-Vehicle Coupon Recommendation (ID 603), <https://doi.org/10.24432/C5GS4P>; CC BY 4.0. Giữ attribution khi sử dụng/phân phối dữ liệu.
-
-## Nguyên tắc xử lý
-
-1. Không chỉnh sửa nội dung trong `raw/`.
-2. Luôn mô tả missing, duplicate, encoding và bất kỳ row drop nào.
-3. Sau từng bước làm thay đổi dữ liệu: ghi lại số dòng trước/sau và lý do.
-4. Nếu lưu processed CSV, ghi rõ notebook/script và các bước tạo ra nó.
-5. Dataset lớn không được commit trong repo này (`.gitignore` đã cấu hình).
-
-## Bản mô tả phục vụ phần Hà
-
-EDA tạo `data/processed/ha_analysis_ready.csv`: giữ nguyên tất cả 12.684 dòng
-và 26 cột raw của bản UCI đã kiểm tra, thêm `matched_frequency` và
-`frequent_user` (0/1, để trống khi không biết). Không xóa duplicate, điền NaN
-hoặc đổi tên cột raw. Quy tắc mapping/ngưỡng và log nằm trong notebook 01 và
-`docs/ha_analysis_protocol.md`. Q3/Q4 tự đọc raw, không phụ thuộc file processed.
-Không dùng bản điền mode trong sensitivity Q3 làm tiền xử lý ML.
+Hoặc tải từ [UCI Dataset #603](https://archive.ics.uci.edu/dataset/603/in+vehicle+coupon+recommendation) (`DOI: 10.24432/C5GS4P`, **CC BY 4.0**). Chi tiết 26 cột và quy ước xử lý xem tại [docs/dataset_dictionary.md](../docs/dataset_dictionary.md).
