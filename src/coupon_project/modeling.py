@@ -1,27 +1,30 @@
-"""Leakage-safe sklearn Pipeline builder, respondent-clustered bootstrap, and error tables for Q6."""
+"""Xây dựng Pipeline sklearn chống rò rỉ dữ liệu, bootstrap theo cụm người và phân tích lỗi cho Q6."""
 import numpy as np
 import pandas as pd
 
 
 def build_pipeline(estimator, cat_cols, bin_cols):
-    """Build ColumnTransformer (SimpleImputer + dense OneHotEncoder) + estimator Pipeline."""
+    """Đóng gói bước tiền xử lý (điền thiếu + One-Hot) và mô hình vào 1 Pipeline chống leakage."""
+    # Import sklearn bên trong hàm để GitHub CI (không cài scikit-learn) vẫn chạy pass
     from sklearn.compose import ColumnTransformer
     from sklearn.impute import SimpleImputer
     from sklearn.pipeline import Pipeline
     from sklearn.preprocessing import OneHotEncoder
 
     prep = ColumnTransformer([
+        # Các cột phân loại: điền ô trống bằng nhãn "missing" rồi mã hóa One-Hot thành 0/1
         ("cat", Pipeline([
             ("imp", SimpleImputer(strategy="constant", fill_value="missing")),
             ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
         ]), list(cat_cols)),
+        # Các cột nhị phân 0/1 giữ nguyên không biến đổi
         ("bin", "passthrough", list(bin_cols)),
     ])
     return Pipeline([("preprocess", prep), ("model", estimator)])
 
 
 def cluster_bootstrap_metric(metric_fn, y_true, y_values, groups, n_boot: int = 1000, seed: int = 42) -> np.ndarray:
-    """Bootstrap metric_fn by resampling respondent clusters cleanly via sample weights."""
+    """Tính phân phối bootstrap của metric_fn bằng cách lấy mẫu lại theo cụm người trả lời."""
     rng = np.random.default_rng(seed)
     pid = pd.factorize(np.asarray(groups))[0]
     n_people = int(pid.max() + 1)
@@ -30,7 +33,7 @@ def cluster_bootstrap_metric(metric_fn, y_true, y_values, groups, n_boot: int = 
 
 
 def error_breakdown(df: pd.DataFrame, y_true, y_pred, y_proba, group_col: str) -> pd.DataFrame:
-    """Compute group acceptance rate, accuracy, FPR (%), and FNR (%) without mutating df."""
+    """Thống kê tỷ lệ nhận thật, độ chính xác, FPR (%) và FNR (%) theo từng nhóm mà không sửa df."""
     work = pd.DataFrame({
         group_col: df[group_col].to_numpy(),
         "y_true": np.asarray(y_true),
@@ -57,7 +60,7 @@ def error_breakdown(df: pd.DataFrame, y_true, y_pred, y_proba, group_col: str) -
 
 
 def probability_bins(y_true, y_pred, y_proba, bins=(0, 0.3, 0.4, 0.5, 0.6, 0.7, 1.0)) -> pd.DataFrame:
-    """Summarize calibration and accuracy across predicted probability bins."""
+    """Đánh giá độ khớp xác suất dự đoán (calibration) và độ chính xác theo từng khoảng xác suất."""
     work = pd.DataFrame({
         "y_true": np.asarray(y_true),
         "ok": np.asarray(y_true) == np.asarray(y_pred),
