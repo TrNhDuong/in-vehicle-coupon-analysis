@@ -1,8 +1,8 @@
-"""Download the public UCI #603 CSV without changing its contents.
+"""Tải file CSV gốc UCI #603 mà không chỉnh sửa nội dung.
 
-Usage (from project root): python scripts/download_data.py [--overwrite]
-Source: https://archive.ics.uci.edu/dataset/603/in+vehicle+coupon+recommendation
-License of upstream dataset: CC BY 4.0. This script does not grant a code license.
+Cách chạy (từ thư mục gốc dự án): python scripts/download_data.py [--overwrite]
+Nguồn: https://archive.ics.uci.edu/dataset/603/in+vehicle+coupon+recommendation
+Giấy phép dữ liệu gốc: CC BY 4.0.
 """
 from __future__ import annotations
 import argparse
@@ -45,8 +45,8 @@ def get_csv_bytes() -> tuple[bytes, str]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Download UCI #603 raw CSV")
-    parser.add_argument("--overwrite", action="store_true", help="Replace existing raw file")
+    parser = argparse.ArgumentParser(description="Tải dữ liệu CSV gốc từ UCI #603")
+    parser.add_argument("--overwrite", action="store_true", help="Ghi đè nếu file CSV gốc đã tồn tại")
     args = parser.parse_args()
     if OUTPUT.exists() and not args.overwrite:
         print(f"Đã tồn tại: {OUTPUT}; dùng --overwrite nếu thật sự muốn tải lại")
