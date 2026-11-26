@@ -15,7 +15,9 @@ def test_error_breakdown_and_probability_bins():
     y_pred = [1, 1, 0, 0]
     y_prob = [0.8, 0.9, 0.2, 0.45]
 
-    err = error_breakdown(df, y_true, y_pred, y_prob, "coupon").set_index("coupon") if "coupon" in error_breakdown(df, y_true, y_pred, y_prob, "coupon").columns else error_breakdown(df, y_true, y_pred, y_prob, "coupon")
+    err = error_breakdown(df, y_true, y_pred, y_prob, "coupon")
+    if "coupon" in err.columns:
+        err = err.set_index("coupon")
     assert err.loc["Bar", "FPR"] == pytest.approx(100.0)
     assert err.loc["Bar", "FNR"] == pytest.approx(0.0)
     assert err.loc["Coffee", "FPR"] == pytest.approx(0.0)

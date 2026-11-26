@@ -2,10 +2,10 @@
 
 ## Quy tắc bắt buộc khi làm việc & dùng LLM
 
-1. **Chỉ chỉnh sửa phần của chính mình:** Ai làm (hoặc dùng LLM hỗ trợ) **chỉ được chỉnh sửa đúng phần bài làm, code/notebook và mục nhật ký của người đó** — tuyệt đối không tự ý sửa phần việc hay nhật ký của thành viên khác.
-2. **Đọc bảng phân chia công việc trước khi bắt đầu:** Trước khi làm hoặc nhờ LLM hỗ trợ, hãy đọc mục **[Thành viên & Phân công theo Phase](docs/CONTRIBUTING.md#1-thành-viên--phân-công-theo-phase)** trong `docs/CONTRIBUTING.md` để nắm rõ từng người phụ trách phần nào.
-3. **Ghi nhận trung thực mỗi lần dùng đáng kể:** Ai dùng LLM tự ghi vào đúng bảng mang tên mình bên dưới (ngày, công cụ, tóm tắt prompt/mục đích và cách tự kiểm chứng lại trên dữ liệu thật).
-4. **Phạm vi hợp lệ:** Chỉ dùng LLM như gia sư hỗ trợ giải thích khái niệm, debug, chuẩn hóa code/tài liệu; **không dùng để bịa số liệu hoặc viết thay kết luận, phân tích và Individual reflection**. Người đứng tên chịu trách nhiệm giải thích toàn bộ code và số liệu trong phần của mình.
+1. **Hỏi & xác nhận đúng người trước khi sửa:** Trước khi nhờ LLM chỉnh sửa, xác định rõ người dùng là **Dương (`23120243`)**, **Hà (`23120248`)** hay **Lý (`24120378`)**; đọc mục **[Phân công theo Phase](docs/CONTRIBUTING.md#1-thành-viên--phân-công-theo-phase)** trong `docs/CONTRIBUTING.md`.
+2. **Chỉ sửa phần của chính mình:** Ai làm (hoặc dùng LLM hỗ trợ) **chỉ được chỉnh sửa đúng phần bài làm, code/notebook và mục nhật ký mang tên mình bên dưới** — không tự ý sửa phần việc hay nhật ký của thành viên khác.
+3. **Giữ hợp đồng `src/` & không bịa số liệu:** Đọc [docs/workflow_and_api.md](docs/workflow_and_api.md) trước khi sửa hàm dùng chung; mọi con số báo cáo phải lấy từ kết quả chạy thật (`scripts/run_all.py`, `pytest`), **không** viết hộ phân tích kết luận hoặc *Individual reflections*.
+4. **Ghi nhận trung thực & tự kiểm chứng:** Ghi rõ ngày, công cụ, tóm tắt prompt và kết quả kiểm chứng bằng `python scripts/check_project.py` + `python -m pytest -q`. *(Quy tắc tự động cho AI coding agent xem tại [AGENTS.md](AGENTS.md).)*
 
 ---
 

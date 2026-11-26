@@ -209,8 +209,8 @@ def cluster_rates_ci(data: pd.DataFrame, group_col: str, strata_cols=(), unit: s
                      id_col: str = "respondent_id", target: str = "Y",
                      n_boot: int = N_BOOT, seed: int = SEED) -> pd.DataFrame:
     """Group rates (%) with 95% respondent-clustered bootstrap CI."""
-    point, draws = _cluster_rate_fn(data, group_col, strata_cols, target), None
-    point, draws = _cluster_draws(data, point, unit, id_col, n_boot, seed)
+    rate_fn = _cluster_rate_fn(data, group_col, strata_cols, target)
+    point, draws = _cluster_draws(data, rate_fn, unit, id_col, n_boot, seed)
     low, high = np.nanpercentile(draws, [2.5, 97.5], axis=0)
     return pd.DataFrame(
         {"rate_pct": np.round(point, 2), "ci_low_pct": np.round(low, 2), "ci_high_pct": np.round(high, 2)},
