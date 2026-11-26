@@ -632,22 +632,22 @@
             <tbody>
               <tr><td>Dummy (đa số)</td><td class="num">0,500 ± 0,000</td><td class="num">0,500</td><td class="num">0,500</td><td class="num">0,749</td></tr>
               <tr><td>Logistic Regression</td><td class="num">0,722 ± 0,011</td><td class="num">0,726 (0,700–0,753)</td><td class="num">0,660</td><td class="num">0,744</td></tr>
-              <tr class="best"><td>Random Forest ★</td><td class="num">0,767 ± 0,009</td><td class="num">0,781 (0,755–0,807)</td><td class="num">0,706</td><td class="num">0,775</td></tr>
+              <tr class="best"><td>Random Forest ★</td><td class="num">0,767 ± 0,009</td><td class="num">0,782 (0,756–0,808)</td><td class="num">0,705</td><td class="num">0,775</td></tr>
             </tbody>
           </table>
           <p style="font-size:8.7pt; color:#475569; margin-top:5px;">
-            Accuracy test: RF <strong>72,4%</strong> vs Dummy 59,9%. Lưu ý F1 của LogReg (0,744) thấp hơn Dummy (0,749) — chứng minh cần dùng ROC-AUC làm metric chính.
+            Accuracy test: RF <strong>72,3%</strong> vs Dummy 59,9%. Lưu ý F1 của LogReg (0,744) thấp hơn Dummy (0,749) — chứng minh cần dùng ROC-AUC làm metric chính.
           </p>
         </div>
       </div>
       <div class="col">
         <div class="fig-box">
           <img src="../reports/figures/q6_fig1_model_comparison.png" alt="Q6 model comparison">
-          <div class="fig-cap">Random Forest vượt Logistic Regression (+0,055 ROC-AUC trên test) và baseline</div>
+          <div class="fig-cap">Random Forest vượt Logistic Regression (+0,056 ROC-AUC trên test) và baseline</div>
         </div>
         <div class="fig-box">
           <img src="../reports/figures/q6_fig2_confusion_matrix.png" alt="Q6 confusion matrix">
-          <div class="fig-cap">Ma trận nhầm lẫn trên tập test (ngưỡng 0,5; 391 FP vs 314 FN)</div>
+          <div class="fig-cap">Ma trận nhầm lẫn trên tập test (ngưỡng 0,5; 396 FP vs 312 FN)</div>
         </div>
       </div>
     </div>
@@ -671,7 +671,7 @@
           <h3>Permutation Importance (mức giảm ROC-AUC trên test)</h3>
           <ul class="bullets">
             <li><strong><code>coupon</code> áp đảo:</strong> giảm <strong>0,157 ± 0,009</strong> (gấp ~3× biến đứng thứ hai).</li>
-            <li><strong>Thói quen khớp &amp; thời hạn:</strong> <code>CoffeeHouse</code> (<strong>0,057</strong>), <code>expiration</code> (<strong>0,049</strong>), <code>Bar</code> (<strong>0,017</strong>), <code>destination</code> (0,015), <code>time</code> (0,009).</li>
+            <li><strong>Thói quen khớp &amp; thời hạn:</strong> <code>CoffeeHouse</code> (<strong>0,058</strong>), <code>expiration</code> (<strong>0,049</strong>), <code>Bar</code> (<strong>0,017</strong>), <code>destination</code> (0,015), <code>time</code> (0,009).</li>
             <li><strong>Nhân khẩu học ≈ 0:</strong> <code>age</code> (0,001), <code>income</code> (~0), <code>education</code>, <code>gender</code> hầu như không giúp dự đoán thêm — khớp với Q5.</li>
             <li>Random Forest học được tương tác phi tuyến <code>coupon × thói quen</code> mà Logistic Regression tuyến tính bỏ qua.</li>
           </ul>
@@ -679,9 +679,9 @@
         <div class="card">
           <h3>Phân tích lỗi &amp; gợi ý xếp hạng xác suất</h3>
           <ul class="bullets">
-            <li><strong>Lỗi lệch theo nền tỷ lệ nhận:</strong> <code>Carry out</code> (nhận nhiều) bị <strong>FPR = 90,5%</strong>; <code>Bar</code> (ít nhận) bị bỏ sót <strong>FNR = 51,9%</strong>.</li>
-            <li><strong>Mạnh ở hai đầu xác suất:</strong> Khi dự đoán <code>p &gt; 0,7</code> (824 dòng), tỷ lệ nhận thật là <strong>84,6%</strong>; khi <code>p ≤ 0,3</code> (422 dòng), chỉ <strong>19,0%</strong> nhận.</li>
-            <li>Vùng lưng chừng <code>0,3–0,6</code> (865 dòng) độ chính xác chỉ 52–59% → phù hợp dùng để <em>xếp hạng ưu tiên gửi</em> hơn là cắt cứng ở 0,5.</li>
+            <li><strong>Lỗi lệch theo nền tỷ lệ nhận:</strong> <code>Carry out</code> (nhận nhiều) bị <strong>FPR = 90,5%</strong>; <code>Bar</code> (ít nhận) bị bỏ sót <strong>FNR = 53,0%</strong>.</li>
+            <li><strong>Mạnh ở hai đầu xác suất:</strong> Khi dự đoán <code>p &gt; 0,7</code> (818 dòng), tỷ lệ nhận thật là <strong>84,4%</strong>; khi <code>p ≤ 0,3</code> (420 dòng), chỉ <strong>18,6%</strong> nhận.</li>
+            <li>Vùng lưng chừng <code>0,3–0,6</code> (874 dòng) độ chính xác chỉ 53–57% → phù hợp dùng để <em>xếp hạng ưu tiên gửi</em> hơn là cắt cứng ở 0,5.</li>
           </ul>
         </div>
       </div>
@@ -718,7 +718,7 @@
             <li><strong>1. Sản phẩm + thói quen &gt; nhân khẩu học:</strong> Ghé quán thường xuyên tăng tỷ lệ nhận tới +39,58 pp (Bar) và +31,41 pp (Coffee House), áp đảo chênh lệch tuổi (+7,5 pp) và thu nhập (+3,8 pp khi cố định tuổi).</li>
             <li><strong>2. Phân tầng (D4) chống kết luận sai:</strong> <code>direction_same</code> (+1,76 → +17,40 pp ở Home), <code>10AM</code> (−2,01 pp đảo chiều dương cả 5/5 coupon), và <code>Friend(s) − Alone</code> (+14,76 → +1,33 pp) đều minh họa tác động của confounder &amp; mất cân bằng mẫu.</li>
             <li><strong>3. Ngưỡng tiện lợi tùy loại dịch vụ:</strong> <code>Restaurant(&lt;20)</code> sụt 42,74 pp khi xa ≥25 phút; ngược lại <code>Carry out</code> giữ trên 72% ở mọi khoảng cách.</li>
-            <li><strong>4. ML có giá trị xếp hạng:</strong> Random Forest đạt ROC-AUC <strong>0,781</strong> trên người chưa từng gặp, nhưng cần tinh chỉnh ngưỡng theo chi phí làm phiền người dùng.</li>
+            <li><strong>4. ML có giá trị xếp hạng:</strong> Random Forest đạt ROC-AUC <strong>0,782</strong> trên người chưa từng gặp, nhưng cần tinh chỉnh ngưỡng theo chi phí làm phiền người dùng.</li>
           </ul>
         </div>
         <div class="card">
