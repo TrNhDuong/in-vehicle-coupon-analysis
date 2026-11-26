@@ -53,9 +53,7 @@ def matched_frequency(df: pd.DataFrame) -> pd.Series:
 
     res = pd.Series(pd.NA, index=df.index, dtype="string", name="matched_frequency")
     for coupon, col in COUPON_FREQUENCY.items():
-        mask = df["coupon"].eq(coupon)
-        if not mask.any():
-            continue
+        mask = df["coupon"] == coupon
         vals = df.loc[mask, col]
         if not vals.dropna().isin(FREQUENCIES).all():
             raise ValueError(f"Giá trị tần suất không hợp lệ ở cột {col}.")

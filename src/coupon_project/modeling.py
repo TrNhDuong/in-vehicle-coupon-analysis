@@ -32,29 +32,28 @@ def cluster_bootstrap_metric(metric_fn, y_true, y_values, groups, n_boot: int = 
     return np.array([metric_fn(y_true, y_values, sample_weight=rng.multinomial(n_people, probs)[pid]) for _ in range(n_boot)])
 
 
-def error_breakdown(df: pd.DataFrame, y_true, y_pred, y_proba, group_col: str) -> pd.DataFrame:
+def error_breakdown(df: pd.DataFrame, y_true, y_pred, group_col: str) -> pd.DataFrame:
     """Thống kê tỷ lệ nhận thật, độ chính xác, FPR (%) và FNR (%) theo từng nhóm mà không sửa df."""
     work = pd.DataFrame({
         group_col: df[group_col].to_numpy(),
         "y_true": np.asarray(y_true),
         "y_pred": np.asarray(y_pred),
-        "proba": np.asarray(y_proba),
     })
-    work["ok"] = work["y_true"] == work["y_pred"]
-    work["fp"] = (work["y_true"] == 0) & (work["y_pred"] == 1)
-    work["fn"] = (work["y_true"] == 1) & (work["y_pred"] == 0)
-    work["neg"] = work["y_true"] == 0
-    work["pos"] = work["y_true"] == 1
+    work["correct"] = work["y_true"] == work["y_pred"]
+    work["pred_accept"] = work["y_pred"] == 1
+    work["pred_reject"] = work["y_pred"] == 0
 
-    grouped = work.groupby(group_col, observed=False)
-    neg_cnt = grouped["neg"].sum().replace(0, np.nan)
-    pos_cnt = grouped["pos"].sum().replace(0, np.nan)
+    by_group = work.groupby(group_col)
+    actual_reject = work[work["y_true"] == 0].groupby(group_col)  # các dòng thật sự từ chối
+    actual_accept = work[work["y_true"] == 1].groupby(group_col)  # các dòng thật sự nhận
     out = pd.DataFrame({
-        "n": grouped.size(),
-        "true_rate": grouped["y_true"].mean().round(3),
-        "acc": grouped["ok"].mean().round(3),
-        "FPR": (grouped["fp"].sum() / neg_cnt * 100.0).round(2),
-        "FNR": (grouped["fn"].sum() / pos_cnt * 100.0).round(2),
+        "n": by_group.size(),
+        "true_rate": by_group["y_true"].mean().round(3),
+        "acc": by_group["correct"].mean().round(3),
+        # FPR: trong số dòng thật sự từ chối, bao nhiêu % bị đoán là nhận
+        "FPR": (actual_reject["pred_accept"].mean() * 100.0).round(2),
+        # FNR: trong số dòng thật sự nhận, bao nhiêu % bị đoán là từ chối
+        "FNR": (actual_accept["pred_reject"].mean() * 100.0).round(2),
     })
     return out.sort_values("true_rate")
 
