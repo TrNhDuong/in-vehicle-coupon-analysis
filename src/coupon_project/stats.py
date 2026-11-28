@@ -1,4 +1,4 @@
-"""Unified rate, CI, stratified contrast, and cluster-bootstrap statistics (% and pp)."""
+"""Thống kê tỷ lệ (%), khoảng tin cậy 95%, chênh lệch phân tầng (pp) và bootstrap theo cụm người."""
 import hashlib
 from statistics import NormalDist
 
@@ -13,21 +13,21 @@ N_BOOT = 2000
 
 
 def validate_binary(values) -> np.ndarray:
-    """Validate and return binary 0/1 float array without nulls."""
+    """Kiểm tra và trả về mảng số thực 0/1 không chứa giá trị thiếu."""
     arr = pd.Series(values).to_numpy(dtype=float)
     if np.isnan(arr).any() or (arr.size and not np.isin(arr, [0.0, 1.0]).all()):
-        raise ValueError("Target values must contain only non-null 0/1.")
+        raise ValueError("Cột mục tiêu chỉ được chứa giá trị 0 hoặc 1 và không được thiếu.")
     return arr
 
 
 def rng_for(key, seed: int = SEED) -> np.random.Generator:
-    """Create a deterministic RNG seeded by SHA-256 of key."""
+    """Tạo bộ sinh số ngẫu nhiên cố định theo mã băm SHA-256 của khóa key để tái lập kết quả."""
     digest = hashlib.sha256(str(key).encode("utf-8")).digest()
     return np.random.default_rng(seed + int.from_bytes(digest[:4], "little"))
 
 
 def wilson_ci(accepted: int, n: int) -> tuple[float, float]:
-    """95% Wilson score interval in percent [0, 100]."""
+    """Tính khoảng tin cậy 95% theo công thức Wilson, đơn vị % trong [0, 100]."""
     if n == 0:
         return np.nan, np.nan
     z = NormalDist().inv_cdf(0.975)
@@ -41,7 +41,7 @@ def wilson_ci(accepted: int, n: int) -> tuple[float, float]:
 
 
 def bootstrap_rate_ci(values, n_boot: int = N_BOOT, seed: int = SEED) -> tuple[float, float]:
-    """95% percentile bootstrap CI in percent [0, 100] for binary values."""
+    """Tính khoảng tin cậy bootstrap 95% (đơn vị %) cho dãy nhị phân 0/1."""
     arr = validate_binary(values)
     n = len(arr)
     if n == 0:
@@ -50,13 +50,14 @@ def bootstrap_rate_ci(values, n_boot: int = N_BOOT, seed: int = SEED) -> tuple[f
         val = float(arr[0] * 100.0)
         return val, val
     rng = np.random.default_rng(seed)
+    # Với biến 0/1, lấy mẫu bootstrap tương đương rút phân phối nhị thức Binomial(n, p)
     draws = rng.binomial(n, float(arr.mean()), n_boot) / n * 100.0
     low, high = np.percentile(draws, [2.5, 97.5])
     return float(low), float(high)
 
 
 def bootstrap_diff_ci(values_a, values_b, n_boot: int = N_BOOT, seed: int = SEED) -> dict:
-    """Rate difference A - B (percentage points) with 95% bootstrap CI."""
+    """Tính chênh lệch tỷ lệ nhóm A - nhóm B (điểm phần trăm, pp) kèm 95% bootstrap CI."""
     a, b = validate_binary(values_a), validate_binary(values_b)
     na, nb = len(a), len(b)
     if na == 0 or nb == 0:
@@ -79,26 +80,24 @@ def bootstrap_diff_ci(values_a, values_b, n_boot: int = N_BOOT, seed: int = SEED
 
 def rate_table(df: pd.DataFrame, cols, ci_method: str = "wilson", target: str = "Y",
                min_n: int = MIN_N, n_boot: int = N_BOOT, seed: int = SEED) -> pd.DataFrame:
-    """Summarize n, accepted count, rate (%), and 95% CI per group."""
+    """Tổng hợp số mẫu n, số chấp nhận, tỷ lệ (%) và khoảng tin cậy 95% theo từng nhóm."""
     if not cols:
-        raise ValueError("cols cannot be empty.")
+        raise ValueError("Danh sách cột nhóm (cols) không được rỗng.")
     if ci_method not in {"wilson", "bootstrap"}:
-        raise ValueError("ci_method must be 'wilson' or 'bootstrap'.")
+        raise ValueError("Tham số ci_method chỉ nhận 'wilson' hoặc 'bootstrap'.")
 
     validate_binary(df[target])
     rows = []
     for idx, (keys, sub) in enumerate(df.groupby(list(cols), observed=True, dropna=False)):
         keys = keys if isinstance(keys, tuple) else (keys,)
+        # groupby(observed=True) chỉ trả về nhóm có dữ liệu, nên n luôn >= 1
         y = sub[target].to_numpy(dtype=float)
-        n = len(y)
-        accepted = int(y.sum()) if n else 0
-        rate = float(y.mean() * 100.0) if n else np.nan
+        n, accepted = len(y), int(y.sum())
         low, high = wilson_ci(accepted, n) if ci_method == "wilson" else bootstrap_rate_ci(y, n_boot, seed + idx)
         rows.append({
             **dict(zip(cols, keys)), "n": n, "accepted": accepted,
-            "rate_pct": round(rate, 2) if n else np.nan,
-            "ci_low_pct": round(low, 2) if n else np.nan,
-            "ci_high_pct": round(high, 2) if n else np.nan,
+            "rate_pct": round(float(y.mean() * 100.0), 2),
+            "ci_low_pct": round(low, 2), "ci_high_pct": round(high, 2),
             "small_n": n < min_n,
         })
     return pd.DataFrame(rows)
@@ -106,7 +105,7 @@ def rate_table(df: pd.DataFrame, cols, ci_method: str = "wilson", target: str = 
 
 def contrasts(df: pd.DataFrame, strata_cols, exposure: str, group_a, group_b, target: str = "Y",
               min_n: int = MIN_N, n_boot: int = N_BOOT, seed: int = SEED, key="contrast") -> pd.DataFrame:
-    """Difference group_a - group_b (pp) with 95% bootstrap CI per stratum."""
+    """Tính chênh lệch group_a - group_b (pp) kèm 95% bootstrap CI trong từng tầng phân nhóm."""
     validate_binary(df[target])
     grouped = df.groupby(list(strata_cols), observed=True, dropna=False) if strata_cols else [((), df)]
     rows = []
@@ -114,23 +113,26 @@ def contrasts(df: pd.DataFrame, strata_cols, exposure: str, group_a, group_b, ta
         labels = labels if isinstance(labels, tuple) else (labels,)
         ya = part.loc[part[exposure] == group_a, target]
         yb = part.loc[part[exposure] == group_b, target]
-        na, nb = len(ya), len(yb)
-        small = min(na, nb) < min_n
+        small = min(len(ya), len(yb)) < min_n
+        # Mỗi tầng có seed riêng suy ra từ key + nhãn tầng, nên kết quả không phụ thuộc thứ tự gọi
         sub_seed = int(rng_for((key, labels, group_a, group_b), seed).integers(0, 2**31 - 1))
-        diff = bootstrap_diff_ci(ya, yb, n_boot=n_boot, seed=sub_seed) if (na and nb) else bootstrap_diff_ci(ya, yb)
-        status = "no_common_support" if (na == 0 or nb == 0) else ("small_n" if small else "ok")
+        if len(ya) == 0 or len(yb) == 0:
+            status = "no_common_support"
+        else:
+            status = "small_n" if small else "ok"
         rows.append({
             **dict(zip(strata_cols, labels)),
             "group_a": str(group_a), "group_b": str(group_b),
-            "accepted_a": int(ya.sum()) if na else 0, "accepted_b": int(yb.sum()) if nb else 0,
-            **diff, "small_n": small, "status": status,
+            "accepted_a": int(ya.sum()), "accepted_b": int(yb.sum()),
+            **bootstrap_diff_ci(ya, yb, n_boot=n_boot, seed=sub_seed), "small_n": small, "status": status,
         })
     return pd.DataFrame(rows)
 
 
 def standardized_contrast(strata_df: pd.DataFrame, min_n: int = MIN_N,
                           n_boot: int = N_BOOT, seed: int = SEED, key="standardized") -> dict:
-    """Sample-weighted average difference across strata with n >= min_n in both arms."""
+    """Tính chênh lệch trung bình có trọng số trên các tầng đủ mẫu (n >= min_n ở cả 2 nhóm)."""
+    # Chỉ giữ các tầng có common support (đủ mẫu tối thiểu ở cả nhóm A và nhóm B)
     keep = strata_df.loc[(strata_df["n_a"] >= min_n) & (strata_df["n_b"] >= min_n)]
     total_n = int((strata_df["n_a"] + strata_df["n_b"]).sum())
     used_n = int((keep["n_a"] + keep["n_b"]).sum())
@@ -159,7 +161,7 @@ def standardized_contrast(strata_df: pd.DataFrame, min_n: int = MIN_N,
 
 
 def pivot_expiration(df: pd.DataFrame, index_cols=("time",), target: str = "Y"):
-    """Build rate pivot (%), count pivot (n), and melted long DataFrame for 2h vs 1d (D2)."""
+    """Tạo bảng pivot tỷ lệ (%), bảng pivot số mẫu (n) và bảng dạng dài (melt) cho hạn 2h vs 1d (D2)."""
     work = df.copy()
     if "time" in work.columns:
         work["time"] = pd.Categorical(work["time"], categories=TIME_ORDER, ordered=True)
@@ -174,43 +176,55 @@ def pivot_expiration(df: pd.DataFrame, index_cols=("time",), target: str = "Y"):
     return rates, counts, long_r.merge(long_c, on=[*index_cols, "expiration"], how="left")
 
 
-def _cluster_rate_fn(data: pd.DataFrame, group_col: str, strata_cols=(), target: str = "Y"):
+def _cluster_bootstrap(data: pd.DataFrame, group_col: str, strata_cols=(), unit: str = "respondent",
+                       id_col: str = "respondent_id", target: str = "Y",
+                       n_boot: int = N_BOOT, seed: int = SEED):
+    """Tỷ lệ chấp nhận (%) đã chuẩn hóa trực tiếp theo tầng cho từng nhóm của group_col.
+
+    Trả về (point, draws): point là tỷ lệ trên dữ liệu gốc (1 giá trị / nhóm),
+    draws là n_boot lần bootstrap (mỗi hàng 1 lần, mỗi cột 1 nhóm).
+    """
+    # Bước 1: gán mỗi dòng vào một ô = (nhóm, tầng)
     group_code = data[group_col].cat.codes.to_numpy()
     n_groups = len(data[group_col].cat.categories)
-    stratum_code = data.groupby(list(strata_cols), observed=True).ngroup().to_numpy() if strata_cols else np.zeros(len(data), dtype=int)
+    if strata_cols:
+        stratum_code = data.groupby(list(strata_cols), observed=True).ngroup().to_numpy()
+    else:
+        stratum_code = np.zeros(len(data), dtype=int)  # không phân tầng = chỉ có 1 tầng
     n_strata = stratum_code.max() + 1
-    y = data[target].to_numpy()
     cell_code = group_code * n_strata + stratum_code
     n_cells = n_groups * n_strata
+    y = data[target].to_numpy()
 
-    def fn(weights: np.ndarray) -> np.ndarray:
+    def standardized_rates(weights: np.ndarray) -> np.ndarray:
+        # Tỷ lệ nhận trong từng ô, mỗi dòng được tính "weights" lần
         accepted = np.bincount(cell_code, weights=weights * y, minlength=n_cells)
         total = np.bincount(cell_code, weights=weights, minlength=n_cells)
-        with np.errstate(invalid="ignore", divide="ignore"):
+        with np.errstate(invalid="ignore", divide="ignore"):  # ô rỗng -> NaN
             cell_rate = (accepted / total).reshape(n_groups, n_strata)
-        share = np.bincount(stratum_code, weights=weights, minlength=n_strata) / weights.sum()
-        return 100.0 * cell_rate @ share
+        # Chuẩn hóa trực tiếp: trung bình các ô, trọng số = tỷ trọng của tầng trong toàn mẫu
+        stratum_share = np.bincount(stratum_code, weights=weights, minlength=n_strata) / weights.sum()
+        return 100.0 * cell_rate @ stratum_share
 
-    return fn
-
-
-def _cluster_draws(data: pd.DataFrame, fn, unit: str = "respondent", id_col: str = "respondent_id",
-                   n_boot: int = N_BOOT, seed: int = SEED):
-    rng = np.random.default_rng(seed)
+    # Bước 2: bootstrap theo người: rút lại người có hoàn lại; người được rút k lần thì
+    # mọi dòng của họ có trọng số k. unit="row" là bản so sánh, rút lại từng dòng.
     unit_idx = pd.factorize(data[id_col])[0] if unit == "respondent" else np.arange(len(data))
     n_units = unit_idx.max() + 1
     probs = np.full(n_units, 1.0 / n_units)
-    point = fn(np.ones(len(data)))
-    draws = np.array([fn(rng.multinomial(n_units, probs)[unit_idx].astype(float)) for _ in range(n_boot)])
-    return point, draws
+    rng = np.random.default_rng(seed)
+    point = standardized_rates(np.ones(len(data)))
+    draws = []
+    for _ in range(n_boot):
+        times_drawn = rng.multinomial(n_units, probs)  # số lần mỗi người được rút
+        draws.append(standardized_rates(times_drawn[unit_idx].astype(float)))
+    return point, np.array(draws)
 
 
 def cluster_rates_ci(data: pd.DataFrame, group_col: str, strata_cols=(), unit: str = "respondent",
                      id_col: str = "respondent_id", target: str = "Y",
                      n_boot: int = N_BOOT, seed: int = SEED) -> pd.DataFrame:
-    """Group rates (%) with 95% respondent-clustered bootstrap CI."""
-    rate_fn = _cluster_rate_fn(data, group_col, strata_cols, target)
-    point, draws = _cluster_draws(data, rate_fn, unit, id_col, n_boot, seed)
+    """Tính tỷ lệ chấp nhận (%) theo nhóm kèm khoảng tin cậy 95% bootstrap theo cụm người trả lời."""
+    point, draws = _cluster_bootstrap(data, group_col, strata_cols, unit, id_col, target, n_boot, seed)
     low, high = np.nanpercentile(draws, [2.5, 97.5], axis=0)
     return pd.DataFrame(
         {"rate_pct": np.round(point, 2), "ci_low_pct": np.round(low, 2), "ci_high_pct": np.round(high, 2)},
@@ -221,10 +235,10 @@ def cluster_rates_ci(data: pd.DataFrame, group_col: str, strata_cols=(), unit: s
 def cluster_diff_ci(data: pd.DataFrame, group_col: str, group_a: str, group_b: str, strata_cols=(),
                     unit: str = "respondent", id_col: str = "respondent_id", target: str = "Y",
                     n_boot: int = N_BOOT, seed: int = SEED) -> dict:
-    """Standardized rate difference group_a - group_b (pp) with 95% cluster-bootstrap CI."""
+    """Tính chênh lệch chuẩn hóa group_a - group_b (pp) kèm khoảng tin cậy 95% bootstrap theo cụm người."""
     cats = list(data[group_col].cat.categories)
     a, b = cats.index(group_a), cats.index(group_b)
-    point, draws = _cluster_draws(data, _cluster_rate_fn(data, group_col, strata_cols, target), unit, id_col, n_boot, seed)
+    point, draws = _cluster_bootstrap(data, group_col, strata_cols, unit, id_col, target, n_boot, seed)
     diff_draws = draws[:, a] - draws[:, b]
     low, high = np.nanpercentile(diff_draws, [2.5, 97.5])
     return {

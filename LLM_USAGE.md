@@ -31,7 +31,9 @@
 
 | Ngày | Công cụ | Câu hỏi / mục đích sử dụng (tóm tắt) | Tự kiểm chứng & thay đổi đã thực hiện |
 | --- | --- | --- | --- |
-| `—` | *(Tự điền nếu có dùng LLM cho Q5/Q6)* | *(Tóm tắt prompt/mục đích)* | *(Ghi cách tự kiểm chứng code, số liệu Q5/Q6 và pipeline ML)* |
+| `2026-11-14` | `Claude` | Hỏi giải thích khái niệm & cách thiết kế phương pháp cho Q5–Q6: vì sao cần cluster-bootstrap theo cụm người thay vì bootstrap theo dòng, cách chuẩn hóa trực tiếp (`direct standardization`), cách dùng `GroupShuffleSplit` / `StratifiedGroupKFold`, `ColumnTransformer` + `Pipeline` chống data leakage và ý nghĩa `permutation_importance` | Tự kiểm tra phân bố `age`, `income`, `respondent_id` (567 hồ sơ) trên CSV thật; đối chiếu từng bảng kết quả Q5/Q6 với output chạy từ kernel mới trong môi trường Python 3.11; tự đọc hiểu và giải thích lại toàn bộ logic trước khi chốt diễn giải |
+| `2026-11-26` | `Claude` | Gỡ lỗi tương thích cú pháp f-string trên Python 3.11 và rà soát đối chiếu yêu cầu đề cho phần Q5–Q6 (bổ sung bảng cỡ mẫu `n`, kiểm tra ô nhỏ, phân tích lỗi theo `destination` và ví dụ dự đoán sai ngẫu nhiên) | Tự kiểm tra kết quả sau khi chạy lại Phase 2.3 (`02_analysis.ipynb`) và `03_ml_question.ipynb` trong môi trường `python=3.11`; chạy `check_project.py` và `pytest` (`11/11` pass) |
+| `2026-11-26` | `Antigravity (Gemini)` | Đóng vai gia sư giải thích kiến trúc codebase (`workflow_and_api.md`, `data.py`, `features.py`, lỗi `AttributeError`/`set()`), chuẩn hóa thống nhất tiếng Việt cho docstring/thông báo lỗi và đối chiếu toàn bộ dự án theo đề chính thức `CSC17104_2026_Final_Project.pdf` | Tự đọc và chỉnh sửa trực tiếp trong `data.py`, xác nhận `check_project.py` đạt và `pytest` pass `11/11`; rà soát danh mục các điểm còn thiếu (`Individual reflection`, `Future work`, `README.md`, đồng bộ số liệu Q6 và merge `final_1` vào `main`) để nhóm hoàn thiện trước khi nộp |
 
 ---
 

@@ -1,4 +1,4 @@
-"""Check project structure and dataset sanity."""
+"""Kiểm tra cấu trúc dự án và tính hợp lệ cơ bản của dữ liệu gốc."""
 from __future__ import annotations
 from pathlib import Path
 import sys
@@ -20,23 +20,23 @@ def main() -> int:
     print("=== Kiểm tra cấu trúc dự án CSC17104 ===")
     if missing:
         for f in missing:
-            print(f"  [MISSING] {f}")
+            print(f"  [THIẾU] {f}")
     else:
-        print(f"  [OK] {len(REQUIRED)} tệp cấu trúc quan trọng")
+        print(f"  [OK] Đủ {len(REQUIRED)} tệp cấu trúc quan trọng")
 
     raw_path = ROOT / "data" / "raw" / "in-vehicle-coupon-recommendation.csv"
     if not raw_path.is_file():
-        print("  [NEXT] Chưa có CSV gốc; chạy: python scripts/download_data.py")
+        print("  [TIẾP THEO] Chưa có CSV gốc; chạy: python scripts/download_data.py")
     else:
         if str(ROOT / "src") not in sys.path:
             sys.path.insert(0, str(ROOT / "src"))
         try:
             from coupon_project.data import load_raw_data, target_is_binary
             df = load_raw_data(raw_path)
-            print(f"  [OK] Dataset: {len(df):,} rows, {len(df.columns)} columns")
-            print(f"  [{'OK' if target_is_binary(df) else 'WARN'}] Target Y nhị phân (0/1)")
+            print(f"  [OK] Dữ liệu gốc: {len(df):,} dòng, {len(df.columns)} cột")
+            print(f"  [{'OK' if target_is_binary(df) else 'CẢNH BÁO'}] Nhãn mục tiêu Y là nhị phân (0/1)")
         except Exception as exc:
-            print(f"  [WARN] Không kiểm tra được CSV: {exc}")
+            print(f"  [CẢNH BÁO] Không kiểm tra được CSV: {exc}")
     return 1 if missing else 0
 
 

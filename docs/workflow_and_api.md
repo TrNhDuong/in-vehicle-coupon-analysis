@@ -47,7 +47,7 @@ data.py (đường dẫn gốc, load_raw_data, missing_table, target_is_binary, 
   │     ├── rate_table()       ──► gọi validate_binary(), wilson_ci() / bootstrap_rate_ci()
   │     ├── contrasts()        ──► gọi validate_binary(), rng_for(), bootstrap_diff_ci()
   │     ├── standardized_contrast() ──► nhận output từ contrasts()
-  │     └── cluster_rates_ci(), cluster_diff_ci() ──► gọi _cluster_rate_fn(), _cluster_draws()
+  │     └── cluster_rates_ci(), cluster_diff_ci() ──► gọi _cluster_bootstrap()
   ├── plotting.py (cần FIGURES_DIR từ data.py)
   │     ├── plot_heatmap()     ──► hỗ trợ cả heatmap đơn lẫn ô subplot (ax=)
   │     └── plot_bars_ci()     ──► nhận summary_df đúng schema của stats.rate_table()
@@ -92,8 +92,8 @@ data.py (đường dẫn gốc, load_raw_data, missing_table, target_is_binary, 
 | `contrasts(df, strata_cols, exposure, group_a, group_b, ...)` | `validate_binary`, `rng_for`, `bootstrap_diff_ci` | `df`, tầng, biến so sánh | `pd.DataFrame` cột: `[...strata_cols, "group_a", "group_b", "accepted_a", "accepted_b", "n_a", "n_b", "rate_a_pct", "rate_b_pct", "diff_pp", "ci_low_pp", "ci_high_pp", "small_n", "status"]` |
 | `standardized_contrast(strata_df, ...)` | `contrasts` (input), `rng_for` | Output của `contrasts` | `dict` khóa: `n_strata_total`, `n_strata_used`, `n_comparison_total`, `n_comparison_used`, `coverage`, `diff_pp`, `ci_low_pp`, `ci_high_pp`, `status` |
 | `pivot_expiration(df, index_cols=("time",), target="Y")` | `TIME_ORDER`, `EXPIRATION_ORDER` | `df` raw | `tuple(rates_pct, counts, long_df)` (`diff_1d_minus_2h_pp` theo `pp`) |
-| `cluster_rates_ci(data, group_col, strata_cols=(), ...)` | `_cluster_rate_fn`, `_cluster_draws` | `Categorical`, `respondent_id` | `pd.DataFrame` index = categories của `group_col`, cột `["rate_pct", "ci_low_pct", "ci_high_pct"]` |
-| `cluster_diff_ci(data, group_col, group_a, group_b, ...)` | `_cluster_rate_fn`, `_cluster_draws` | `Categorical`, 2 nhãn | `dict` khóa: `rate_a_pct`, `rate_b_pct`, `diff_pp`, `ci_low_pp`, `ci_high_pp`, `empty_strata_draws` |
+| `cluster_rates_ci(data, group_col, strata_cols=(), ...)` | `_cluster_bootstrap` | `Categorical`, `respondent_id` | `pd.DataFrame` index = categories của `group_col`, cột `["rate_pct", "ci_low_pct", "ci_high_pct"]` |
+| `cluster_diff_ci(data, group_col, group_a, group_b, ...)` | `_cluster_bootstrap` | `Categorical`, 2 nhãn | `dict` khóa: `rate_a_pct`, `rate_b_pct`, `diff_pp`, `ci_low_pp`, `ci_high_pp`, `empty_strata_draws` |
 
 ### `plotting.py` & `modeling.py` (Trực quan hóa & ML Q6)
 
@@ -104,5 +104,5 @@ data.py (đường dẫn gốc, load_raw_data, missing_table, target_is_binary, 
 | `plotting.plot_bars_ci(summary_df, x_col, hue_col, ...)` | `stats.rate_table` (schema input), `set_style`, `save_figure` | `summary_df` | `matplotlib.figure.Figure` |
 | `modeling.build_pipeline(estimator, cat_cols, bin_cols)` | `sklearn` (lazy import) | Estimator + cột | `sklearn.pipeline.Pipeline` (`ColumnTransformer` + `model`) |
 | `modeling.cluster_bootstrap_metric(metric_fn, y_true, y_values, groups, ...)` | `np`, `pd` | Mảng + `groups` | `np.ndarray` gồm `n_boot` điểm bootstrap theo người |
-| `modeling.error_breakdown(df, y_true, y_pred, y_proba, group_col)` | — | Test predictions & nhóm | `pd.DataFrame` index = `group_col`, cột `["n", "true_rate", "acc", "FPR", "FNR"]` |
+| `modeling.error_breakdown(df, y_true, y_pred, group_col)` | — | Test predictions & nhóm | `pd.DataFrame` index = `group_col`, cột `["n", "true_rate", "acc", "FPR", "FNR"]` |
 | `modeling.probability_bins(y_true, y_pred, y_proba, ...)` | — | Mảng `y`, xác suất | `pd.DataFrame` index = `p_bin`, cột `["n", "mean_p", "true_y", "acc"]` |

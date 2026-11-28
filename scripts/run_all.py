@@ -1,4 +1,4 @@
-"""One-command verification and full notebook pipeline runner (check -> pytest -> 01 -> 02 -> 03)."""
+"""Chạy kiểm chứng và thực thi toàn bộ pipeline bằng 1 lệnh (check -> pytest -> 01 -> 02 -> 03)."""
 from __future__ import annotations
 import hashlib
 import json
@@ -22,27 +22,27 @@ def run_step(cmd: list[str], label: str) -> None:
 
 def main() -> int:
     py = sys.executable
-    run_step([py, "scripts/check_project.py"], "1. Project structure check")
-    run_step([py, "-m", "pytest", "-q"], "2. Unit tests")
+    run_step([py, "scripts/check_project.py"], "1. Kiểm tra cấu trúc dự án")
+    run_step([py, "-m", "pytest", "-q"], "2. Chạy kiểm thử đơn vị (pytest)")
 
     raw_before = hashlib.sha256(RAW_CSV.read_bytes()).hexdigest()
     for nb_rel in NOTEBOOKS:
         run_step(
             [py, "-m", "jupyter", "nbconvert", "--to", "notebook", "--execute", "--inplace", "--ExecutePreprocessor.timeout=300", nb_rel],
-            f"3. Execute {nb_rel}",
+            f"3. Thực thi {nb_rel}",
         )
         nb = json.loads((ROOT / nb_rel).read_text(encoding="utf-8"))
         errs = [o for c in nb["cells"] if c["cell_type"] == "code" for o in c.get("outputs", []) if o.get("output_type") == "error"]
         if errs:
-            raise RuntimeError(f"Execution errors found in {nb_rel}: {errs}")
+            raise RuntimeError(f"Phát hiện lỗi khi chạy {nb_rel}: {errs}")
 
     raw_after = hashlib.sha256(RAW_CSV.read_bytes()).hexdigest()
     if raw_before != raw_after:
-        raise RuntimeError("Raw CSV checksum changed unexpectedly!")
+        raise RuntimeError("Mã kiểm tra SHA-256 của CSV gốc bị thay đổi bất thường!")
 
     figs = len(list((ROOT / "reports" / "figures").glob("*.png")))
     tabs = len(list((ROOT / "reports" / "tables").glob("*.csv")))
-    print(f"\n[OK] All checks and 3 notebooks completed cleanly ({figs} figures, {tabs} tables; raw SHA-256 unchanged).")
+    print(f"\n[OK] Hoàn tất toàn bộ kiểm tra và 3 notebook ({figs} biểu đồ, {tabs} bảng; SHA-256 CSV gốc giữ nguyên).")
     return 0
 
 

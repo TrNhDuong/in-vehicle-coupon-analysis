@@ -1,4 +1,4 @@
-"""Shared Matplotlib helpers for clean annotated heatmaps and grouped CI bar charts."""
+"""Các hàm vẽ biểu đồ Matplotlib dùng chung: heatmap có ghi cỡ mẫu và biểu đồ cột kèm CI 95%."""
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -8,7 +8,7 @@ from .data import FIGURES_DIR
 
 
 def set_style():
-    """Apply clean defaults for project charts."""
+    """Thiết lập kiểu chữ, độ phân giải và khung biểu đồ gọn gàng cho toàn dự án."""
     plt.rcParams.update({
         "figure.dpi": 120, "savefig.dpi": 160, "font.size": 10,
         "axes.titlesize": 12, "axes.titleweight": "bold", "axes.labelsize": 10.5,
@@ -17,7 +17,7 @@ def set_style():
 
 
 def save_figure(fig, name: str, out_dir: Path = FIGURES_DIR, dpi: int = 160) -> Path:
-    """Save PNG figure cleanly into reports/figures/."""
+    """Lưu biểu đồ dạng PNG nền trắng vào thư mục reports/figures/."""
     path = Path(out_dir) / f"{name}.png"
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, dpi=dpi, bbox_inches="tight", facecolor="white")
@@ -27,7 +27,7 @@ def save_figure(fig, name: str, out_dir: Path = FIGURES_DIR, dpi: int = 160) -> 
 def plot_heatmap(rate_matrix, count_matrix, title, xlabel, ylabel, cbar_label="Acceptance (%)",
                  out_name=None, cmap="YlGnBu", vmin=0, vmax=100, value_suffix="%",
                  signed=False, min_n_warn=30, figsize=(8.0, 4.8), ax=None):
-    """Plot annotated heatmap with counts and empty-cell shading (standalone or on Axes)."""
+    """Vẽ heatmap ghi giá trị (%/pp), cỡ mẫu n và đánh dấu ô trống/mẫu nhỏ (hỗ trợ cả subplot ax=)."""
     set_style()
     vals = rate_matrix.to_numpy(dtype=float)
     n_rows, n_cols = vals.shape
@@ -70,7 +70,7 @@ def plot_heatmap(rate_matrix, count_matrix, title, xlabel, ylabel, cbar_label="A
 def plot_bars_ci(summary_df, x_col, hue_col, x_order, hue_order, title, xlabel,
                  ylabel="Acceptance rate (%)", out_name=None, colors=None,
                  figsize=(10.5, 4.8), ylim=(0, 102), rotate_xticks=0, show_n=True, legend_title=None):
-    """Plot grouped bars with 95% CI error bars using rate_pct, ci_low_pct, ci_high_pct."""
+    """Vẽ biểu đồ cột nhóm kèm thanh khoảng tin cậy 95% từ bảng kết quả của stats.rate_table()."""
     set_style()
     fig, ax = plt.subplots(figsize=figsize)
     palette = colors or ["#2563EB", "#F59E0B", "#10B981", "#EF4444", "#8B5CF6"]

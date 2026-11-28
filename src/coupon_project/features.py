@@ -1,11 +1,13 @@
-"""Domain orders and deterministic feature derivation for Q1-Q6."""
+"""Định nghĩa thứ tự danh mục và tạo các biến đặc trưng cho Q1–Q6."""
 import pandas as pd
 
+# Thứ tự chuẩn cho các biến phân loại để giữ nhất quán bảng và biểu đồ
 TRAVEL_BAND_ORDER = ["5-<15 min", "15-<25 min", ">=25 min"]
 TIME_ORDER = ["7AM", "10AM", "2PM", "6PM", "10PM"]
 EXPIRATION_ORDER = ["2h", "1d"]
 FREQUENCIES = ["never", "less1", "1~3", "4~8", "gt8"]
 
+# Bảng ánh xạ từ nhãn coupon trong CSV sang đúng cột thói quen đi quán tương ứng
 COUPON_FREQUENCY = {
     "Bar": "Bar",
     "Coffee House": "CoffeeHouse",
@@ -19,7 +21,8 @@ DESTINATIONS = ["No Urgent Place", "Home", "Work"]
 
 
 def check_journey_flags(df: pd.DataFrame) -> dict:
-    """Audit GEQ distance flag consistency and complementary direction flags."""
+    """Kiểm tra tính nhất quán của cờ khoảng cách (GEQ5/15/25) và cờ hướng di chuyển."""
+    # Dòng vô lý: thời gian >= 25 phút nhưng cờ >= 15 phút lại bằng 0
     invalid = (df["toCoupon_GEQ25min"] == 1) & (df["toCoupon_GEQ15min"] == 0)
     return {
         "n_rows": len(df),
@@ -30,9 +33,9 @@ def check_journey_flags(df: pd.DataFrame) -> dict:
 
 
 def add_travel_time_band(df: pd.DataFrame, col_name: str = "travel_time_band") -> pd.DataFrame:
-    """Derive ordered categorical travel_time_band from GEQ flags without mutating df."""
+    """Tạo biến phân loại có thứ tự travel_time_band (D3) trên bản sao df."""
     if check_journey_flags(df)["invalid_geq_hierarchy_count"] > 0:
-        raise ValueError("Invalid rows: toCoupon_GEQ25min == 1 while GEQ15min == 0.")
+        raise ValueError("Có dòng bất hợp lý: toCoupon_GEQ25min == 1 nhưng toCoupon_GEQ15min == 0.")
 
     out = df.copy()
     band = pd.Series("15-<25 min", index=out.index)
@@ -43,23 +46,21 @@ def add_travel_time_band(df: pd.DataFrame, col_name: str = "travel_time_band") -
 
 
 def matched_frequency(df: pd.DataFrame) -> pd.Series:
-    """Map each row's coupon label to its corresponding visit-frequency column."""
+    """Ánh xạ mỗi loại coupon sang đúng cột tần suất thói quen tương ứng (giữ nguyên giá trị thiếu)."""
     unknown = set(df["coupon"].dropna()) - set(COUPON_FREQUENCY)
     if unknown or df["coupon"].isna().any():
-        raise ValueError(f"Unmapped or missing coupon labels: {sorted(unknown)}")
+        raise ValueError(f"Nhãn coupon bị thiếu hoặc không hợp lệ: {sorted(unknown)}")
 
     res = pd.Series(pd.NA, index=df.index, dtype="string", name="matched_frequency")
     for coupon, col in COUPON_FREQUENCY.items():
-        mask = df["coupon"].eq(coupon)
-        if not mask.any():
-            continue
+        mask = df["coupon"] == coupon
         vals = df.loc[mask, col]
         if not vals.dropna().isin(FREQUENCIES).all():
-            raise ValueError(f"Unexpected frequency label in {col}")
+            raise ValueError(f"Giá trị tần suất không hợp lệ ở cột {col}.")
         res.loc[mask] = vals.astype("string")
     return res
 
 
 def build_respondent_id(df: pd.DataFrame, profile_cols) -> pd.Series:
-    """Assign an inferred integer respondent ID from identical profile columns."""
+    """Suy ra mã người trả lời giả định (0..k-1) từ các dòng có cùng tổ hợp hồ sơ cá nhân."""
     return df.groupby(list(profile_cols), dropna=False, sort=False).ngroup()
