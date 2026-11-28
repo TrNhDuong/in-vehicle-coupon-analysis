@@ -46,7 +46,7 @@ flowchart LR
 | `scripts/run_all.py` | Chạy toàn bộ pipeline bằng 1 lệnh | Dương |
 | `tests/` | 44 unit test (pytest) | chung |
 | `environment.yml`, `requirements.txt`, `pyproject.toml` | Môi trường ghim phiên bản; cấu hình gói | chung |
-| `presentation/slides.html` → `slides.pdf` | Slide (nguồn HTML, xuất PDF bằng trình duyệt) | chung |
+| `slides.pdf` | Slide thuyết trình cuối kỳ (10 trang) | chung |
 | `docs/` | Từ điển dữ liệu, câu hỏi, related work, API, kế hoạch, tài liệu này, ngân hàng vấn đáp, báo cáo rà soát | chung |
 
 ## 3. Chạy lại dự án từ đầu
@@ -185,7 +185,7 @@ Mỗi câu theo khung: **Câu hỏi → Lợi ích → Tiền xử lý (mô tả
 | `q6_fig1–4` | 03 | Slide 8–9 |
 | 27 bảng `reports/tables/*.csv` | `save_table` trong 3 notebook | Đối chiếu số liệu (không commit, sinh lại bằng `run_all.py`) |
 
-Mọi con số trong README/slide phải lấy từ output notebook. Khi sửa code làm số thay đổi: chạy lại `run_all.py` → cập nhật markdown kết luận → README → `slides.html` → xuất lại `slides.pdf`.
+Mọi con số trong README/slide phải lấy từ output notebook. Khi sửa code làm số thay đổi: chạy lại `run_all.py` → cập nhật markdown kết luận → README → xuất lại `slides.pdf`.
 
 ## 9. Các quyết định thiết kế quan trọng (và lý do)
 | Quyết định | Lý do |

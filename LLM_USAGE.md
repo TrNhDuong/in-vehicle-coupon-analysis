@@ -17,6 +17,7 @@
 | Ngày | Công cụ | Câu hỏi / mục đích sử dụng (tóm tắt) | Tự kiểm chứng & thay đổi đã thực hiện |
 | --- | --- | --- | --- |
 | `2026-11-17` | `Antigravity (Gemini)` | Hỗ trợ tổ chức `src/coupon_project/` (5 module theo vai trò), gom 3 Phase notebooks, chuẩn hóa `docs/`, viết `scripts/run_all.py` và xuất `slides.pdf` | Tự kiểm tra số liệu thực từ CSV UCI #603, chạy `scripts/run_all.py` (`check_project.py`, `pytest`, 3 notebook từ kernel mới) và đối chiếu nguồn UCI/Wang et al. (2017) |
+| `2026-11-28` | `Antigravity (Gemini)` | Chuẩn hóa câu chữ 6 câu hỏi nghiên cứu (dịch sang *phiếu ưu đãi*) trong `README.md`, `02_analysis.ipynb`, `slides.pdf` và gỡ `presentation/slides.html` | Tự kiểm tra `slides.pdf` sau xuất, chạy `scripts/check_project.py` và `pytest -q` |
 
 ### 2. Nguyễn Mạnh Hà (`23120248`)
 *(Chỉ Nguyễn Mạnh Hà chỉnh sửa mục này)*

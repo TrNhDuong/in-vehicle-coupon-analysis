@@ -68,12 +68,12 @@ Bảng đối chiếu đầy đủ và nguyên tắc trích dẫn: [`docs/relate
 
 | Mã | Owner | Câu hỏi nghiên cứu | Tiêu chí / Phương pháp | Vị trí |
 | :--- | :---: | :--- | :--- | :--- |
-| **Q1** | Dương | Khoảng cách và hướng di chuyển đến điểm dùng coupon liên hệ thế nào với tỷ lệ chấp nhận sau khi phân tầng theo mục đích chuyến đi và loại coupon? | `D3, D4, D5` | `02_analysis.ipynb` (Phase 2.1) |
-| **Q2** | Dương | Chênh lệch chấp nhận giữa hạn `1d` và `2h` thay đổi ra sao theo khung giờ trong ngày và loại coupon? | `D2, D4, D5` | `02_analysis.ipynb` (Phase 2.1) |
-| **Q3** | Hà | Trong cùng loại coupon, người có thói quen ghé địa điểm tương ứng thường xuyên hơn có tỷ lệ chấp nhận cao hơn không? | `D3, D4, D5, D6` | `02_analysis.ipynb` (Phase 2.2) |
-| **Q4** | Hà | Người đồng hành (`passanger`) liên hệ ra sao với tỷ lệ chấp nhận sau khi kiểm soát loại coupon và mục đích hành trình (`destination`)? | `D4, D5` | `02_analysis.ipynb` (Phase 2.2) |
-| **Q5** | Lý | Khác biệt tỷ lệ chấp nhận theo nhóm tuổi và khoảng thu nhập còn giữ lại bao nhiêu sau khi chuẩn hóa theo loại coupon và thói quen tương ứng? | `D4, D5, D6` | `02_analysis.ipynb` (Phase 2.3) |
-| **Q6** | Lý | Các đặc trưng biết trước thời điểm hiển thị coupon dự đoán ý định `Y` vượt baseline ở mức nào khi tách dữ liệu theo người trả lời? | **ML** (`Dummy`, `LogReg`, `RF` trong `Pipeline`) | `03_ml_question.ipynb` (Phase 3) |
+| **Q1** | Dương | Khoảng cách và hướng di chuyển liên hệ ra sao với tỷ lệ chấp nhận phiếu ưu đãi theo từng mục đích đi và loại dịch vụ? | `D3, D4, D5` | `02_analysis.ipynb` (Phase 2.1) |
+| **Q2** | Dương | Tỷ lệ chấp nhận giữa phiếu ưu đãi có hạn `2h` và `1d` thay đổi thế nào theo khung giờ trong ngày và loại dịch vụ? | `D2, D4, D5` | `02_analysis.ipynb` (Phase 2.1) |
+| **Q3** | Hà | Trong cùng loại dịch vụ, người có thói quen ghé địa điểm thường xuyên có tỷ lệ chấp nhận phiếu ưu đãi cao hơn không? | `D3, D4, D5, D6` | `02_analysis.ipynb` (Phase 2.2) |
+| **Q4** | Hà | Người đồng hành (`passanger`) liên hệ thế nào với việc chấp nhận phiếu ưu đãi khi xét cùng loại dịch vụ và mục đích chuyến đi? | `D4, D5` | `02_analysis.ipynb` (Phase 2.2) |
+| **Q5** | Lý | Khác biệt tỷ lệ chấp nhận phiếu ưu đãi theo tuổi và thu nhập có còn tồn tại sau khi kiểm soát loại dịch vụ và thói quen tiêu dùng? | `D4, D5, D6` | `02_analysis.ipynb` (Phase 2.3) |
+| **Q6** | Lý | Thông tin sẵn có trước lúc hiển thị phiếu ưu đãi dự đoán ý định `Y` vượt baseline ở mức nào khi tách dữ liệu theo người trả lời? | **ML** (`Dummy`, `LogReg`, `RF` trong `Pipeline`) | `03_ml_question.ipynb` (Phase 3) |
 
 Chi tiết thiết kế biến và biểu đồ từng câu: [`docs/research_questions.md`](docs/research_questions.md).
 
@@ -109,7 +109,7 @@ Chi tiết thiết kế biến và biểu đồ từng câu: [`docs/research_que
 ├── tests/                                 # 44 unit tests kiểm thử các hàm cốt lõi (pytest)
 ├── docs/                                  # Từ điển dữ liệu, câu hỏi, related work, hợp đồng API, hướng dẫn hệ thống, ngân hàng vấn đáp
 ├── reports/                               # figures/ (19 biểu đồ PNG) & tables/ (27 bảng CSV, gitignored)
-└── presentation/                          # slides.html (nguồn xuất slides.pdf)
+└── slides.pdf                             # Slide thuyết trình cuối kỳ ở thư mục gốc (10 trang)
 ```
 
 ---

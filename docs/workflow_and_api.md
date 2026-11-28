@@ -33,7 +33,7 @@ data/raw/in-vehicle-coupon-recommendation.csv
   │
   └──► Phase 4: Kiểm chứng & Thuyết trình (Cả nhóm)
          python scripts/run_all.py  (check_project → pytest (44 test) → python -m nbconvert 01, 02, 03)
-         presentation/slides.html ──► slides.pdf (in ra PDF bằng trình duyệt)
+         slides.pdf (slide thuyết trình cuối kỳ 10 trang ở thư mục gốc)
 ```
 
 ---

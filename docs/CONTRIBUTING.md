@@ -8,7 +8,7 @@
 | **Nguyễn Mạnh Hà** | `23120248` | `ha/q3-q4` | `01` Phase 1.2–1.3 (EDA) · `02` Phase 2.2 (**Q3–Q4**) · `data.py`, `features.py`, `docs/dataset_dictionary.md` | Dương |
 | **Hoàng Công Lý** | `24120378` | `ly/q5-ml` | `02` Phase 2.3 (**Q5**) · `03` Phase 3 (**Q6 ML**) · `stats.py` (cluster CI), `modeling.py` | Dương + Hà |
 
-**Nguyên tắc phân công:** Ai phụ trách (hoặc dùng LLM hỗ trợ) **chỉ chỉnh sửa đúng phần việc/file của người đó** và mục riêng mang tên mình trong `LLM_USAGE.md`; phần tích hợp chung (`02` Phase 2.4, `docs/research_questions.md`, `presentation/slides.html`) chỉ cập nhật khi ghép bài hoặc thống nhất chung. Mỗi thành viên trình bày 2 câu sở hữu và nắm toàn bộ project phục vụ **15 phút thuyết trình + 10 phút Q&A**.
+**Nguyên tắc phân công:** Ai phụ trách (hoặc dùng LLM hỗ trợ) **chỉ chỉnh sửa đúng phần việc/file của người đó** và mục riêng mang tên mình trong `LLM_USAGE.md`; phần tích hợp chung (`02` Phase 2.4, `docs/research_questions.md`, `slides.pdf`) chỉ cập nhật khi ghép bài hoặc thống nhất chung. Mỗi thành viên trình bày 2 câu sở hữu và nắm toàn bộ project phục vụ **15 phút thuyết trình + 10 phút Q&A**.
 
 ---
 
@@ -38,7 +38,7 @@
 | **D5** | Định lượng bất định (CI / effect size) | **Q1–Q5** (Wilson CI & bootstrap / cluster-bootstrap CI 95%) |
 | **D6** | Kiểm tra độ bền (sensitivity analysis) | **Q3** (4 biến thể ngưỡng/NaN + dedup), **Q5** (ngưỡng, gộp nhóm, bootstrap unit) |
 
-**Bố cục thuyết trình (`presentation/slides.html` → `slides.pdf` ở root):**
+**Bố cục thuyết trình (`slides.pdf` ở root):**
 1. Mở đầu & Bối cảnh/EDA (Slides 1–2, ~3') · 2. Dương Q1–Q2 (Slides 3–4, ~3') · 3. Hà Q3–Q4 (Slides 5–6, ~3') · 4. Lý Q5–Q6 ML (Slides 7–9, ~4') · 5. Tổng kết, Hạn chế & Reflection (Slide 10, ~2').
 
 ---
