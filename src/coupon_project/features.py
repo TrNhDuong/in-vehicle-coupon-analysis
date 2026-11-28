@@ -6,6 +6,13 @@ TRAVEL_BAND_ORDER = ["5-<15 min", "15-<25 min", ">=25 min"]
 TIME_ORDER = ["7AM", "10AM", "2PM", "6PM", "10PM"]
 EXPIRATION_ORDER = ["2h", "1d"]
 FREQUENCIES = ["never", "less1", "1~3", "4~8", "gt8"]
+# age và income là mã nhóm/khoảng (không ép sang số); thứ tự tăng dần theo đúng nhãn trong CSV
+AGE_ORDER = ["below21", "21", "26", "31", "36", "41", "46", "50plus"]
+INCOME_ORDER = [
+    "Less than $12500", "$12500 - $24999", "$25000 - $37499", "$37500 - $49999",
+    "$50000 - $62499", "$62500 - $74999", "$75000 - $87499", "$87500 - $99999",
+    "$100000 or More",
+]
 
 # Bảng ánh xạ từ nhãn coupon trong CSV sang đúng cột thói quen đi quán tương ứng
 COUPON_FREQUENCY = {
@@ -46,10 +53,12 @@ def add_travel_time_band(df: pd.DataFrame, col_name: str = "travel_time_band") -
 
 
 def matched_frequency(df: pd.DataFrame) -> pd.Series:
-    """Ánh xạ mỗi loại coupon sang đúng cột tần suất thói quen tương ứng (giữ nguyên giá trị thiếu)."""
-    unknown = set(df["coupon"].dropna()) - set(COUPON_FREQUENCY)
-    if unknown or df["coupon"].isna().any():
-        raise ValueError(f"Nhãn coupon bị thiếu hoặc không hợp lệ: {sorted(unknown)}")
+    """Ánh xạ mỗi loại coupon sang đúng cột tần suất thói quen tương ứng (giữ nguyên ô thiếu)."""
+    if df["coupon"].isna().any():
+        raise ValueError("Cột coupon có giá trị thiếu (NaN).")
+    unknown = set(df["coupon"]) - set(COUPON_FREQUENCY)
+    if unknown:
+        raise ValueError(f"Nhãn coupon không hợp lệ: {sorted(unknown)}")
 
     res = pd.Series(pd.NA, index=df.index, dtype="string", name="matched_frequency")
     for coupon, col in COUPON_FREQUENCY.items():

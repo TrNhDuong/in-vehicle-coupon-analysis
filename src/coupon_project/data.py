@@ -19,11 +19,14 @@ FIGURES_DIR = PROJECT_ROOT / "reports" / "figures"
 TABLES_DIR = PROJECT_ROOT / "reports" / "tables"
 TARGET = "Y"
 
+# Đủ 26 cột của CSV gốc UCI #603 (mọi cột đều được dùng ở Phase 1–3)
 REQUIRED_COLUMNS = {
     "destination", "passanger", "weather", "temperature", "time",
-    "coupon", "expiration", "age", "income", "Bar", "CoffeeHouse",
-    "CarryAway", "RestaurantLessThan20", "Restaurant20To50",
-    "toCoupon_GEQ15min", "toCoupon_GEQ25min", "direction_same", "Y",
+    "coupon", "expiration", "gender", "age", "maritalStatus", "has_children",
+    "education", "occupation", "income", "car",
+    "Bar", "CoffeeHouse", "CarryAway", "RestaurantLessThan20", "Restaurant20To50",
+    "toCoupon_GEQ5min", "toCoupon_GEQ15min", "toCoupon_GEQ25min",
+    "direction_same", "direction_opp", "Y",
 }
 
 

@@ -5,14 +5,19 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
-    "README.md", "pyproject.toml", "environment.yml", "LLM_USAGE.md",
+    "README.md", "pyproject.toml", "environment.yml", "requirements.txt", "LLM_USAGE.md",
     "docs/CONTRIBUTING.md", "docs/workflow_and_api.md", "docs/research_questions.md",
     "data/raw/.gitkeep", "data/processed/.gitkeep",
-    "notebooks/01_collection_exploration.ipynb", "notebooks/02_analysis.ipynb", "notebooks/03_ml_question.ipynb",
+    "notebooks/01_collection_exploration.ipynb", "notebooks/02_analysis.ipynb",
+    "notebooks/03_ml_question.ipynb",
     "src/coupon_project/data.py", "src/coupon_project/features.py", "src/coupon_project/stats.py",
     "src/coupon_project/plotting.py", "src/coupon_project/modeling.py",
     "scripts/run_all.py", "reports/figures/.gitkeep", "reports/tables/.gitkeep",
 ]
+
+# In tiếng Việt an toàn cả khi output bị chuyển hướng ra file trên Windows (mặc định cp1252)
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
 def main() -> int:
@@ -34,7 +39,8 @@ def main() -> int:
             from coupon_project.data import load_raw_data, target_is_binary
             df = load_raw_data(raw_path)
             print(f"  [OK] Dữ liệu gốc: {len(df):,} dòng, {len(df.columns)} cột")
-            print(f"  [{'OK' if target_is_binary(df) else 'CẢNH BÁO'}] Nhãn mục tiêu Y là nhị phân (0/1)")
+            status = "OK" if target_is_binary(df) else "CẢNH BÁO"
+            print(f"  [{status}] Nhãn mục tiêu Y là nhị phân (0/1)")
         except Exception as exc:
             print(f"  [CẢNH BÁO] Không kiểm tra được CSV: {exc}")
     return 1 if missing else 0

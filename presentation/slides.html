@@ -385,7 +385,7 @@
         <div class="card">
           <h3>Phân tầng theo loại coupon &amp; mục đích (D4)</h3>
           <ul class="bullets">
-            <li><strong>Phản ứng rất khác nhau theo coupon:</strong> <code>Restaurant(&lt;20)</code> giảm mạnh nhất <strong>+42,74 pp</strong> (75,32% → 32,58%), <code>Coffee House</code> giảm <strong>+20,29 pp</strong>; nhưng <code>Carry out &amp; Take away</code> giữ phẳng ở <strong>73,21%</strong> (chênh chỉ +2,05 pp, CI chứa 0).</li>
+            <li><strong>Phản ứng rất khác nhau theo coupon:</strong> <code>Restaurant(&lt;20)</code> giảm mạnh nhất <strong>42,74 pp</strong> (75,32% → 32,58%), <code>Coffee House</code> giảm <strong>20,29 pp</strong>; nhưng <code>Carry out &amp; Take away</code> giữ phẳng ở <strong>73,21%</strong> (chênh chỉ +2,05 pp, CI chứa 0).</li>
             <li><strong>Confounder <code>destination</code> ở hướng đi:</strong> Thô toàn mẫu <code>direction_same=1</code> chỉ hơn <code>0</code> là <code>+1,76 pp</code> (CI <code>[-0,33; +3,85]</code>) vì 6.283 dòng <code>No Urgent Place</code> đều có <code>direction_same=0</code>.</li>
             <li>Khi giữ cố định <code>Home</code>, đi cùng hướng tăng <strong>+17,40 pp</strong> (dải 15–&lt;25 min đạt <strong>+24,91 pp</strong>). Ở <code>Work</code> 5–&lt;15 min lại đảo chiều (<code>-9,30 pp</code>).</li>
           </ul>
@@ -441,8 +441,8 @@
         <div class="card">
           <h3>Nghịch lý Simpson ở 10AM &amp; phân tầng coupon (D4)</h3>
           <ul class="bullets">
-            <li><strong>Giải mã 10AM:</strong> Bảng thô ghi <code>2h &gt; 1d</code> (−2,01 pp), nhưng khi tách theo từng coupon thì <strong>cả 5/5 loại đều <code>1d &gt; 2h</code></strong> (+2,41 đến +23,02 pp). Nguyên nhân: nhóm <code>1d</code> lúc 10AM chứa <strong>36,1%</strong> coupon <code>Bar</code> (vốn ít nhận), còn nhóm <code>2h</code> chỉ có <strong>5,4%</strong> <code>Bar</code>.</li>
-            <li><strong>Ngoại lệ <code>Bar</code>:</strong> Tổng thể chênh chỉ +0,85 pp (CI chứa 0); riêng lúc <code>10PM</code> thì <code>2h</code> (50,25%) nhỉnh hơn <code>1d</code> (41,38%, −8,87 pp).</li>
+            <li><strong>Giải mã 10AM:</strong> Bảng thô ghi <code>2h &gt; 1d</code> (−2,01 pp), nhưng khi tách theo từng coupon thì <strong>cả 5/5 loại đều có ước lượng <code>1d &gt; 2h</code></strong> (+2,41 đến +23,02 pp; 4/5 có CI không chứa 0). Nguyên nhân: nhóm <code>1d</code> lúc 10AM chứa <strong>36,1%</strong> coupon <code>Bar</code> (vốn ít nhận), còn nhóm <code>2h</code> chỉ có <strong>5,4%</strong> <code>Bar</code>.</li>
+            <li><strong>Ngoại lệ <code>Bar</code>:</strong> Tổng thể chênh chỉ +0,85 pp (CI chứa 0); lúc <code>10PM</code> <code>2h</code> nhỉnh hơn (−8,87 pp, CI <code>[−18,37; 0,14]</code> chứa 0) nhưng lúc <code>6PM</code> lại ngược chiều (+12,82 pp) → thời hạn gần như không tạo khác biệt cho <code>Bar</code>.</li>
             <li><strong>Ô rỗng cấu trúc:</strong> <code>Bar</code> lúc 7AM và 2PM có <code>n_2h = 0</code>.</li>
           </ul>
         </div>
@@ -491,7 +491,7 @@
           <h3>Kiểm tra độ bền (D6) &amp; điểm đáng chú ý</h3>
           <ul class="bullets">
             <li><strong>Độ bền qua 4 biến thể (2 ngưỡng × 2 cách xử lý NaN):</strong> Cả 5/5 coupon đều giữ chiều chênh lệch dương ở 4/4 cấu hình; bỏ 74 dòng trùng chỉ làm đổi tối đa <strong>0,29 pp</strong>.</li>
-            <li><strong>Độ bất định với <code>Carry out</code>:</strong> Khi đổi ngưỡng lên <code>≥4 lần/tháng</code>, chênh lệch còn <code>+2,90 pp</code> và CI <code>[−0,72; +6,45]</code> cắt qua 0.</li>
+            <li><strong>CI theo người & ngưỡng ≥4:</strong> Tính CI theo người, <code>Carry out</code> <code>[−0,9; 12,7]</code> và <code>Restaurant(&lt;20)</code> <code>[−1,2; 11,7]</code> chứa 0; ngưỡng <code>≥4 lần/tháng</code> cho <code>Carry out</code> cũng chứa 0 (<code>[−0,72; 6,45]</code>) → chắc chắn ở 3 loại còn lại.</li>
             <li><strong>Không tăng đơn điệu ở mức cao:</strong> Với <code>Bar</code>, mức <code>4~8</code> đạt 78,00% (n=150) vs <code>gt8</code> là 73,47% (n=49); với <code>Coffee House</code> là 68,59% vs 65,79%.</li>
           </ul>
         </div>
@@ -540,7 +540,7 @@
           <ul class="bullets">
             <li><strong>Mất cân bằng cấu trúc:</strong> <code>Friend(s)</code> có <strong>3.298</strong> dòng ở <code>No Urgent Place</code> nhưng <strong>0</strong> dòng ở <code>Home</code> và <code>Work</code> — không thể suy rộng cho mọi hành trình.</li>
             <li><strong>Khác biệt theo coupon:</strong> Trong <code>Bar</code> tại <code>No Urgent Place</code>, <code>Friend(s)</code> (55,79%, n=337) cao hơn hẳn <code>Alone</code> (37,80%, n=291; chênh <strong>+17,99 pp</strong>, CI <code>[10,29; 25,66]</code>). Ở <code>Carry out</code> lại có dấu âm (<code>−8,22 pp</code>, CI chứa 0).</li>
-            <li><strong>Đổi dấu giữa các tầng:</strong> <strong>6/12</strong> tầng đủ n≥30 đổi dấu so với mức chưa phân tầng <code>destination</code>.</li>
+            <li><strong>Đổi dấu giữa các tầng:</strong> <strong>6/12</strong> tầng đủ n≥30 ngược dấu với chênh lệch thô (chỉ 2 tầng có CI không chứa 0); <code>+1,33 pp</code> là chênh lệch trong 4 tầng <code>No Urgent Place</code>, không phải toàn mẫu.</li>
           </ul>
         </div>
       </div>
@@ -572,7 +572,7 @@
     <div class="grid-left-wide">
       <div class="col">
         <div class="card highlight">
-          <h3>Cluster-bootstrap theo 567 người (12.520 dòng đủ thói quen)</h3>
+          <h3>Cluster-bootstrap theo 560 người (12.520 dòng đủ thói quen)</h3>
           <table>
             <thead><tr><th>So sánh toàn mẫu</th><th class="num">Thô</th><th class="num">Chuẩn hóa coupon</th><th class="num">Chuẩn hóa coupon × thói quen</th></tr></thead>
             <tbody>
@@ -584,8 +584,8 @@
         <div class="card">
           <h3>Phát hiện chính &amp; độ nhạy (D4, D6)</h3>
           <ul class="bullets">
-            <li><strong>Tuổi còn liên hệ nhưng giảm ~1/4:</strong> Rõ nhất ở <code>Bar</code> (<code>+19,6</code> → <code>+15,2 pp</code>), <code>Coffee House</code> (<code>+13,2</code> → <code>+8,8 pp</code>) và <code>Restaurant(&lt;20)</code> (<code>+10,3 pp</code>), vì người trẻ đến bar/cà phê thường xuyên hơn.</li>
-            <li><strong>Thu nhập mong manh &amp; không tuyến tính:</strong> Khi giữ cố định nhóm tuổi, chênh lệch thu nhập còn <code>+3,8 pp</code> (CI <code>[−0,6; 7,8]</code>, chứa 0). Nhóm ≥100k USD nhận <strong>57,8%</strong>, cao hơn mức trung bình 56,8%.</li>
+            <li><strong>Tuổi còn liên hệ nhưng giảm ~23%:</strong> Rõ nhất ở <code>Bar</code> (<code>+19,6</code> → <code>+15,2 pp</code>) và <code>Coffee House</code> (<code>+13,2</code> → <code>+8,8 pp</code>); người trẻ ghé bar thường xuyên hơn (35,9% người <code>&lt;26</code> so với 23,2% người <code>50+</code>).</li>
+            <li><strong>Thu nhập mong manh &amp; không tuyến tính:</strong> Khi giữ cố định nhóm tuổi, chênh lệch thu nhập còn <code>+3,8 pp</code> (CI <code>[−0,6; 7,8]</code>, chứa 0). Nhóm ≥100k USD nhận <strong>57,8%</strong>, không thấp hơn mức trung bình 56,84%.</li>
             <li><strong>Đơn vị bootstrap (D6):</strong> Bootstrap theo dòng cho CI hẹp giả tạo hơn ~<strong>1,8 lần</strong> so với cluster-bootstrap theo người. 9/40 ô 3 chiều theo tuổi có &lt;30 người.</li>
           </ul>
         </div>
@@ -620,8 +620,8 @@
         <div class="card">
           <h3>Thiết kế chống rò rỉ &amp; chia theo người trả lời</h3>
           <ul class="bullets">
-            <li><strong>Prediction time:</strong> Giữ <strong>22</strong> đặc trưng biết trước khi gợi ý; loại <code>Y</code>, <code>toCoupon_GEQ5min</code> (hằng), <code>direction_opp</code> (trùng), <code>car</code> (thiếu 99,1%).</li>
-            <li><strong>Group Split 80/20:</strong> Train 10.132 dòng (453 người), Test 2.552 dòng (114 người) — tránh thổi phồng <strong>+0,043 ROC-AUC</strong> do lặp người giữa train/test.</li>
+            <li><strong>Prediction time:</strong> Giữ <strong>22</strong> đặc trưng biết trước khi gợi ý; loại <code>Y</code>, <code>toCoupon_GEQ5min</code> (hằng), <code>direction_opp</code> (trùng), <code>car</code> (thiếu 99,15%).</li>
+            <li><strong>Group Split 80/20:</strong> Train 10.132 dòng (453 người), Test 2.552 dòng (114 người). Nếu chia fold CV theo dòng, ROC-AUC bị thổi phồng <strong>+0,043</strong> vì gặp lại cùng người.</li>
             <li><strong>Pipeline &amp; CV:</strong> <code>ColumnTransformer</code> (<code>SimpleImputer</code> + <code>OneHotEncoder</code>) trong <code>Pipeline</code>; <code>GridSearchCV</code> 5-fold <code>StratifiedGroupKFold</code> chỉ trên train; chấm test 1 lần.</li>
           </ul>
         </div>
@@ -632,22 +632,22 @@
             <tbody>
               <tr><td>Dummy (đa số)</td><td class="num">0,500 ± 0,000</td><td class="num">0,500</td><td class="num">0,500</td><td class="num">0,749</td></tr>
               <tr><td>Logistic Regression</td><td class="num">0,722 ± 0,011</td><td class="num">0,726 (0,700–0,753)</td><td class="num">0,660</td><td class="num">0,744</td></tr>
-              <tr class="best"><td>Random Forest ★</td><td class="num">0,767 ± 0,009</td><td class="num">0,782 (0,756–0,808)</td><td class="num">0,705</td><td class="num">0,775</td></tr>
+              <tr class="best"><td>Random Forest ★</td><td class="num">0,767 ± 0,009</td><td class="num">0,781 (0,755–0,807)</td><td class="num">0,706</td><td class="num">0,775</td></tr>
             </tbody>
           </table>
           <p style="font-size:8.7pt; color:#475569; margin-top:5px;">
-            Accuracy test: RF <strong>72,3%</strong> vs Dummy 59,9%. Lưu ý F1 của LogReg (0,744) thấp hơn Dummy (0,749) — chứng minh cần dùng ROC-AUC làm metric chính.
+            Accuracy test: RF <strong>72,4%</strong> vs Dummy 59,9%. F1 của LogReg (0,744) thấp hơn Dummy (0,749) — minh họa vì sao chọn ROC-AUC làm metric chính. 50 cách chia khác: RF 0,774 ± 0,012, luôn hơn LR.
           </p>
         </div>
       </div>
       <div class="col">
         <div class="fig-box">
           <img src="../reports/figures/q6_fig1_model_comparison.png" alt="Q6 model comparison">
-          <div class="fig-cap">Random Forest vượt Logistic Regression (+0,056 ROC-AUC trên test) và baseline</div>
+          <div class="fig-cap">Random Forest vượt Logistic Regression (+0,055 ROC-AUC trên test, CI [0,037; 0,074]) và baseline</div>
         </div>
         <div class="fig-box">
           <img src="../reports/figures/q6_fig2_confusion_matrix.png" alt="Q6 confusion matrix">
-          <div class="fig-cap">Ma trận nhầm lẫn trên tập test (ngưỡng 0,5; 396 FP vs 312 FN)</div>
+          <div class="fig-cap">Ma trận nhầm lẫn trên tập test (ngưỡng 0,5; 391 FP vs 314 FN)</div>
         </div>
       </div>
     </div>
@@ -670,18 +670,18 @@
         <div class="card highlight">
           <h3>Permutation Importance (mức giảm ROC-AUC trên test)</h3>
           <ul class="bullets">
-            <li><strong><code>coupon</code> áp đảo:</strong> giảm <strong>0,157 ± 0,009</strong> (gấp ~3× biến đứng thứ hai).</li>
-            <li><strong>Thói quen khớp &amp; thời hạn:</strong> <code>CoffeeHouse</code> (<strong>0,058</strong>), <code>expiration</code> (<strong>0,049</strong>), <code>Bar</code> (<strong>0,017</strong>), <code>destination</code> (0,015), <code>time</code> (0,009).</li>
+            <li><strong><code>coupon</code> áp đảo:</strong> giảm <strong>0,157 ± 0,009</strong> (gấp ~2,8× biến đứng thứ hai).</li>
+            <li><strong>Thói quen khớp &amp; thời hạn:</strong> <code>CoffeeHouse</code> (<strong>0,057</strong>), <code>expiration</code> (<strong>0,049</strong>), <code>Bar</code> (<strong>0,017</strong>), <code>destination</code> (0,015), <code>time</code> (0,009).</li>
             <li><strong>Nhân khẩu học ≈ 0:</strong> <code>age</code> (0,001), <code>income</code> (~0), <code>education</code>, <code>gender</code> hầu như không giúp dự đoán thêm — khớp với Q5.</li>
-            <li>Random Forest học được tương tác phi tuyến <code>coupon × thói quen</code> mà Logistic Regression tuyến tính bỏ qua.</li>
+            <li><strong>Vì sao RF hơn LR?</strong> Phần lớn nhờ tương tác <code>coupon × thói quen</code>: thêm cột ghép này cho LR nâng CV 0,722 → 0,748 (RF 0,767).</li>
           </ul>
         </div>
         <div class="card">
           <h3>Phân tích lỗi &amp; gợi ý xếp hạng xác suất</h3>
           <ul class="bullets">
-            <li><strong>Lỗi lệch theo nền tỷ lệ nhận:</strong> <code>Carry out</code> (nhận nhiều) bị <strong>FPR = 90,5%</strong>; <code>Bar</code> (ít nhận) bị bỏ sót <strong>FNR = 53,0%</strong>.</li>
-            <li><strong>Mạnh ở hai đầu xác suất:</strong> Khi dự đoán <code>p &gt; 0,7</code> (818 dòng), tỷ lệ nhận thật là <strong>84,4%</strong>; khi <code>p ≤ 0,3</code> (420 dòng), chỉ <strong>18,6%</strong> nhận.</li>
-            <li>Vùng lưng chừng <code>0,3–0,6</code> (874 dòng) độ chính xác chỉ 53–57% → phù hợp dùng để <em>xếp hạng ưu tiên gửi</em> hơn là cắt cứng ở 0,5.</li>
+            <li><strong>Lỗi lệch theo nền tỷ lệ nhận:</strong> <code>Carry out</code> (nhận nhiều) bị <strong>FPR = 90,5%</strong>; <code>Bar</code> (ít nhận) bị bỏ sót <strong>FNR = 51,9%</strong>.</li>
+            <li><strong>Mạnh ở hai đầu xác suất:</strong> Khi dự đoán <code>p &gt; 0,7</code> (824 dòng), tỷ lệ nhận thật là <strong>84,6%</strong>; khi <code>p ≤ 0,3</code> (422 dòng), chỉ <strong>19,0%</strong> nhận.</li>
+            <li>Vùng lưng chừng <code>0,3–0,6</code> (865 dòng) độ chính xác chỉ 52–59% → phù hợp dùng để <em>xếp hạng ưu tiên gửi</em> hơn là cắt cứng ở 0,5.</li>
           </ul>
         </div>
       </div>
@@ -715,17 +715,17 @@
         <div class="card highlight">
           <h3>4 phát hiện cốt lõi từ dữ liệu thật</h3>
           <ul class="bullets">
-            <li><strong>1. Sản phẩm + thói quen &gt; nhân khẩu học:</strong> Ghé quán thường xuyên tăng tỷ lệ nhận tới +39,58 pp (Bar) và +31,41 pp (Coffee House), áp đảo chênh lệch tuổi (+7,5 pp) và thu nhập (+3,8 pp khi cố định tuổi).</li>
+            <li><strong>1. Sản phẩm + thói quen &gt; nhân khẩu học:</strong> Người ghé quán thường xuyên có tỷ lệ nhận cao hơn tới +39,58 pp (Bar) và +31,41 pp (Coffee House), áp đảo chênh lệch tuổi (+7,5 pp) và thu nhập (+3,8 pp khi cố định tuổi).</li>
             <li><strong>2. Phân tầng (D4) chống kết luận sai:</strong> <code>direction_same</code> (+1,76 → +17,40 pp ở Home), <code>10AM</code> (−2,01 pp đảo chiều dương cả 5/5 coupon), và <code>Friend(s) − Alone</code> (+14,76 → +1,33 pp) đều minh họa tác động của confounder &amp; mất cân bằng mẫu.</li>
             <li><strong>3. Ngưỡng tiện lợi tùy loại dịch vụ:</strong> <code>Restaurant(&lt;20)</code> sụt 42,74 pp khi xa ≥25 phút; ngược lại <code>Carry out</code> giữ trên 72% ở mọi khoảng cách.</li>
-            <li><strong>4. ML có giá trị xếp hạng:</strong> Random Forest đạt ROC-AUC <strong>0,782</strong> trên người chưa từng gặp, nhưng cần tinh chỉnh ngưỡng theo chi phí làm phiền người dùng.</li>
+            <li><strong>4. ML có giá trị xếp hạng:</strong> Random Forest đạt ROC-AUC <strong>0,781</strong> trên người chưa từng gặp, nhưng cần tinh chỉnh ngưỡng theo chi phí làm phiền người dùng.</li>
           </ul>
         </div>
         <div class="card">
           <h3>Ứng dụng có điều kiện (thử nghiệm đề xuất)</h3>
           <ul class="bullets">
             <li>Cá nhân hóa ưu đãi dựa trên <strong>loại coupon × thói quen ghé thăm × bối cảnh hành trình</strong> thay vì nhắm theo thu nhập.</li>
-            <li>Siết bán kính (&lt;25 phút) cho <code>Restaurant(&lt;20)</code> / <code>Coffee House</code>; ưu tiên hạn <code>1d</code> cho ăn uống và <code>2h</code> cho <code>Bar</code> buổi tối.</li>
+            <li>Siết bán kính (&lt;25 phút) cho <code>Restaurant(&lt;20)</code> / <code>Coffee House</code>; ưu tiên hạn <code>1d</code> cho ăn uống (với <code>Bar</code>, thời hạn hầu như không tạo khác biệt).</li>
           </ul>
         </div>
       </div>
@@ -744,7 +744,7 @@
           <ul class="bullets">
             <li>Thử nghiệm A/B trên ứng dụng thực tế với dữ liệu giao dịch đổi coupon thật và có mã người dùng rõ ràng.</li>
             <li>Hiệu chỉnh xác suất (calibration), tối ưu ngưỡng theo chi phí FP/FN và mở rộng sang mô hình Gradient Boosting.</li>
-            <li>Kiểm tra toàn bộ 11 unit tests (<code>pytest</code>) &amp; quy trình tái lập 1 lệnh <code>scripts/run_all.py</code>.</li>
+            <li>Mở rộng bootstrap theo người cho mọi CI của Q1–Q4 và dùng hồi quy logistic nhiều biến để kiểm soát đồng thời các biến nhiễu.</li>
           </ul>
         </div>
       </div>

@@ -2,16 +2,21 @@ name: csc17104-coupon
 channels:
   - conda-forge
 dependencies:
+  # Ghim phiên bản các thư viện tính toán để chạy lại ra ĐÚNG các con số trong notebook.
+  # (Đã kiểm chứng 2026-11-28: notebook 01–02 cho kết quả trùng khớp; Q6 phụ thuộc phiên bản
+  #  scikit-learn – bản 1.7.x/1.9.x chia fold/huấn luyện khác nên số liệu lệch ở chữ số thứ 3.)
   - python=3.11
-  - numpy
-  - pandas
-  - matplotlib
-  - scipy
-  - scikit-learn
+  - numpy=2.4.6
+  - pandas=3.1.1
+  - scipy=1.17.1
+  - scikit-learn=1.8.0
+  - matplotlib=3.11.2
+  # Công cụ notebook & kiểm thử (không ảnh hưởng số liệu)
   - jupyterlab
   - notebook
   - ipykernel
   - nbformat
   - nbclient
+  - nbconvert
   - pytest
   - pip

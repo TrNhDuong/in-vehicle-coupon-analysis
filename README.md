@@ -8,7 +8,7 @@ CSC17104 · Lập trình cho Khoa học Dữ liệu
 
 [![Dataset](https://img.shields.io/badge/UCI-Dataset%20%23603-0A66C2?style=flat-square)](https://archive.ics.uci.edu/dataset/603/in+vehicle+coupon+recommendation)
 [![License](https://img.shields.io/badge/Data-CC%20BY%204.0-16A34A?style=flat-square)](https://creativecommons.org/licenses/by/4.0/)
-![Tests](https://img.shields.io/badge/Tests-11%2F11-22C55E?style=flat-square)
+![Tests](https://img.shields.io/badge/Tests-44%2F44-22C55E?style=flat-square)
 
 </div>
 
@@ -18,7 +18,7 @@ CSC17104 · Lập trình cho Khoa học Dữ liệu
 
 Dự án phân tích các yếu tố **bối cảnh hành trình, thời hạn, thói quen tiêu dùng, người đồng hành và nhân khẩu học** liên quan đến **ý định chấp nhận coupon khi lái xe**, đồng thời xây dựng mô hình Machine Learning dự đoán nhãn `Y` từ các đặc trưng biết trước thời điểm gợi ý.
 
-- **3 Phase notebook** · **19 biểu đồ** · **22 bảng CSV** · [Slide thuyết trình (`slides.pdf`)](slides.pdf)
+- **3 Phase notebook** · **19 biểu đồ** · **27 bảng CSV** · [Slide thuyết trình (`slides.pdf`)](slides.pdf)
 - Bao phủ **5/6 tiêu chí độ sâu (`D2, D3, D4, D5, D6`)** cho câu hỏi thống kê và đầy đủ quy trình chống rò rỉ dữ liệu cho câu hỏi Machine Learning.
 
 > [!IMPORTANT]
@@ -35,6 +35,10 @@ Dự án phân tích các yếu tố **bối cảnh hành trình, thời hạn, 
 | **Hoàng Công Lý** | `24120378` | **Q5 – Q6 (ML)** | Phân khúc tuổi & thu nhập theo cụm người (`Phase 2.3`), mô hình ML chống rò rỉ (`Phase 3`), `stats.py` (cluster CI), `modeling.py` |
 
 *(Chi tiết ranh giới module và quy tắc phối hợp xem tại [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) và [`docs/workflow_and_api.md`](docs/workflow_and_api.md).)*
+
+**Kế hoạch & theo dõi công việc (theo yêu cầu đề):** bảng kế hoạch từng giai đoạn (việc, người làm, thời gian, trạng thái) — **Google Sheets: `<DÁN LINK GOOGLE SHEETS / TRELLO CỦA NHÓM VÀO ĐÂY>`** · bản sao trong repo: [`docs/KE_HOACH_CONG_VIEC.md`](docs/KE_HOACH_CONG_VIEC.md).
+
+**Tài liệu cho thành viên:** [`docs/HUONG_DAN_HE_THONG.md`](docs/HUONG_DAN_HE_THONG.md) (toàn bộ luồng chạy, từng module/hàm, từng notebook) · [`docs/NGAN_HANG_VAN_DAP.md`](docs/NGAN_HANG_VAN_DAP.md) (lý thuyết + câu hỏi vấn đáp có đáp án) · [`docs/BAO_CAO_KIEM_TRA.md`](docs/BAO_CAO_KIEM_TRA.md) (kết quả rà soát toàn diện trước khi nộp).
 
 ---
 
@@ -54,7 +58,7 @@ Chi tiết ý nghĩa 26 cột & kiểm tra chất lượng dữ liệu: [`docs/d
 
 - **Wang et al. (2017)** ([JMLR](https://www.jmlr.org/papers/v18/16-003.html)): đề xuất thuật toán học tập luật diễn giải được (*Bayesian Rule Sets*) trên bộ dữ liệu gốc. Nhóm không phát triển thuật toán rule-set mới mà đi sâu phân tích thống kê có kiểm soát biến nhiễu (`D4`), định lượng bất định (`D5`) và kiểm tra độ bền (`D6`).
 - **seetharamanr86 / customer_coupon_acceptance** ([GitHub](https://github.com/seetharamanr86/customer_coupon_acceptance)): thống kê mô tả tỷ lệ nhận coupon theo loại ưu đãi, thói quen và người đi cùng. Nhóm khác biệt ở việc phân tầng có hệ thống để bóc tách nghịch lý Simpson (`10AM` ở Q2), hiệu ứng che khuất bởi điểm đến (`direction_same` ở Q1) và giới hạn *common support* (`Friend(s)` vắng mặt hoàn toàn ở `Home`/`Work` trong Q4).
-- **arnavkundu / MLEngineerNanoDegree-Capstone** ([GitHub](https://github.com/arnavkundu/MLEngineerNanoDegree-Capstone)): huấn luyện bộ phân loại dự đoán `Y` theo dòng. Nhóm thiết kế kiểm kê đặc trưng tại *prediction time*, tách `train`/`test` và `StratifiedGroupKFold` theo người trả lời suy ra (`respondent_id`) để chặn độ thổi phồng `+0,043` ROC-AUC do lặp người giữa hai tập.
+- **arnavkundu / MLEngineerNanoDegree-Capstone** ([GitHub](https://github.com/arnavkundu/MLEngineerNanoDegree-Capstone)): huấn luyện bộ phân loại dự đoán `Y` theo dòng. Nhóm thiết kế kiểm kê đặc trưng tại *prediction time*, tách `train`/`test` và `StratifiedGroupKFold` theo người trả lời suy ra (`respondent_id`) để chặn độ thổi phồng `+0,043` ROC-AUC xảy ra khi cùng một người nằm ở cả fold huấn luyện lẫn fold kiểm định.
 
 Bảng đối chiếu đầy đủ và nguyên tắc trích dẫn: [`docs/related_work.md`](docs/related_work.md).
 
@@ -77,10 +81,10 @@ Chi tiết thiết kế biến và biểu đồ từng câu: [`docs/research_que
 
 ## Các phát hiện chính (Key Findings)
 
-1. **Loại coupon và sự khớp thói quen áp đảo nhân khẩu học:** Người ghé quán thường xuyên (`≥1` lần/tháng) chấp nhận cao hơn ở cả 5/5 loại coupon — mạnh nhất tại `Bar` (**+39,58 pp**, CI `[35,09; 44,11]`) và `Coffee House` (**+31,41 pp**, CI `[28,15; 34,58]`). Ngược lại, chênh lệch tuổi `<26 − 50+` sau chuẩn hóa thói quen còn **+7,5 pp** (CI `[2,8; 12,4]`), còn chênh lệch thu nhập `Thấp − Cao` mất ý nghĩa thống kê khi cố định tuổi (**+3,8 pp**, CI `[−0,6; 7,8]`).
-2. **Phát hiện bất ngờ nhất — Nghịch lý Simpson & mất cân bằng cấu trúc khi gộp thô:** Lúc `10AM` (Q2), gộp thô cho cảm giác `2h` cao hơn `1d` (`−2,01 pp`), nhưng tách riêng từng coupon thì **cả 5/5 loại đều `1d > 2h`** (`+2,41` đến `+23,02 pp`). Tương tự, chênh lệch thô `Friend(s) − Alone` (**+14,76 pp**) thu hẹp còn **+1,33 pp** (CI `[−1,70; +4,51]`) sau chuẩn hóa `coupon × destination` vì `Friend(s)` chỉ xuất hiện ở `No Urgent Place` (`0` dòng ở `Home`/`Work`); ở Q5, nhóm thu nhập `≥100k USD` vẫn nhận **57,8%** (cao hơn trung bình mẫu `56,84%`).
-3. **Độ nhạy khoảng cách và thời hạn phụ thuộc đặc thù dịch vụ:** Toàn mẫu, gần `5–<15 min` (**61,42%**) vượt xa `≥25 min` (**42,89%**, **+18,53 pp**) và hạn `1d` (**62,56%**) vượt `2h` (**49,60%**, **+12,96 pp**). Tuy nhiên `Restaurant(<20)` sụt **42,74 pp** khi xa `≥25 min` trong khi `Carry out & Take away` giữ phẳng trên **72%**; riêng `Bar` lúc `10PM` nghiêng về `2h` (`−8,87 pp`).
-4. **Mô hình ML có giá trị xếp hạng ưu tiên và đòi hỏi chia theo cụm người:** Trên tập test giữ riêng (`2.552` dòng, `114` người chưa từng gặp), **Random Forest** đạt **ROC-AUC = 0,782** (CI `[0,756; 0,808]`), **Balanced Accuracy = 0,705**, vượt rõ `Logistic Regression` (`0,726`) và `Dummy` (`0,500`), dẫn dắt bởi `coupon` (`0,157`), `CoffeeHouse` (`0,058`), `expiration` (`0,049`) và `Bar` (`0,017`). Nếu chia ngẫu nhiên theo dòng thay vì theo `respondent_id`, CV ROC-AUC của Random Forest bị thổi phồng giả tạo thêm **+0,043** (`0,810` vs `0,767`).
+1. **Loại coupon và sự khớp thói quen áp đảo nhân khẩu học:** Người ghé quán thường xuyên (`≥1` lần/tháng) có tỷ lệ chấp nhận cao hơn ở cả 5/5 loại coupon (ước lượng điểm) — mạnh nhất tại `Bar` (**+39,58 pp**, CI `[35,18; 43,97]`) và `Coffee House` (**+31,41 pp**, CI `[28,42; 34,38]`); khi tính CI theo người, `Bar`, `Coffee House`, `Restaurant(20-50)` vẫn rõ ràng còn `Carry out` và `Restaurant(<20)` chưa phân biệt được với 0. Ngược lại, chênh lệch tuổi `<26 − 50+` sau chuẩn hóa thói quen còn **+7,5 pp** (CI `[2,8; 12,4]`), còn chênh lệch thu nhập `Thấp − Cao` mất ý nghĩa thống kê khi cố định tuổi (**+3,8 pp**, CI `[−0,6; 7,8]`).
+2. **Phát hiện bất ngờ nhất — Nghịch lý Simpson & mất cân bằng cấu trúc khi gộp thô:** Lúc `10AM` (Q2), gộp thô cho cảm giác `2h` cao hơn `1d` (`−2,01 pp`), nhưng tách riêng từng coupon thì **cả 5/5 loại đều có ước lượng `1d > 2h`** (`+2,41` đến `+23,02 pp`). Tương tự, chênh lệch thô `Friend(s) − Alone` (**+14,76 pp**) thu hẹp còn **+1,33 pp** (CI `[−1,70; +4,51]`) sau chuẩn hóa `coupon × destination` vì `Friend(s)` chỉ xuất hiện ở `No Urgent Place` (`0` dòng ở `Home`/`Work`); ở Q5, nhóm thu nhập `≥100k USD` vẫn nhận **57,8%** — không thấp hơn trung bình mẫu `56,84%`.
+3. **Độ nhạy khoảng cách và thời hạn phụ thuộc đặc thù dịch vụ:** Toàn mẫu, gần `5–<15 min` (**61,42%**) vượt xa `≥25 min` (**42,89%**, **+18,53 pp**) và hạn `1d` (**62,56%**) vượt `2h` (**49,60%**, **+12,96 pp**). Tuy nhiên `Restaurant(<20)` giảm **42,74 pp** khi xa `≥25 min` trong khi `Carry out & Take away` giữ phẳng trên **72%**; riêng `Bar` gần như không phụ thuộc thời hạn (`+0,85 pp`, CI chứa 0).
+4. **Mô hình ML có giá trị xếp hạng ưu tiên và đòi hỏi chia theo cụm người:** Trên tập test giữ riêng (`2.552` dòng, `114` người chưa từng gặp), **Random Forest** đạt **ROC-AUC = 0,781** (CI `[0,755; 0,807]`), **Balanced Accuracy = 0,706**, vượt rõ `Logistic Regression` (`0,726`) và `Dummy` (`0,500`); lặp lại với 50 cách chia theo người, RF đạt `0,774 ± 0,012` và luôn hơn LR. Mô hình dựa chủ yếu vào `coupon` (`0,1573`), `CoffeeHouse` (`0,0569`), `expiration` (`0,0495`) và `Bar` (`0,0168`). Nếu chia fold CV ngẫu nhiên theo dòng thay vì theo `respondent_id`, CV ROC-AUC của Random Forest bị thổi phồng giả tạo thêm **+0,043** (`0,810` vs `0,767`).
 
 ---
 
@@ -88,7 +92,8 @@ Chi tiết thiết kế biến và biểu đồ từng câu: [`docs/research_que
 
 ```text
 ├── README.md                              # Tổng quan, phân công, câu hỏi, kết quả chính & cách chạy
-├── environment.yml                        # Môi trường Conda tái lập (Python 3.11)
+├── environment.yml                        # Môi trường Conda tái lập (Python 3.11, thư viện đã ghim phiên bản)
+├── requirements.txt                       # Cùng bộ phiên bản cho người cài bằng pip
 ├── pyproject.toml                         # Cấu hình gói nội bộ coupon_project
 ├── LLM_USAGE.md                           # Nhật ký sử dụng công cụ AI/LLM của từng thành viên
 ├── slides.pdf                             # Slide thuyết trình cuối kỳ (10 trang)
@@ -101,9 +106,9 @@ Chi tiết thiết kế biến và biểu đồ từng câu: [`docs/research_que
 │   ├── 02_analysis.ipynb                  # Phase 2: Phân tích Q1–Q5, tổng hợp, hạn chế, hướng mở rộng & reflections
 │   └── 03_ml_question.ipynb               # Phase 3: Q6 Machine Learning, error analysis & permutation importance
 ├── scripts/                               # download_data.py, check_project.py, run_all.py
-├── tests/                                 # 11 unit tests kiểm thử các hàm cốt lõi (pytest)
-├── docs/                                  # Từ điển dữ liệu, câu hỏi, related work, quy ước & hợp đồng API
-├── reports/                               # figures/ (19 biểu đồ PNG) & tables/ (22 bảng CSV, gitignored)
+├── tests/                                 # 44 unit tests kiểm thử các hàm cốt lõi (pytest)
+├── docs/                                  # Từ điển dữ liệu, câu hỏi, related work, hợp đồng API, hướng dẫn hệ thống, ngân hàng vấn đáp
+├── reports/                               # figures/ (19 biểu đồ PNG) & tables/ (27 bảng CSV, gitignored)
 └── presentation/                          # slides.html (nguồn xuất slides.pdf)
 ```
 
@@ -116,17 +121,22 @@ Chi tiết thiết kế biến và biểu đồ từng câu: [`docs/research_que
 git clone https://github.com/TrNhDuong/in-vehicle-coupon-analysis.git
 cd in-vehicle-coupon-analysis
 
-# 2. Tạo và kích hoạt môi trường Conda
+# 2. Tạo và kích hoạt môi trường Conda (phiên bản thư viện đã ghim để ra đúng số liệu)
 conda env create -f environment.yml
 conda activate csc17104-coupon
-pip install -e . --no-deps
+python -m pip install -e . --no-deps
+#    (không dùng Conda: tạo venv Python 3.11 rồi `python -m pip install -r requirements.txt`
+#     và `python -m pip install -e . --no-deps`)
 
-# 3. Tải dữ liệu CSV gốc từ UCI #603 (vào data/raw/)
+# 3. Tải dữ liệu CSV gốc từ UCI #603 (vào data/raw/; script tự kiểm tra SHA-256)
 python scripts/download_data.py
 
-# 4. Chạy kiểm tra & thực thi tuần tự toàn bộ notebook (01 -> 02 -> 03)
+# 4. Chạy kiểm tra & thực thi tuần tự toàn bộ notebook (01 -> 02 -> 03), khoảng 3 phút
 python scripts/run_all.py
 ```
+
+> [!NOTE]
+> Số liệu Q6 phụ thuộc phiên bản `scikit-learn` (đã ghim `1.8.0`; bản ≤ 1.7 chia fold `StratifiedGroupKFold` khác). Trên Windows, luôn gọi công cụ qua `python -m ...` (ví dụ `python -m pytest`) — `run_all.py` đã làm như vậy để chạy được cả khi bật Smart App Control.
 
 Hoặc mở `jupyter lab` và chạy lần lượt theo đúng thứ tự:
 1. `notebooks/01_collection_exploration.ipynb`

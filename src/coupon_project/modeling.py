@@ -1,4 +1,4 @@
-"""Xây dựng Pipeline sklearn chống rò rỉ dữ liệu, bootstrap theo cụm người và phân tích lỗi cho Q6."""
+"""Pipeline sklearn chống rò rỉ dữ liệu, bootstrap theo cụm người và phân tích lỗi cho Q6."""
 import numpy as np
 import pandas as pd
 
@@ -23,17 +23,31 @@ def build_pipeline(estimator, cat_cols, bin_cols):
     return Pipeline([("preprocess", prep), ("model", estimator)])
 
 
-def cluster_bootstrap_metric(metric_fn, y_true, y_values, groups, n_boot: int = 1000, seed: int = 42) -> np.ndarray:
-    """Tính phân phối bootstrap của metric_fn bằng cách lấy mẫu lại theo cụm người trả lời."""
+def cluster_bootstrap_metric(metric_fn, y_true, y_values, groups, n_boot: int = 1000,
+                             seed: int = 42) -> np.ndarray:
+    """Tính phân phối bootstrap của metric_fn bằng cách lấy mẫu lại theo cụm người trả lời.
+
+    Mỗi lần: rút lại n người có hoàn lại; người được rút k lần thì mọi dòng của họ có trọng số k
+    (truyền qua sample_weight). Cùng seed + cùng groups => các mô hình dùng chung các lần rút,
+    nên hiệu số giữa hai mô hình là bootstrap ghép cặp.
+    """
     rng = np.random.default_rng(seed)
     pid = pd.factorize(np.asarray(groups))[0]
     n_people = int(pid.max() + 1)
     probs = np.full(n_people, 1.0 / n_people)
-    return np.array([metric_fn(y_true, y_values, sample_weight=rng.multinomial(n_people, probs)[pid]) for _ in range(n_boot)])
+    draws = []
+    for _ in range(n_boot):
+        times_drawn = rng.multinomial(n_people, probs)  # số lần mỗi người được rút
+        draws.append(metric_fn(y_true, y_values, sample_weight=times_drawn[pid]))
+    return np.array(draws)
 
 
 def error_breakdown(df: pd.DataFrame, y_true, y_pred, group_col: str) -> pd.DataFrame:
-    """Thống kê tỷ lệ nhận thật, độ chính xác, FPR (%) và FNR (%) theo từng nhóm mà không sửa df."""
+    """Thống kê tỷ lệ nhận thật, độ chính xác, FPR (%) và FNR (%) theo từng nhóm mà không sửa df.
+
+    Đơn vị: true_rate và acc là tỷ lệ 0–1; FPR và FNR là phần trăm. Nhóm không có dòng
+    thật sự từ chối (hoặc thật sự nhận) sẽ có FPR (hoặc FNR) = NaN. Bảng sắp xếp theo true_rate.
+    """
     work = pd.DataFrame({
         group_col: df[group_col].to_numpy(),
         "y_true": np.asarray(y_true),
@@ -58,8 +72,12 @@ def error_breakdown(df: pd.DataFrame, y_true, y_pred, group_col: str) -> pd.Data
     return out.sort_values("true_rate")
 
 
-def probability_bins(y_true, y_pred, y_proba, bins=(0, 0.3, 0.4, 0.5, 0.6, 0.7, 1.0)) -> pd.DataFrame:
-    """Đánh giá độ khớp xác suất dự đoán (calibration) và độ chính xác theo từng khoảng xác suất."""
+def probability_bins(y_true, y_pred, y_proba,
+                     bins=(0, 0.3, 0.4, 0.5, 0.6, 0.7, 1.0)) -> pd.DataFrame:
+    """Đánh giá độ khớp xác suất dự đoán (calibration) và độ chính xác theo từng khoảng xác suất.
+
+    Cột: n (số dòng), mean_p (xác suất dự đoán trung bình), true_y (tỷ lệ nhận thật), acc.
+    """
     work = pd.DataFrame({
         "y_true": np.asarray(y_true),
         "ok": np.asarray(y_true) == np.asarray(y_pred),
@@ -67,5 +85,6 @@ def probability_bins(y_true, y_pred, y_proba, bins=(0, 0.3, 0.4, 0.5, 0.6, 0.7, 
     })
     work["p_bin"] = pd.cut(work["proba"], list(bins), include_lowest=True)
     return work.groupby("p_bin", observed=True).agg(
-        n=("y_true", "size"), mean_p=("proba", "mean"), true_y=("y_true", "mean"), acc=("ok", "mean"),
+        n=("y_true", "size"), mean_p=("proba", "mean"), true_y=("y_true", "mean"),
+        acc=("ok", "mean"),
     ).round(3)

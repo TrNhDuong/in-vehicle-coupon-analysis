@@ -1,0 +1,14 @@
+# Cài bằng pip (Python 3.11) khi không dùng Conda: python -m pip install -r requirements.txt
+# Các phiên bản tính toán được ghim giống environment.yml để tái lập đúng số liệu.
+numpy==2.4.6
+pandas==3.1.1
+scipy==1.17.1
+scikit-learn==1.8.0
+matplotlib==3.11.2
+jupyterlab
+notebook
+ipykernel
+nbformat
+nbclient
+nbconvert
+pytest

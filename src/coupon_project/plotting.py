@@ -27,7 +27,10 @@ def save_figure(fig, name: str, out_dir: Path = FIGURES_DIR, dpi: int = 160) -> 
 def plot_heatmap(rate_matrix, count_matrix, title, xlabel, ylabel, cbar_label="Acceptance (%)",
                  out_name=None, cmap="YlGnBu", vmin=0, vmax=100, value_suffix="%",
                  signed=False, min_n_warn=30, figsize=(8.0, 4.8), ax=None):
-    """Vẽ heatmap ghi giá trị (%/pp), cỡ mẫu n và đánh dấu ô trống/mẫu nhỏ (hỗ trợ cả subplot ax=)."""
+    """Vẽ heatmap ghi giá trị (%/pp), cỡ mẫu n và đánh dấu ô trống/mẫu nhỏ.
+
+    Hỗ trợ cả subplot (truyền ax=); trả về (fig, ax, im) để gắn colorbar chung.
+    """
     set_style()
     vals = rate_matrix.to_numpy(dtype=float)
     n_rows, n_cols = vals.shape
@@ -40,7 +43,9 @@ def plot_heatmap(rate_matrix, count_matrix, title, xlabel, ylabel, cbar_label="A
     if own_fig:
         fig.colorbar(im, ax=ax, pad=0.02).set_label(cbar_label)
 
-    ax.set_xticks(range(n_cols), labels=[str(c) for c in rate_matrix.columns], rotation=22 if n_cols > 3 else 0, ha="right" if n_cols > 3 else "center")
+    many_cols = n_cols > 3  # nhiều cột thì xoay nhãn trục x cho khỏi chồng chữ
+    ax.set_xticks(range(n_cols), labels=[str(c) for c in rate_matrix.columns],
+                  rotation=22 if many_cols else 0, ha="right" if many_cols else "center")
     ax.set_yticks(range(n_rows), labels=[str(r) for r in rate_matrix.index])
     ax.set(xlabel=xlabel, ylabel=ylabel)
     ax.set_title(title, pad=10)
@@ -57,7 +62,9 @@ def plot_heatmap(rate_matrix, count_matrix, title, xlabel, ylabel, cbar_label="A
                 dark = abs(val) > 25 if signed else val > mid + 5
                 color = "white" if dark else "#111827"
                 star = "*" if (n_val is not None and n_val < min_n_warn) else ""
-                text = f"{val:{fmt}}{value_suffix}" if n_val is None else f"{val:{fmt}}{value_suffix}\n(n={n_val:,}{star})"
+                text = f"{val:{fmt}}{value_suffix}"
+                if n_val is not None:
+                    text += f"\n(n={n_val:,}{star})"
             ax.text(j, i, text, ha="center", va="center", color=color, fontsize=8.3)
 
     if own_fig:
@@ -69,7 +76,8 @@ def plot_heatmap(rate_matrix, count_matrix, title, xlabel, ylabel, cbar_label="A
 
 def plot_bars_ci(summary_df, x_col, hue_col, x_order, hue_order, title, xlabel,
                  ylabel="Acceptance rate (%)", out_name=None, colors=None,
-                 figsize=(10.5, 4.8), ylim=(0, 102), rotate_xticks=0, show_n=True, legend_title=None):
+                 figsize=(10.5, 4.8), ylim=(0, 102), rotate_xticks=0, show_n=True,
+                 legend_title=None):
     """Vẽ biểu đồ cột nhóm kèm thanh khoảng tin cậy 95% từ bảng kết quả của stats.rate_table()."""
     set_style()
     fig, ax = plt.subplots(figsize=figsize)

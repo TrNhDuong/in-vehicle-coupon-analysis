@@ -1,5 +1,7 @@
 # Báo cáo sửa đổi – nhánh `ly/final-fixes`
 
+> **Cập nhật 2026-11-28:** báo cáo này mô tả nhánh `ly/final-fixes`. Lần rà soát sau đó (nhánh `ly/full-audit`, xem [`BAO_CAO_KIEM_TRA.md`](BAO_CAO_KIEM_TRA.md)) đã ghim `scikit-learn 1.8.0` và chạy lại toàn bộ, nên các số Q6 ở mục 2 dưới đây (0,782 / 0,705 / 72,3% / 53,0%) được thay bằng 0,781 / 0,706 / 72,4% / 51,9%. Nguyên nhân số Q6 khác nhau giữa các lần chạy là **phiên bản scikit-learn** (và nền tảng), không phải phiên bản Python.
+
 **Người thực hiện:** Hoàng Công Lý (`24120378`) · **Ngày:** 2026-11-26 · **So với:** `final_1`
 **Người cần review:** Trần Nhật Dương, Nguyễn Mạnh Hà
 
@@ -50,7 +52,7 @@ Các module `data.py`, `plotting.py` và `scripts/` vốn đã gọn nên **khô
 | `02` Q5 | Tách cell dài thành 3 cell: **chuẩn bị dữ liệu / D4+D5 / D6**; các mapping gộp nhóm có tên riêng (`AGE_GROUP`, `INCOME_GROUP`, `FREQ_1`, `FREQ_4`, `AGE_HALF`, `INCOME_HALF`) và dùng chung hàm `regroup()`; D6 dùng helper `sensitivity()`; Hình 3 bỏ câu `if … else` khó đọc |
 | `03` Q6 (commit `4779cf3`) | `SCORING` thành list; bảng CV và bảng rò rỉ dùng vòng lặp thường; **kiểm tra rò rỉ dùng lại ROC-AUC CV theo người đã có** (không chạy lại 5 fold, nhanh hơn, số y hệt); bảng lỗi theo `coupon`/`passanger`/`destination` gom vào 1 vòng lặp; tách 2 cell dài thành 5 cell |
 
-Notebook `02` dài thêm ~30 dòng vì các dòng dài được tách ra và có thêm chú thích (4 → 18 dòng chú thích). Mục tiêu là **dễ đọc và dễ giải thích**, không phải ít dòng nhất.
+Notebook `02` dài thêm ~50 dòng (393 → 445 dòng code) vì các dòng dài được tách ra và có thêm chú thích (4 → 18 dòng chú thích). Mục tiêu là **dễ đọc và dễ giải thích**, không phải ít dòng nhất.
 
 **Không thay đổi:** nội dung Markdown, kết luận, *Individual reflections*, file hình trong `reports/figures/`.
 
@@ -67,7 +69,7 @@ Notebook `02` dài thêm ~30 dòng vì các dòng dài được tách ra và có
 | Việt hóa | `fb6df92` → `3790217` (9 commit) | Docstring, chú thích và thông báo lỗi tiếng Việt trong `src/` và `scripts/` (không đổi logic) |
 | Tài liệu | `867cb9f`, `4257f8e` | README thêm 6 câu hỏi, kết quả chính, related work; cập nhật mục của Lý trong `LLM_USAGE.md` |
 
-**Lý do số Q6 thay đổi nhẹ so với `final_1`:** bản trên `final_1` chạy trên Python ≥ 3.12, còn `environment.yml` khai báo `python=3.11`. Q1–Q5 không đổi số.
+**Lý do số Q6 thay đổi nhẹ so với `final_1`:** hai lần chạy dùng môi trường thư viện khác nhau (kiểm chứng ngày 28/11: `scikit-learn 1.8.0` tái lập đúng số của `final_1`; chỉ Random Forest lệch ở chữ số thứ 3). Q1–Q5 không đổi số.
 
 ---
 

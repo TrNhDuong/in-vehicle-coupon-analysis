@@ -7,6 +7,7 @@ Giấy phép dữ liệu gốc: CC BY 4.0.
 from __future__ import annotations
 import argparse
 import hashlib
+import sys
 from io import BytesIO
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -16,8 +17,15 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = PROJECT_ROOT / "data" / "raw" / "in-vehicle-coupon-recommendation.csv"
 URLS = [
     "https://archive.ics.uci.edu/static/public/603/in%2Bvehicle%2Bcoupon%2Brecommendation.zip",
-    "https://archive.ics.uci.edu/ml/machine-learning-databases/00603/in-vehicle-coupon-recommendation.csv",
+    "https://archive.ics.uci.edu/ml/machine-learning-databases/00603/"
+    "in-vehicle-coupon-recommendation.csv",
 ]
+# SHA-256 của đúng file CSV nhóm đã phân tích (12.684 dòng × 26 cột) – dùng để xác nhận tái lập
+EXPECTED_SHA256 = "d47897367f5a12a31dece0f4e42d7bd9da76d7016b568da511b50335d08dcb43"
+
+# In tiếng Việt an toàn cả khi output bị chuyển hướng ra file trên Windows (mặc định cp1252)
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
 def get_csv_bytes() -> tuple[bytes, str]:
@@ -46,7 +54,8 @@ def get_csv_bytes() -> tuple[bytes, str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Tải dữ liệu CSV gốc từ UCI #603")
-    parser.add_argument("--overwrite", action="store_true", help="Ghi đè nếu file CSV gốc đã tồn tại")
+    parser.add_argument("--overwrite", action="store_true",
+                        help="Ghi đè nếu file CSV gốc đã tồn tại")
     args = parser.parse_args()
     if OUTPUT.exists() and not args.overwrite:
         print(f"Đã tồn tại: {OUTPUT}; dùng --overwrite nếu thật sự muốn tải lại")
@@ -58,6 +67,10 @@ def main() -> None:
     print(f"Đã tải {len(data):,} bytes từ: {url}")
     print(f"Đã lưu: {OUTPUT}")
     print(f"SHA-256: {sha}")
+    if sha == EXPECTED_SHA256:
+        print("[OK] Trùng khớp SHA-256 với file nhóm đã phân tích")
+    else:
+        print("[CẢNH BÁO] SHA-256 khác file nhóm đã phân tích – số liệu có thể không khớp notebook")
     print("Giấy phép nguồn: CC BY 4.0 – vui lòng giữ ghi nhận nguồn UCI")
 
 
