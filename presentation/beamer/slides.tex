@@ -1,0 +1,301 @@
+% !TeX program = xelatex
+% 14 trang nội dung và 1 trang cảm ơn; notebook và dữ liệu gốc chỉ được đọc.
+\documentclass[aspectratio=169,12pt]{beamer}
+\usepackage{fontspec}
+\XeTeXgenerateactualtext=1
+\IfFontExistsTF{Segoe UI}{\setsansfont{Segoe UI}}{\setsansfont{TeX Gyre Heros}}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\geometry{paperwidth=338.6667mm,paperheight=190.5mm}
+\setbeamersize{text margin left=12mm,text margin right=12mm}
+\definecolor{Ink}{HTML}{18222B}
+\definecolor{Accent}{HTML}{365E7D}
+\definecolor{Muted}{HTML}{58656F}
+\definecolor{Line}{HTML}{CBD2D8}
+\definecolor{Cover}{HTML}{EDF3F7}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=Accent}
+\setbeamerfont{normal text}{size=\fontsize{14.5}{19.5}}
+\setbeamerfont{frametitle}{size=\fontsize{21}{26},series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}{%
+  \vspace{3mm}\usebeamerfont{frametitle}\insertframetitle\par
+  \vspace{2mm}{\color{Line}\hrule height .5pt}\vspace{2mm}}
+\setbeamertemplate{footline}{%
+  \hbox to\paperwidth{\hfil{\fontsize{10}{12}\selectfont\color{Muted}
+  \insertframenumber/\inserttotalframenumber}\hspace{12mm}}\vspace{3mm}}
+\graphicspath{{figures/}}
+\input{questions.tex}
+\newcommand{\Block}[2]{%
+  {\fontsize{16}{20}\selectfont\bfseries #1\par}\vspace{2mm}
+  {\fontsize{14.5}{19.5}\selectfont\raggedright #2\par}\vspace{5mm}}
+\newcommand{\QBlock}[2]{%
+  {\fontsize{16}{20}\selectfont\bfseries #1\par}\vspace{1.5mm}
+  {\fontsize{14.5}{19}\selectfont\raggedright #2\par}\vspace{4mm}}
+\newcommand{\Plot}[3][62mm]{%
+  {\fontsize{14.5}{18}\selectfont\bfseries #2\par}\vspace{1mm}
+  \noindent\makebox[\linewidth][c]{%
+    \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#3.pdf}}\par\vspace{3mm}}
+\newcommand{\QTitle}[1]{\ifnum#1=1\fontsize{19}{24}\selectfont\fi Câu #1: {\mdseries\csname question#1\endcsname}}
+\newcommand{\QuestionPage}[8]{%
+  \begin{frame}[t]{\QTitle{#1}}
+  \begin{columns}[T,onlytextwidth]
+    \column{.31\textwidth}
+      \QBlock{Cách phân tích}{#2}
+      \QBlock{Kết quả}{#3}
+      \QBlock{Giải thích}{#4}
+    \column{.66\textwidth}
+      \Plot{#5}{#6}
+      \Plot{#7}{#8}
+  \end{columns}
+  \end{frame}}
+\newcommand{\Point}[1]{#1\par\vspace{2mm}}
+\hypersetup{pdftitle={In-Vehicle Coupon Acceptance},
+ pdfauthor={Trần Nhật Dương, Nguyễn Mạnh Hà, Hoàng Công Lý},
+ pdfsubject={UCI 603; tìm hiểu dữ liệu và dự đoán việc nhận coupon}}
+
+\begin{document}
+\usebeamerfont{normal text}
+
+% 1. Bìa có nền xanh nhạt.
+\begingroup
+\setbeamercolor{background canvas}{bg=Cover}
+\begin{frame}[plain]
+  \vspace{12mm}
+  {\fontsize{15}{19}\selectfont\color{Accent}CSC17104 · Lập trình cho Khoa học Dữ liệu\par}
+  \vspace{10mm}
+  {\fontsize{38}{45}\selectfont\bfseries Chấp nhận coupon khi lái xe\par}
+  \vspace{4mm}
+  {\fontsize{21}{27}\selectfont\color{Accent}In-Vehicle Coupon Acceptance\par}
+  \vspace{8mm}
+  {\fontsize{18}{25}\selectfont Người đang đi xe có muốn nhận ưu đãi ở một quán gần đó không?\par}
+  \vspace{15mm}
+  \begin{columns}[T,onlytextwidth]
+    \column{.32\textwidth}
+      \textbf{Trần Nhật Dương}\par 23120243\par\vspace{2mm}
+      {\color{Muted}Câu 1–2: Đường đi, thời hạn}
+    \column{.32\textwidth}
+      \textbf{Nguyễn Mạnh Hà}\par 23120248\par\vspace{2mm}
+      {\color{Muted}Câu 3–4: Thói quen, người đi cùng}
+    \column{.32\textwidth}
+      \textbf{Hoàng Công Lý}\par 24120378\par\vspace{2mm}
+      {\color{Muted}Câu 5–6: Tuổi, thu nhập, dự đoán}
+  \end{columns}
+\end{frame}
+\endgroup
+
+% 2. Chủ đề, quy mô và ví dụ thật.
+\begin{frame}[t]{Bộ dữ liệu nói về điều gì?}
+  \begin{columns}[T,onlytextwidth]
+    \column{.31\textwidth}
+      \Block{Chủ đề}{Một người đang đi xe được gợi ý coupon (phiếu ưu đãi) của bar, quán cà phê hoặc nhà hàng. Họ có muốn nhận không?}
+      \Block{Nguồn và quy mô}{
+        \Point{Khảo sát trên Amazon Mechanical Turk, được chia sẻ tại UCI \#603 theo giấy phép CC BY 4.0.}
+        \Point{\textbf{12.684 dòng, 26 cột}: 25 cột thông tin và cột trả lời Y.}
+        \textbf{56,84\%} câu trả lời là nhận coupon.}
+      \Block{Một dòng là gì?}{Một câu trả lời cho một tình huống. Một người có thể trả lời nhiều tình huống; dữ liệu không ghi nhận việc đổi coupon thật.}
+    \column{.66\textwidth}
+      {\fontsize{19}{24}\selectfont\bfseries Ví dụ từ dòng đầu tiên của dữ liệu\par}
+      \vspace{6mm}
+      {\fontsize{17.28}{25}\selectfont\renewcommand{\arraystretch}{1.55}
+      \begin{tabular}{@{}p{65mm}p{135mm}@{}}
+        \toprule
+        Thông tin & Giá trị trong tình huống\\ \midrule
+        Điểm đến & Không có nơi cần đến gấp\\
+        Người đi cùng & Một mình\\
+        Giờ & 14 giờ\\
+        Loại coupon & Nhà hàng dưới 20 USD/người\\
+        Thời hạn & 1 ngày\\
+        Câu trả lời & Y = 1: muốn nhận\\
+        \bottomrule
+      \end{tabular}}
+  \end{columns}
+\end{frame}
+
+% 3. Đủ 26 cột, giữ tên gốc để đối chiếu dữ liệu.
+\begin{frame}[t]{Các cột cho biết những thông tin gì?}
+  \vspace{2mm}
+  {\fontsize{14.4}{19}\selectfont\renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{}>{\raggedright\arraybackslash}p{53mm}
+    >{\raggedright\arraybackslash\hyphenpenalty=10000}p{157mm}
+    >{\raggedright\arraybackslash}p{91mm}@{}}
+    \toprule
+    \textbf{Nhóm} & \textbf{Tên cột trong dữ liệu} & \textbf{Ý nghĩa}\\ \midrule
+    Chuyến đi (5) & destination, passanger, weather, temperature, time & Điểm đến, người đi cùng, thời tiết, nhiệt độ °F và giờ trong ngày.\\[3mm]
+    Coupon (2) & coupon, expiration & 5 loại ưu đãi; thời hạn 2 giờ hoặc 1 ngày.\\[3mm]
+    Thói quen (5) & Bar, CoffeeHouse, CarryAway, RestaurantLessThan20, Restaurant20To50 & Số lần ghé mỗi tháng: không bao giờ, dưới 1, 1–3, 4–8, trên 8.\\[3mm]
+    Cá nhân (8) & gender, age, maritalStatus, has\_children, education, occupation, income, car & Giới tính, tuổi, hôn nhân, có con, học vấn, nghề, thu nhập, thông tin xe.\\[3mm]
+    Đường đến quán (5) & toCoupon\_GEQ5min, toCoupon\_GEQ15min, toCoupon\_GEQ25min, direction\_same, direction\_opp & Có mất ít nhất 5/15/25 phút để đến quán không; cùng hay ngược hướng.\\[3mm]
+    Câu trả lời (1) & Y & 1 = muốn nhận; 0 = từ chối.\\
+    \bottomrule
+  \end{tabular}}\par
+  \vspace{5mm}
+  Phần lớn các cột chia thành từng nhóm. Tuổi và thu nhập được ghi theo khoảng; \texttt{time} là giờ trong ngày.
+\end{frame}
+
+% 4. EDA bằng lời dễ hiểu.
+\begin{frame}[t]{EDA: Kiểm tra và tìm hiểu dữ liệu}
+  \begin{columns}[T,onlytextwidth]
+    \column{.31\textwidth}
+      \Block{Nhóm đã làm gì?}{
+        \Point{Đếm dòng/cột, xem mỗi cột chứa số hay tên nhóm.}
+        \Point{Tìm ô trống, dòng trùng và giá trị không hợp lý.}
+        Xem số lượng và tỷ lệ nhận ở từng nhóm; kiểm tra các cột thời gian và hướng đi có khớp nhau không.}
+      \Block{Tìm thấy gì, xử lý ra sao?}{
+        \Point{\textbf{car trống 99,15\%}: bỏ khỏi đầu vào dự đoán.}
+        \Point{\textbf{74 dòng trùng}: giữ bản chính và thử bỏ trùng để xem kết quả có đổi nhiều không.}
+        \Point{Không thấy lỗi trong các quy tắc đã kiểm tra.}
+        GEQ5 luôn bằng 1; hai cột hướng đi chứa thông tin lặp lại.}
+    \column{.66\textwidth}
+      \Plot[116mm]{Tỷ lệ ô trống ở các cột có dữ liệu thiếu}{ref_missing}
+  \end{columns}
+\end{frame}
+
+% 5. Giải nghĩa cách đọc các kết quả trên biểu đồ.
+\begin{frame}[t]{Nhóm tìm câu trả lời như thế nào?}
+  \begin{columns}[T,onlytextwidth]
+    \column{.31\textwidth}
+      \Block{Các bước phân tích}{
+        \Point{1. Chia nhóm cần so sánh: gần/xa, thường ghé/ít ghé.}
+        \Point{2. So sánh trong cùng loại coupon và hoàn cảnh đi xe.}
+        \Point{3. Tính tỷ lệ nhận và mức chênh lệch; lấy mẫu lại nhiều lần để xem kết quả chắc đến đâu.}
+        4. Thử cách chia nhóm khác và bỏ dòng trùng để kiểm tra lại.}
+      \Block{Cách đọc biểu đồ}{
+        \Point{60\% so với 50\% là chênh \textbf{10 điểm phần trăm} (viết gọn: điểm \%).}
+        Thanh ngang là khoảng tin cậy 95\%. Nếu cắt mốc 0, chênh lệch chưa rõ.}
+    \column{.66\textwidth}
+      \Plot[116mm]{Mỗi loại coupon có tỷ lệ nhận ban đầu khác nhau}{ref_acceptance}
+  \end{columns}
+\end{frame}
+
+% 6–10. Cách phân tích, kết quả và giải thích cho từng câu.
+\QuestionPage{1}
+ {Chia thời gian đến quán thành ba nhóm. So sánh gần–xa trong từng loại coupon; so sánh hướng đi khi giữ cùng điểm đến và thời gian đến quán.}
+ {\Point{Gần: 61,42\%; xa: 42,89\%, chênh \textbf{18,53 điểm \%}. Nhà hàng dưới 20 USD chênh 42,74 điểm \%; đồ mang đi gần như không đổi.}
+  Khi về nhà, cùng hướng cao hơn \textbf{17,40 điểm \%}.}
+ {Quán xa có thể làm mất thời gian; cùng hướng thì tiện ghé hơn. Đồ mang đi mua nhanh nên ít ngại đường xa. Riêng khi đi làm, giờ giấc có thể quan trọng hơn việc quán có tiện đường hay không.}
+ {Gần và xa trong từng loại coupon}{ref_distance}
+ {Cùng hướng hơn ngược hướng bao nhiêu?}{ref_direction}
+
+\QuestionPage{2}
+ {Tính tỷ lệ nhận theo giờ và thời hạn. So sánh 1 ngày với 2 giờ, rồi kiểm tra lại riêng từng loại coupon.}
+ {\Point{Hạn 1 ngày: 62,56\%; 2 giờ: 49,60\%, chênh \textbf{12,96 điểm \%}.}
+  Lúc 10 giờ, gộp chung thì 1 ngày thấp hơn 2,01 điểm \%; tách riêng thì cả 5 loại đều cao hơn, với 4 loại chênh rõ.}
+ {Hạn dài có thể giúp dễ sắp xếp ghé quán. Riêng lúc 10 giờ, nhóm hạn 1 ngày có nhiều Bar hơn (36,1\% so với 5,4\%). Bar vốn ít được nhận nên kéo tỷ lệ chung xuống.}
+ {Tỷ lệ nhận theo giờ và thời hạn}{ref_time}
+ {10 giờ: gộp chung và tách theo loại coupon}{ref_10am}
+
+\QuestionPage{3}
+ {Dùng cột thói quen đúng với từng loại coupon. So sánh người ghé từ 1 lần/tháng với người ghé ít hơn; thử đổi cách chia nhóm để kiểm tra lại.}
+ {\Point{Bar: 68,79\% so với 29,21\%, chênh \textbf{39,58 điểm \%}. Cà phê: chênh \textbf{31,41 điểm \%}.}
+  Cả 5 loại đều có tỷ lệ cao hơn; kiểm tra theo người thì chênh lệch rõ ở Bar, cà phê và nhà hàng 20–50 USD.}
+ {Người vốn thích hoặc hay dùng dịch vụ có thể thấy coupon hữu ích hơn. Đồ mang đi và nhà hàng rẻ vốn được nhiều người nhận nên khác biệt theo thói quen nhỏ hơn.}
+ {Người thường ghé và người ít ghé}{ref_habit}
+ {Tỷ lệ nhận theo số lần ghé mỗi tháng}{ref_frequency}
+
+\QuestionPage{4}
+ {So sánh người đi cùng bạn bè/bạn đời với người đi một mình trong cùng loại coupon và điểm đến. Chỉ dùng nhóm có ít nhất 30 dòng ở mỗi phía.}
+ {\Point{Bạn bè: từ chênh \textbf{14,76 còn 1,33 điểm \%}. Bạn đời: từ \textbf{6,95 còn 3,03 điểm \%}.}
+  Sau khi so sánh cùng hoàn cảnh, cả hai mức chênh đều chưa rõ. Với bạn bè, phần so sánh chỉ bao phủ 41,6\% số dòng của hai nhóm.}
+ {Bạn bè chỉ xuất hiện ở chuyến đi không gấp, nơi vốn dễ nhận coupon hơn. Vì vậy mức chênh ban đầu còn do chuyến đi và loại coupon, không thể quy hết cho người đi cùng.}
+ {Gộp chung và so sánh cùng hoàn cảnh}{ref_passenger}
+ {Mỗi kiểu đi cùng xuất hiện ở chuyến đi nào?}{ref_support}
+
+\QuestionPage{5}
+ {So sánh các nhóm tuổi/thu nhập sau khi đưa về cùng tỷ lệ loại coupon và thói quen. Dùng 12.520 dòng đủ thông tin; lấy mẫu lại theo hồ sơ người trả lời.}
+ {\Point{Dưới 26 so với từ 50 tuổi: chênh \textbf{9,7 còn 7,5 điểm \%}; khoảng tin cậy [2,8; 12,4].}
+  Thu nhập thấp so với cao còn 4,4 điểm \%. Kiểm tra riêng theo coupon và tuổi còn 3,8 điểm \%, nhưng chênh lệch chưa rõ.}
+ {Người trẻ thường ghé bar/cà phê nhiều hơn, nên thói quen giải thích được một phần chênh lệch tuổi. Thu nhập không cho xu hướng rõ: thu nhập cao không có nghĩa là ít muốn nhận coupon.}
+ {Người trẻ và lớn tuổi trong từng loại coupon}{ref_age}
+ {Chênh lệch trước và sau khi cân bằng hai nhóm}{ref_demographic}
+
+% 11. Q6: quá trình làm ML.
+\begin{frame}[t]{\QTitle{6}}
+  \begin{columns}[T,onlytextwidth]
+    \column{.31\textwidth}
+      \QBlock{Cách phân tích}{Dùng 22 cột thông tin có trước lúc gửi coupon. Bỏ car, cột luôn bằng 1 và một cột hướng đi bị lặp. Tách người dùng để học và để kiểm tra.}
+      \QBlock{Kết quả}{Điểm AUC khi chia theo hồ sơ là \textbf{0,767}; chia ngẫu nhiên từng dòng lại lên \textbf{0,810}. AUC càng cao, khả năng xếp hạng người muốn nhận càng tốt.}
+      \QBlock{Giải thích}{Một người trả lời nhiều dòng. Chia theo dòng dễ để mô hình gặp lại người cũ khi kiểm tra, khiến điểm cao hơn thực tế. Hồ sơ chỉ được suy ra vì dữ liệu thiếu mã người.}
+    \column{.66\textwidth}
+      {\fontsize{17}{22}\selectfont\bfseries Các bước xây dựng mô hình dự đoán\par}\vspace{5mm}
+      {\fontsize{14.4}{20}\selectfont\renewcommand{\arraystretch}{1.22}
+      \begin{tabular}{@{}p{15mm}>{\raggedright\arraybackslash}p{180mm}@{}}
+        \textcolor{Accent}{\textbf{1}} & \textbf{Chia dữ liệu theo nhóm hồ sơ}\par
+        Dữ liệu học: 10.132 dòng, 453 hồ sơ. Kiểm tra: 2.552 dòng, 114 hồ sơ.\\[5mm]
+        \textcolor{Accent}{\textbf{2}} & \textbf{Chuẩn bị đầu vào}\par
+        Điền ô trống; đổi mỗi nhóm thành các cột 0/1. Chỉ học cách xử lý từ dữ liệu học.\\[5mm]
+        \textcolor{Accent}{\textbf{3}} & \textbf{Thử và chọn mô hình}\par
+        Chia dữ liệu học thành 5 phần để lần lượt kiểm tra; so sánh 3 mô hình.\\[5mm]
+        \textcolor{Accent}{\textbf{4}} & \textbf{Kiểm tra lần cuối trên phần giữ riêng}\par
+        Chấm mô hình đã chọn, xem các trường hợp sai và cột nào giúp dự đoán.\\
+      \end{tabular}}\par
+      \vspace{6mm}
+      Không để cùng một hồ sơ nằm ở cả phần học và phần kiểm tra.
+  \end{columns}
+\end{frame}
+
+% 12. Q6: kết quả và giải thích vì sao RF tốt hơn.
+\begin{frame}[t]{\QTitle{6}}
+  \begin{columns}[T,onlytextwidth]
+    \column{.31\textwidth}
+      \QBlock{Cách phân tích}{So sánh ba cách đoán trên cùng dữ liệu giữ riêng. Cách đơn giản luôn đoán nhận. AUC đo khả năng xếp hạng: 0,5 tương đương ngẫu nhiên, 1 là hoàn hảo.}
+      \QBlock{Kết quả}{\Point{\textbf{Random Forest tốt nhất}: AUC \textbf{0,781}, so với Logistic 0,726 và cách đơn giản 0,500. Khoảng tin cậy: [0,755; 0,807].}
+        Đoán đúng \textbf{72,4\%}, so với 59,9\% của cách đơn giản.}
+      \QBlock{Giải thích}{Random Forest học được cách nhiều thông tin kết hợp với nhau, như loại coupon đi cùng thói quen ghé quán. Khi thêm thông tin kết hợp này cho Logistic, điểm của nó cũng tăng.}
+    \column{.66\textwidth}
+      \Plot{Ba mô hình trên dữ liệu kiểm tra cuối}{ref_models}
+      \Plot{Random Forest đoán đúng và sai ở đâu?}{ref_confusion}
+  \end{columns}
+\end{frame}
+
+% 13. Q6: lỗi và các thông tin giúp dự đoán.
+\begin{frame}[t]{\QTitle{6}}
+  \begin{columns}[T,onlytextwidth]
+    \column{.31\textwidth}
+      \QBlock{Cách phân tích}{Đếm lỗi theo loại coupon. Sau đó đảo ngẫu nhiên từng cột và xem AUC giảm bao nhiêu: giảm càng nhiều, mô hình càng cần cột đó.}
+      \QBlock{Kết quả}{\Point{Đồ mang đi: \textbf{90,5\%} người từ chối bị đoán là nhận. Bar: bỏ sót \textbf{51,9\%} người muốn nhận.}
+        Loại coupon, thói quen cà phê và thời hạn giúp dự đoán nhiều nhất.}
+      \QBlock{Giải thích}{Mô hình dễ đoán nhận với đồ mang đi vì loại này vốn được nhận nhiều; với Bar thì dễ đoán từ chối. Vì vậy mô hình hữu ích để xếp thứ tự ưu tiên, nhưng chưa đoán tốt mọi trường hợp.}
+    \column{.66\textwidth}
+      \Plot{Hai kiểu đoán sai theo loại coupon}{ref_errors}
+      \Plot{Thông tin nào giúp mô hình nhiều nhất?}{ref_importance}
+  \end{columns}
+\end{frame}
+
+% 14. Tổng kết bằng ngôn ngữ thông thường.
+\begin{frame}[t]{Nhóm rút ra điều gì?}
+  \vspace{3mm}
+  \begin{columns}[T,onlytextwidth]
+    \column{.49\textwidth}
+      \Block{Kết quả chính}{
+        \Point{\textbf{Coupon hợp thói quen dễ được nhận hơn.} Khác biệt lớn nhất ở Bar và cà phê.}
+        \Point{\textbf{Cần so sánh cùng hoàn cảnh.} Gộp các chuyến đi khác nhau có thể làm hiểu sai kết quả.}
+        \textbf{Có thể dự đoán tốt hơn cách đoán đơn giản.} Random Forest đoán đúng 72,4\% trên phần kiểm tra.}
+      \Block{Có thể dùng vào đâu?}{Ưu tiên gợi ý coupon hợp thói quen, vị trí và chuyến đi; dùng điểm dự đoán để chọn ai nên nhận gợi ý trước.}
+    \column{.49\textwidth}
+      \Block{Cần hiểu kết quả trong giới hạn nào?}{
+        \Point{Đây là câu trả lời khảo sát, chưa phải hành vi đổi coupon thật.}
+        \Point{Không có mã người gốc; nhóm hồ sơ suy ra có thể gộp nhầm những người giống thông tin.}
+        Phần ``giải thích'' nêu lý do có thể xảy ra. Dữ liệu chưa chứng minh các yếu tố đó trực tiếp làm người dùng nhận coupon.}
+      \Block{Nếu làm tiếp}{Thử gửi coupon thật cho các nhóm người dùng và so sánh kết quả. Điều chỉnh cách đoán theo mức chấp nhận gửi nhầm hoặc bỏ sót.}
+  \end{columns}
+\end{frame}
+
+% 15. Trang cảm ơn cùng màu nhạt với bìa.
+\begingroup
+\setbeamercolor{background canvas}{bg=Cover}
+\begin{frame}[plain]
+  \centering
+  \vspace{24mm}
+  {\fontsize{19}{24}\selectfont\color{Accent}In-Vehicle Coupon Acceptance\par}
+  \vspace{12mm}
+  {\fontsize{44}{52}\selectfont\bfseries Cảm ơn thầy cô và các bạn\par}
+  \vspace{6mm}
+  {\fontsize{26}{32}\selectfont\color{Accent}Thank you!\par}
+  \vspace{14mm}
+  {\fontsize{19}{25}\selectfont Nhóm xin lắng nghe câu hỏi và góp ý.\par}
+\end{frame}
+\endgroup
+\end{document}
