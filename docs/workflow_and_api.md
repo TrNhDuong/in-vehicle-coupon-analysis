@@ -33,7 +33,7 @@ data/raw/in-vehicle-coupon-recommendation.csv
   │
   └──► Phase 4: Kiểm chứng & Thuyết trình (Cả nhóm)
          python scripts/run_all.py  (check_project → pytest (44 test) → python -m nbconvert 01, 02, 03)
-         slides.pdf (slide thuyết trình cuối kỳ 10 trang ở thư mục gốc)
+         python presentation/beamer/build.py --compile ──► slides.pdf (16 trang ở thư mục gốc)
 ```
 
 ---
@@ -56,7 +56,7 @@ data.py (đường dẫn gốc, load_raw_data, missing_table, target_is_binary, 
   ├── plotting.py (cần FIGURES_DIR từ data.py)
   │     ├── plot_heatmap()     ──► hỗ trợ cả heatmap đơn lẫn ô subplot (ax=)
   │     └── plot_bars_ci()     ──► nhận summary_df đúng schema của stats.rate_table()
-  └── modeling.py (import sklearn nội hàm để CI không cần scikit-learn)
+  └── modeling.py (import sklearn nội hàm để tách nhẹ phần ML)
         ├── build_pipeline()   ──► ColumnTransformer(SimpleImputer + dense OneHotEncoder) + estimator
         ├── cluster_bootstrap_metric()
         └── error_breakdown(), probability_bins()
